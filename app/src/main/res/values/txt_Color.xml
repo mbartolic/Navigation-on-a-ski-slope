@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="txt_Color">
+
+        <item name="android:textColor">#E3E4E8</item>
+    </style>
+
+
+</resources>

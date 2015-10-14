@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="main_app_theme">
+        <item name="android:background">#336699</item>  //pozadina koju cemo koristit na svim ekranima u app
+        //narancasta #ED7411
+        //plava #336699
+        //ljubicasta #663399
+    </style>
+
+
+</resources>
