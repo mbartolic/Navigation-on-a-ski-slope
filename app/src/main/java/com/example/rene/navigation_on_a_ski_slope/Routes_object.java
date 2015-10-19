@@ -8,6 +8,9 @@ public class Routes_object {
     private int routHeight;
     private int routVerticalDrop;
 
+    public Routes_object() {
+    }
+
     public Routes_object(String rName, int rLein, int rHeight, int rVertDrp){
         this.routName = rName;
         this.routLength = rLein;

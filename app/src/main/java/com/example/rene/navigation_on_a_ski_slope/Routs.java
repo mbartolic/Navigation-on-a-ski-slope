@@ -1,15 +1,12 @@
 package com.example.rene.navigation_on_a_ski_slope;
 
-import android.app.Activity;
+
+
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
+
 
 
 public class Routs extends ActionBarActivity {
@@ -35,6 +32,7 @@ public class Routs extends ActionBarActivity {
         ListAdapter listAdapter = new Routes_adapter(this, routesObjects);
         ListView listView = (ListView)findViewById(R.id.routListID);
         listView.setAdapter(listAdapter);
+
 
 
     }
