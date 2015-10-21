@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 'Recon Instruments:Recon Instruments SDK Add-On:16'
     buildToolsVersion "23.0.1"
 
     defaultConfig {
