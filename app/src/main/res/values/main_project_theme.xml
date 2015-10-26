@@ -2,7 +2,7 @@
 <resources>
 
     <style name="main_app_theme">
-        <item name="android:background">#336699</item>  //pozadina koju cemo koristit na svim ekranima u app
+        <item name="android:background">#336699</item>  //background color on every screen (layout)
         //narancasta #ED7411
         //plava #336699
         //ljubicasta #663399

@@ -30,7 +30,8 @@
 
         <activity
             android:name=".SplashScreen"
-            android:label="SplashScreen" >
+            android:label="SplashScreen"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />//ovaj screen postaje glavni kad se app pokrece
                 <category android:name="android.intent.category.LAUNCHER" />
