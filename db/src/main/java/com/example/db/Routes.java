@@ -8,8 +8,7 @@ import com.activeandroid.annotation.Table;
 @Table(name = "Routes")
 public class Routes extends Model{
 
-    @Column (name = "id")
-    private int id_routes;
+
     @Column (name = "routName", index = true)
     private String routName;
     @Column (name = "routLength")
@@ -24,16 +23,12 @@ public class Routes extends Model{
     }
 
     public Routes(int id_Routes, String rName, int rLein, int rHeight, int rVertDrp){
-        this.id_routes = id_Routes;
         this.routName = rName;
         this.routLength = rLein;
         this.routHeight = rHeight;
         this.routVerticalDrop = rVertDrp;
     }
 
-    public int getId_routes() {
-        return id_routes;
-    }
 
     public String getRoutName(){
         return routName;

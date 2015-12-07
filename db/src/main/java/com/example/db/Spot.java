@@ -3,6 +3,7 @@ package com.example.db;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.example.model.Coordinates;
 
 @Table(name = "Spot")
 public class Spot extends Model {

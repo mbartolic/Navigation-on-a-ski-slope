@@ -1,18 +1,26 @@
 package com.example.rene.navigation_on_a_ski_slope;
 
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 
-public class MainActivity extends AppCompatActivity {
+import com.activeandroid.ActiveAndroid;
+import com.example.db.CoordinatesDB;
+import com.example.model.Coordinates;
+import com.example.mvp.presenter.CoordinatesPresenter;
+import com.example.mvp.presenter.impl.CoordinatesPresenterImpl;
+import com.example.mvp.view.CoordiantesView;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements CoordiantesView{
+
+    //Objekt klase koja implementira sucelje CoordinatesPresenter
+    CoordinatesPresenter coordinatesPresenter;
+    private static final String LOG_KEY = "coordianes";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +28,11 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();               // removes title bar from main activity
         setContentView(R.layout.activity_main);     // connecting main activity with xml file
         addListenerToButton();                // calling function for listening button
+
+        //Inicijalizacija klase koja implementira sucelje CoordinatesPresenter
+        coordinatesPresenter = new CoordinatesPresenterImpl(this);
+        //Dohvacanje koordinata preko sucelja CoordinatesPresenter
+        coordinatesPresenter.getData();
     }
 
 
@@ -46,6 +59,25 @@ public class MainActivity extends AppCompatActivity {
        }
        });
    }
+
+    @Override
+    public void storeFetchedCoordinates(List<Coordinates> coordinates) {
+        /*try{
+            for(Coordinates coordinate : coordinates)    {
+                // Log.e(LOG_KEY, "Image: "  + coordinate.getImage() + " lon: " + coordinate.getLon() + " lat: " + coordinate.getLat());
+                CoordinatesDB coordDB = new CoordinatesDB();
+                coordDB.setImage(coordinate.getImage());
+                coordDB.setLat(coordinate.getLat());
+                coordDB.setLon(coordinate.getLon());
+                coordDB.save();
+            }
+            ActiveAndroid.setTransactionSuccessful();
+        }finally {
+            ActiveAndroid.endTransaction();
+        }*/
+
+
+    }
 }
 
 

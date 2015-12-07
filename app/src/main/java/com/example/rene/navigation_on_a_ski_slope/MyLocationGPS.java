@@ -9,6 +9,8 @@ import android.widget.Toast;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
@@ -49,11 +51,20 @@ public class MyLocationGPS extends FragmentActivity implements OnMapReadyCallbac
     GoogleMap.OnMapLongClickListener myOnMapLongClickListener = new GoogleMap.OnMapLongClickListener() {
         @Override
         public void onMapLongClick(LatLng latLng) {
+
+            CircleOptions circleOptions = new CircleOptions()
+                    .center(new LatLng(46.308408, 16.346646))
+                    .radius(50);
+
+            Circle circle = mMap.addCircle(circleOptions);
+
+
+
           /*  mMap.addMarker(new MarkerOptions()
                     .position(latLng)
                     .title(latLng.toString()));*/
 
-            Location myLocation = mMap.getMyLocation();     //try to get users location
+         /*   Location myLocation = mMap.getMyLocation();     //try to get users location
             if(myLocation == null){
                 Toast.makeText(getApplicationContext(), "My location is not avaible", Toast.LENGTH_LONG).show(); //showing note
             }else {
@@ -68,7 +79,7 @@ public class MyLocationGPS extends FragmentActivity implements OnMapReadyCallbac
                 polylineOptions.color(Color.MAGENTA);       //color of line
                 polylineOptions.geodesic(true);             //earth is not flat, ni dragi Bog ovo nezna
                 mMap.addPolyline(polylineOptions);          //connecting points on map
-            }
+            }*/
         }
 
     };
