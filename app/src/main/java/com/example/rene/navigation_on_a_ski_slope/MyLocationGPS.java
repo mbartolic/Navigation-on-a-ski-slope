@@ -1,7 +1,10 @@
 package com.example.rene.navigation_on_a_ski_slope;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.location.Location;
+import android.location.LocationListener;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -12,14 +15,15 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
-import com.google.android.gms.maps.model.PolylineOptions;
 
 
-public class MyLocationGPS extends FragmentActivity implements OnMapReadyCallback {
+
+public class MyLocationGPS extends FragmentActivity implements OnMapReadyCallback, LocationListener {
 
     private GoogleMap mMap; // creating object type map
+    DistanceFromPicture distanceFromPicture;
+    Location loc =  new Location("Loc");
+    Location myl = new Location("Myloc");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +33,8 @@ public class MyLocationGPS extends FragmentActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
+
+
 
 
     @Override
@@ -52,13 +58,21 @@ public class MyLocationGPS extends FragmentActivity implements OnMapReadyCallbac
         @Override
         public void onMapLongClick(LatLng latLng) {
 
-            CircleOptions circleOptions = new CircleOptions()
+          /*  CircleOptions circleOptions = new CircleOptions()
                     .center(new LatLng(46.308408, 16.346646))
                     .radius(50);
 
-            Circle circle = mMap.addCircle(circleOptions);
+            Circle circle = mMap.addCircle(circleOptions);*/
 
 
+            loc.setLatitude(46.308408);
+            loc.setLongitude(16.346646);
+            Location myLocation = mMap.getMyLocation();
+            myl.setLatitude(myLocation.getLatitude());
+            myl.setLongitude(myLocation.getLongitude());
+            distanceFromPicture = new DistanceFromPicture();
+
+            Toast.makeText(getApplicationContext(), distanceFromPicture.getDistance(loc, myl) + "", Toast.LENGTH_LONG).show();
 
           /*  mMap.addMarker(new MarkerOptions()
                     .position(latLng)
@@ -85,6 +99,28 @@ public class MyLocationGPS extends FragmentActivity implements OnMapReadyCallbac
     };
 
 
+    @Override
+    public void onLocationChanged(Location location) {
+        /*Location loc =  new Location("Loc");
+        loc.setLatitude(46.308408);
+        loc.setLongitude(16.346646);
+        Location myLocation = mMap.getMyLocation();
+        distanceFromPicture = new DistanceFromPicture();
+        Toast.makeText(getApplicationContext(), (int) distanceFromPicture.getDistance(loc, myLocation), Toast.LENGTH_LONG).show();
+   */ }
 
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
 
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
 }
