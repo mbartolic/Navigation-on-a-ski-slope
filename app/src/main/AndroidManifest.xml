@@ -38,7 +38,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Routs" />
-
+        <activity android:name=".DisplayImage"/>
 
         <meta-data
             android:name="com.google.android.maps.vw.API_KEY"

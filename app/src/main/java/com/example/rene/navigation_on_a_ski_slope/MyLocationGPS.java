@@ -1,6 +1,7 @@
 package com.example.rene.navigation_on_a_ski_slope;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
@@ -15,7 +16,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
-
+import com.google.android.gms.maps.model.MarkerOptions;
 
 
 public class MyLocationGPS extends FragmentActivity implements OnMapReadyCallback, LocationListener {
@@ -24,6 +25,7 @@ public class MyLocationGPS extends FragmentActivity implements OnMapReadyCallbac
     DistanceFromPicture distanceFromPicture;
     Location loc =  new Location("Loc");
     Location myl = new Location("Myloc");
+    final Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +34,7 @@ public class MyLocationGPS extends FragmentActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager() //deafault
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-    }
+            }
 
 
 
@@ -65,15 +67,19 @@ public class MyLocationGPS extends FragmentActivity implements OnMapReadyCallbac
             Circle circle = mMap.addCircle(circleOptions);*/
 
 
-            loc.setLatitude(46.308408);
-            loc.setLongitude(16.346646);
+            loc.setLatitude(46.308436);
+            loc.setLongitude(16.330984);
             Location myLocation = mMap.getMyLocation();
             myl.setLatitude(myLocation.getLatitude());
             myl.setLongitude(myLocation.getLongitude());
             distanceFromPicture = new DistanceFromPicture();
+           Toast.makeText(getApplicationContext(), distanceFromPicture.getDistance(loc, myl) + "", Toast.LENGTH_LONG).show();
 
-            Toast.makeText(getApplicationContext(), distanceFromPicture.getDistance(loc, myl) + "", Toast.LENGTH_LONG).show();
-
+            float distance = distanceFromPicture.getDistance(loc,myl);
+            if(distance < 100000){
+                Intent intent =  new Intent(context, DisplayImage.class);
+                startActivity(intent);
+            }
           /*  mMap.addMarker(new MarkerOptions()
                     .position(latLng)
                     .title(latLng.toString()));*/
@@ -101,13 +107,15 @@ public class MyLocationGPS extends FragmentActivity implements OnMapReadyCallbac
 
     @Override
     public void onLocationChanged(Location location) {
-        /*Location loc =  new Location("Loc");
-        loc.setLatitude(46.308408);
-        loc.setLongitude(16.346646);
-        Location myLocation = mMap.getMyLocation();
-        distanceFromPicture = new DistanceFromPicture();
-        Toast.makeText(getApplicationContext(), (int) distanceFromPicture.getDistance(loc, myLocation), Toast.LENGTH_LONG).show();
-   */ }
+  /*       loc.setLatitude(46.308436);
+            loc.setLongitude(16.330984);
+            Location myLocation = mMap.getMyLocation();
+            myl.setLatitude(myLocation.getLatitude());
+            myl.setLongitude(myLocation.getLongitude());
+            distanceFromPicture = new DistanceFromPicture();
+
+            Toast.makeText(getApplicationContext(), distanceFromPicture.getDistance(loc, myl) + "", Toast.LENGTH_LONG).show();*/
+    }
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
