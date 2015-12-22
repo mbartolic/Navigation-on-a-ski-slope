@@ -59,14 +59,6 @@ public class MyLocationGPS extends FragmentActivity implements OnMapReadyCallbac
     GoogleMap.OnMapLongClickListener myOnMapLongClickListener = new GoogleMap.OnMapLongClickListener() {
         @Override
         public void onMapLongClick(LatLng latLng) {
-
-          /*  CircleOptions circleOptions = new CircleOptions()
-                    .center(new LatLng(46.308408, 16.346646))
-                    .radius(50);
-
-            Circle circle = mMap.addCircle(circleOptions);*/
-
-
             loc.setLatitude(46.308436);
             loc.setLongitude(16.330984);
             Location myLocation = mMap.getMyLocation();
@@ -76,10 +68,24 @@ public class MyLocationGPS extends FragmentActivity implements OnMapReadyCallbac
            Toast.makeText(getApplicationContext(), distanceFromPicture.getDistance(loc, myl) + "", Toast.LENGTH_LONG).show();
 
             float distance = distanceFromPicture.getDistance(loc,myl);
-            if(distance < 100000){
+            if(distance > 100){
                 Intent intent =  new Intent(context, DisplayImage.class);
                 startActivity(intent);
             }
+
+            ConvertingGpsCoordToXY convertingGpsCoordToXY =  new ConvertingGpsCoordToXY();  //slanje gps podataka za konvertiranje
+            double convX = convertingGpsCoordToXY.convertLat(myLocation.getLatitude());
+            double convY = convertingGpsCoordToXY.convertLon(myLocation.getLongitude());
+            AverageDirection averageDirection = new AverageDirection(convX, convY);
+
+          /*  CircleOptions circleOptions = new CircleOptions()
+                    .center(new LatLng(46.308408, 16.346646))
+                    .radius(50);
+
+            Circle circle = mMap.addCircle(circleOptions);*/
+
+
+
           /*  mMap.addMarker(new MarkerOptions()
                     .position(latLng)
                     .title(latLng.toString()));*/
