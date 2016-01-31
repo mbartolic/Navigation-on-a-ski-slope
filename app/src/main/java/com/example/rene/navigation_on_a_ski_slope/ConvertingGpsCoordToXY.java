@@ -7,25 +7,27 @@ public class ConvertingGpsCoordToXY {
 
     public ConvertingGpsCoordToXY() {}
 
-    public double convertLon(double longitude) {  //pretvara long u nas sustav
+    public float convertLon(float longitude) {  //pretvara long u nas sustav
         lon = longitude;
         if(lon < 0){
             lon = lon * (-1);
             lon = lon/180;
-            return lon;
+            return (float) lon;
         }else {
-            return lon;
+            lon = lon/180;
+            return (float) lon;
         }
     }
 
-    public double convertLat(double latitude) { //pretvara lat u nas sustav
+    public float convertLat(float latitude) { //pretvara lat u nas sustav
         lat = latitude;
         if(lat < 0){
             lat = lat * (-1);
             lat = lat/90;
-            return lat;
+            return (float) lat;
         }else {
-            return lat;
+            lat = lat/90;
+            return (float) lat;
         }
     }
 }
