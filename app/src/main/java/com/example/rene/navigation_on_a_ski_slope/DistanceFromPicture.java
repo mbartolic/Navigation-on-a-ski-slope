@@ -5,10 +5,6 @@ import android.location.Location;
 public class DistanceFromPicture {
 
     private Location loc, myloc;
-    float distance;
-    String vani, unutra;
-    DisplayImage displayImage;
-
 
     public DistanceFromPicture() {
     }
