@@ -31,15 +31,20 @@ public class MyLocationGPS extends FragmentActivity implements OnMapReadyCallbac
         mapFragment.getMapAsync(this);
             }
 
-
+    /**
+     * Creates Google Map and shows the current location on map.
+     * @param googleMap
+     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;       //new object google map
-        mMap.setMyLocationEnabled(true);    //enabeling current location (showning it on map)
+        mMap.setMyLocationEnabled(true);    //enabling current location (showing it on map)
         mMap.setOnMapLongClickListener(myOnMapLongClickListener);   //creating listener on map
     }
 
-
+    /**
+     * Shows the angle on long click.
+     */
     GoogleMap.OnMapLongClickListener myOnMapLongClickListener = new GoogleMap.OnMapLongClickListener() {
         @Override
         public void onMapLongClick(LatLng latLng) {

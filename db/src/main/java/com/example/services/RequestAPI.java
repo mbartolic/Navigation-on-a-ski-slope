@@ -7,6 +7,7 @@ import retrofit.http.GET;
 import retrofit.http.Query;
 
 /**
+ * Request to the web service.
  * Created by Rene on 6.12.2015..
  */
 public interface RequestAPI {

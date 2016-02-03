@@ -9,6 +9,12 @@ public class DistanceFromPoint {
     public DistanceFromPoint() {
     }
 
+    /**
+     * Calculates distance between two GPS coordinates.
+     * @param loc
+     * @param myl
+     * @return
+     */
     public float getDistance(Location loc, Location myl) {
         this.loc = loc;
         this.myloc = myl;

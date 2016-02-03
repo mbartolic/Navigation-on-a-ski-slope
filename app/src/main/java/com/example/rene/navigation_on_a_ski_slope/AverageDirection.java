@@ -4,11 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ *
  * Created by Rene on 22.12.2015..
  */
+
 public class AverageDirection {
     public AverageDirection() {}
 
+    /**
+     * Calculates average direction of the skier. The method needs at least three endpoints to work properly.
+     * @param myLocalHistory
+     * @return
+     */
     public double AvgDirection(List<MyPointDouble> myLocalHistory) {
         double x1 = 0, y1 = 0, x2 = 0, y2 = 0;
         List<MyPointDouble> avgPoint = new ArrayList<>();
@@ -46,6 +53,12 @@ public class AverageDirection {
         return angle;
     }
 
+    /**
+     * Calculates approximate future position of the skier.
+     * @param numberOfPoints
+     * @param avgPoint
+     * @return
+     */
     private double futurePoints (int numberOfPoints, List<MyPointDouble> avgPoint) {
         double angle = 0;
         MyPointDouble futurePoint = new MyPointDouble();
@@ -64,6 +77,11 @@ public class AverageDirection {
     MyPointDouble turn = new MyPointDouble();
     MyPointDouble pathAfterTurn = new MyPointDouble();
 
+    /**
+     * Calculates angle between points on junction.
+     * @param PointAtTheMoment
+     * @return
+     */
     private double angleBetweenPoints(MyPointDouble PointAtTheMoment) {
         turn.x = convertingGpsCoordToXY.convertLat(48.221094);      //location of turn in wien converted
         turn.y = convertingGpsCoordToXY.convertLat(16.377882);     //location if turn in wien converted

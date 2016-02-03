@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Class for determining if the skier is still on track or he left the track.
  * Created by Tomisav on 3.2.2016..
  */
 public class OnSlope extends AppCompatActivity {

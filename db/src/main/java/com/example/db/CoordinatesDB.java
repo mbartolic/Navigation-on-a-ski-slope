@@ -10,6 +10,7 @@ import java.io.Serializable;
 /**
  * Created by Rene on 6.12.2015..
  */
+
 @Table(name = "Coordinates")
 public class CoordinatesDB extends Model {
 

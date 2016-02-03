@@ -3,6 +3,9 @@ package com.example.model;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Coordinates model.
+ */
 public class Coordinates implements Serializable{
 
 

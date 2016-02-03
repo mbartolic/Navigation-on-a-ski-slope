@@ -6,7 +6,9 @@ import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 
 
-
+/**
+ * Displays splash screen on application startup.
+ */
 public class SplashScreen extends ActionBarActivity{
 
     int slpWait = 3000;         //waiting, time when splashscreen is shown just definition

@@ -22,11 +22,23 @@ public class CoordinatesPresenterImpl implements CoordinatesPresenter, OnCoordin
         this.view = view;
     }
 
+    /**
+     *
+     * @param sourcePoint
+     * @param destionationPoint
+     * @param routeType
+     * @param voiceInstructions
+     * @param language
+     */
     @Override
     public void getData(String sourcePoint, String destionationPoint, String routeType, String voiceInstructions, String language) {
         coordiantesInteractor.fetchCoordinates(sourcePoint, destionationPoint, routeType, voiceInstructions, language, this);
     }
 
+    /**
+     *
+     * @param coordinates
+     */
     @Override
     public void fetchedCoordinatesData(Coordinates coordinates) {
         //TODO retrieve data and store in db

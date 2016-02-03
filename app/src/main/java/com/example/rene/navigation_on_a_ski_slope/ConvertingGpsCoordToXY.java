@@ -7,6 +7,11 @@ public class ConvertingGpsCoordToXY {
 
     public ConvertingGpsCoordToXY() {}
 
+    /**
+     * Converts GPS coordinates to values [0..1].
+     * @param longitude
+     * @return
+     */
     public double convertLon(double longitude) {  //pretvara long u nas sustav
         lon = longitude;
         if(lon < 0){
@@ -19,6 +24,11 @@ public class ConvertingGpsCoordToXY {
         }
     }
 
+    /**
+     * Converts GPS coordinates to values [0..1].
+     * @param latitude
+     * @return
+     */
     public double convertLat(double latitude) { //pretvara lat u nas sustav
         lat = latitude;
         if(lat < 0){

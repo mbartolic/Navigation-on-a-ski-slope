@@ -14,6 +14,11 @@ public class DisplayImage extends ActionBarActivity {
         setContentView(R.layout.picture);
     }
     String path;
+
+    /**
+     * Shows appropriate arrow (image) depending on the entering angle when approaching junction.
+     * @param angle
+     */
     public void setImage(double angle){
         if(angle >= 0 && angle <= 60){
             path = "@mipmap-xhdpi/southeast";
