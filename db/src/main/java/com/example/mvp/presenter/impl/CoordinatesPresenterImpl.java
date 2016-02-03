@@ -23,12 +23,12 @@ public class CoordinatesPresenterImpl implements CoordinatesPresenter, OnCoordin
     }
 
     @Override
-    public void getData() {
-        coordiantesInteractor.fetchCoordinates(this);
+    public void getData(String sourcePoint, String destionationPoint, String routeType, String voiceInstructions, String language) {
+        coordiantesInteractor.fetchCoordinates(sourcePoint, destionationPoint, routeType, voiceInstructions, language, this);
     }
 
     @Override
-    public void fetchedCoordinatesData(List<Coordinates> coordinates) {
+    public void fetchedCoordinatesData(Coordinates coordinates) {
         //TODO retrieve data and store in db
         view.storeFetchedCoordinates(coordinates);
     }

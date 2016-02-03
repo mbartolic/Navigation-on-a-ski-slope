@@ -1,43 +1,55 @@
 package com.example.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Coordinates implements Serializable{
 
-    private String id;
-    private String lon;
-    private String lat;
-    private String image;
 
-    public String getColId() {
-        return id;
+
+    private List<Path> paths;
+
+    public List<Path> getPaths() {
+        return paths;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setPaths(List<Path> paths) {
+        this.paths = paths;
     }
 
-    public String getLon() {
-        return lon;
-    }
 
-    public void setLon(String lon) {
-        this.lon = lon;
-    }
+    public class Path implements Serializable{
 
-    public String getLat() {
-        return lat;
-    }
 
-    public void setLat(String lat) {
-        this.lat = lat;
-    }
 
-    public String getImage() {
-        return image;
-    }
+        private float distance;
 
-    public void setImage(String image) {
-        this.image = image;
+        private float weight;
+
+        private List<Instruction> instructions;
+
+        public float getDistance() {
+            return distance;
+        }
+
+        public void setDistance(float distance) {
+            this.distance = distance;
+        }
+
+        public float getWeight() {
+            return weight;
+        }
+
+        public void setWeight(float weight) {
+            this.weight = weight;
+        }
+
+        public List<Instruction> getInstructions() {
+            return instructions;
+        }
+
+        public void setInstructions(List<Instruction> instructions) {
+            this.instructions = instructions;
+        }
     }
 }

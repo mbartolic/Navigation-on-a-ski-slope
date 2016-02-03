@@ -8,8 +8,6 @@ import com.example.mvp.listener.OnCoordinatesFetched;
 import com.example.services.RequestAPI;
 import com.example.utils.Constants;
 
-import java.util.List;
-
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -18,30 +16,31 @@ import retrofit.client.Response;
 /**
  * Created by Rene on 6.12.2015..
  */
-public class CoordiantesInteractorImpl implements CoordiantesInteractor, Callback<List<Coordinates>> {
+public class CoordiantesInteractorImpl implements CoordiantesInteractor, Callback<Coordinates> {
 
     OnCoordinatesFetched listener;
     private static final String LOG_KEY = "coordianes";
 
     @Override
-    public void fetchCoordinates(OnCoordinatesFetched listener) {
+    public void fetchCoordinates(String sourcePoint, String destionationPoint, String routeType, String voiceInstructions, String language, OnCoordinatesFetched listener) {
         this.listener = listener;
 
 
-        //retrofit
+        //intitialize Retrofit adapter and request api interface
         RestAdapter adapter = new RestAdapter.Builder()
                 .setEndpoint(Constants.ENDPOINT)
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
         RequestAPI api = adapter.create(RequestAPI.class);
 
-        //slanje requesta na server
-        api.getCoordinates(this);
+
+        //call web service using retrofit api
+        api.getCoordinates(sourcePoint, destionationPoint, routeType, voiceInstructions, language, this);
     }
 
     @Override
-    public void success(List<Coordinates> coordinates, Response response) {
-        Log.e(LOG_KEY, "success");
+    public void success(Coordinates coordinates, Response response) {
+
         listener.fetchedCoordinatesData(coordinates);
     }
 
