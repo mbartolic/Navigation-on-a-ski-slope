@@ -17,7 +17,7 @@ import java.util.List;
 public class MyLocationGPS extends FragmentActivity implements OnMapReadyCallback, LocationListener {
 
     private GoogleMap mMap; // creating object type map
-    DistanceFromPicture distanceFromPicture;
+    DistanceFromPoint distanceFromPoint;
   //  Location loc =  new Location("Loc");
   //  Location myl = new Location("Myloc");
       final Context context = this;
@@ -49,8 +49,8 @@ public class MyLocationGPS extends FragmentActivity implements OnMapReadyCallbac
          //   Location myLocation = mMap.getMyLocation();
           //  myl.setLatitude(myLocation.getLatitude());
           //  myl.setLongitude(myLocation.getLongitude());
-          //  distanceFromPicture = new DistanceFromPicture();
-         //   float distance = distanceFromPicture.getDistance(loc,myl);
+          //  distanceFromPoint = new DistanceFromPoint();
+         //   float distance = distanceFromPoint.getDistance(loc,myl);
            // Toast.makeText(getApplicationContext(), distance + "", Toast.LENGTH_LONG).show();
             ConvertingGpsCoordToXY convertingGpsCoordToXY = new ConvertingGpsCoordToXY();
             List<MyPointDouble> myLocHist;

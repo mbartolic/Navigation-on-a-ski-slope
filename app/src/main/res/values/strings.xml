@@ -6,6 +6,7 @@
     <string name="welcome_string_screen">EvoSki</string>
     <string name="routsBttn">Routes</string>
     <string name="MyLocationBtn">My location</string>
+    <string name="onroute">On Route</string>
     <string name="txt_routesNameID">Route name</string>
     <string name="txt_routesDistanceID">Route distance</string>
     <string name="txt_routesHeighID">Route height</string>

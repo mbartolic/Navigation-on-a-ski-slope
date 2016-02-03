@@ -36,15 +36,29 @@ public class MainActivity extends AppCompatActivity implements CoordiantesView {
 
 
     public void addListenerToButton() {
-        final Context context = this;        //this activity
-        Button btnloc = (Button) findViewById(R.id.MyLocationBtnID);  // connecting other button with xml
+        final Context context = getApplicationContext();        //this activity probaj sad
+        Button btnlo = (Button) findViewById(R.id.onrouteID);  // connecting other button with xml
+        Button btnloc = (Button) findViewById(R.id.MyLocationBtnID);  // connecting button with xml
+
+
+        btnlo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(context, OnSlope.class);    //creating new intent and replacing the old one
+                startActivity(intent);
+                // overridePendingTransition(R.anim.anim_to_right, R.anim.anim_to_left); //animation when inteint starts
+                //ovaj dio
+            }
+        });
 
         btnloc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, MyLocationGPS.class);
+                Intent intent = new Intent(context, MyLocationGPS.class);    //creating new intent and replacing the old one
                 startActivity(intent);
-                overridePendingTransition(R.anim.anim_to_right, R.anim.anim_to_left);
+                 overridePendingTransition(R.anim.anim_to_right, R.anim.anim_to_left); //animation when inteint starts
+
             }
         });
     }

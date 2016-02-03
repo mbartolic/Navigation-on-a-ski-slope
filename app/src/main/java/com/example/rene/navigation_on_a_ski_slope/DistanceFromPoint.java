@@ -2,11 +2,11 @@ package com.example.rene.navigation_on_a_ski_slope;
 
 import android.location.Location;
 
-public class DistanceFromPicture {
+public class DistanceFromPoint {
 
     private Location loc, myloc;
 
-    public DistanceFromPicture() {
+    public DistanceFromPoint() {
     }
 
     public float getDistance(Location loc, Location myl) {

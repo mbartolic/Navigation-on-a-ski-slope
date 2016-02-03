@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by Bozidar on 02.02.2016..
+ * Created by Marko on 02.02.2016..
  */
 
 public class Instruction implements Serializable {
