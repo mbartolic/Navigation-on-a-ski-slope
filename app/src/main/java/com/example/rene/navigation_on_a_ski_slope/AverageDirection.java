@@ -11,12 +11,44 @@ import java.util.List;
 public class AverageDirection {
     public AverageDirection() {}
 
+
+    public double AvgDirection(List<MyPointDouble> myLocalHistory) {
+        List<MyPointDouble> myLocHistX = new ArrayList<>();
+        List<MyPointDouble> myLocHistY = new ArrayList<>();
+        double angle, angleOfDirect;
+        angle = AvgDirectionXY(myLocalHistory);
+
+        if (angle == 0.0) {
+            for (int i = 0; i < myLocalHistory.size(); i++) {
+                MyPointDouble pointX = new MyPointDouble();
+                pointX.x = myLocalHistory.get(i).x;
+                pointX.y = 0;
+                myLocHistX.add(pointX);
+            }
+            angle = AvgDirectionXY(myLocHistX);
+            angleOfDirect = angle;
+            if(angle == 0.0){
+                for (int i = 0; i < myLocalHistory.size(); i++) {
+                    MyPointDouble pointY = new MyPointDouble();
+                    pointY.x = 0;
+                    pointY.y = myLocalHistory.get(i).y;
+                    myLocHistY.add(pointY);
+                }
+                angle = AvgDirectionXY(myLocHistY);
+                angleOfDirect = angle;
+            }else angleOfDirect = angle;
+        }else angleOfDirect = angle;
+
+        return angleOfDirect;
+    }
+
+
     /**
      * Calculates average direction of the skier. The method needs at least three endpoints to work properly.
      * @param myLocalHistory
      * @return
      */
-    public double AvgDirection(List<MyPointDouble> myLocalHistory) {
+    public double AvgDirectionXY(List<MyPointDouble> myLocalHistory) {
         double x1 = 0, y1 = 0, x2 = 0, y2 = 0;
         List<MyPointDouble> avgPoint = new ArrayList<>();
         boolean zastavica1 = false;

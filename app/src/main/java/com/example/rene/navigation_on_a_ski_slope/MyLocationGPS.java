@@ -60,45 +60,50 @@ public class MyLocationGPS extends FragmentActivity implements OnMapReadyCallbac
             ConvertingGpsCoordToXY convertingGpsCoordToXY = new ConvertingGpsCoordToXY();
             List<MyPointDouble> myLocHist;
 
-            //simulates user skiing
-          /*  MyPointDouble point1, point2, point3, point4, point5, point6, point7, point8, point9, point10, point11, point12;
-            point1 = new MyPointDouble();
-            point1.y = 48.220907;
-            point1.x = 16.379722;
-            point2 = new MyPointDouble();
-            point2.y = 48.221010;      //64.599018
-            point2.x = 16.379626;
-            point3 = new MyPointDouble(); //right point
-            point3.y = 48.221098;   //64.599318   collect
-            point3.x = 16.379540;  //
-            point4 = new MyPointDouble();
-            point4.y = 48.221008;
-            point4.x = 16.379285;     //64.599184
-            point5 = new MyPointDouble();
-            point5.y = 48.220874;      //64.598910
-            point5.x = 16.379231;
-            point6 = new MyPointDouble();
-            point6.y =48.220805; //64.598934
-            point6.x =16.379019;
-            point7 = new MyPointDouble(); //left point
-            point7.y =48.220899;   //64.598722  collect
-            point7.x =16.378877;  //
-            point8 = new MyPointDouble();
-            point8.y = 48.221053;      //64.598848
-            point8.x = 16.378799;
-            point9 = new MyPointDouble();
-            point9.y = 48.221089;      //64.599061
-            point9.x = 16.378593;
-            point10 = new MyPointDouble();  //right point collect
-            point10.y = 48.220983;    //64.599122
-            point10.x = 16.378512;   //
-            point11 = new MyPointDouble();
-            point11.y = 48.220878;     //64.598926
-            point11.x = 16.378306;
-            point12 = new MyPointDouble();
-            point12.y =48.221019;   //64.598989  collect
-            point12.x =16.378180;*/
 
+            //simulates user skiing
+            MyPointDouble point1, point2, point3, point4, point5, point6, point7, point8, point9, point10, point11, point12, point13;
+            point1 = new MyPointDouble();
+            point1.y = 48.221051;
+            point1.x = 16.378234;
+            point2 = new MyPointDouble();
+            point2.y = 48.221083;      //64.599018
+            point2.x = 16.37820;
+            point3 = new MyPointDouble(); //right point
+            point3.y = 48.221105;   //64.599318   collect
+            point3.x = 16.378168;  //
+            point4 = new MyPointDouble();
+            point4.y = 48.221072;
+            point4.x = 16.378140;     //64.599184
+            point5 = new MyPointDouble();
+            point5.y = 48.221030;      //64.598910
+            point5.x = 16.378116;
+            point6 = new MyPointDouble();
+            point6.y =48.221048; //64.598934
+            point6.x =16.378092;
+            point7 = new MyPointDouble(); //left point
+            point7.y =48.221087;   //64.598722  collect
+            point7.x =16.378090;  //
+            point8 = new MyPointDouble();
+            point8.y = 48.221110;      //64.598848
+            point8.x = 16.378060;
+            point9 = new MyPointDouble();
+            point9.y = 48.221077;      //64.599061
+            point9.x = 16.378031;
+            point10 = new MyPointDouble();  //right point collect
+            point10.y = 48.221036;    //64.599122
+            point10.x = 16.377999;   //
+            point11 = new MyPointDouble();
+            point11.y = 48.221067;     //64.598926
+            point11.x = 16.377978;
+            point12 = new MyPointDouble();
+            point12.y =48.221115;   //64.598989  collect
+            point12.x =16.377959;
+            point13 = new MyPointDouble();
+            point13.y =48.221115;   //64.598989  collect
+            point13.x =16.377959;
+
+/*
             MyPointDouble point1, point2, point3, point4, point5, point6, point7, point8, point9, point10, point11, point12;
             point1 = new MyPointDouble();
             point1.y =  48.219962;   //64.598517
@@ -135,7 +140,7 @@ public class MyLocationGPS extends FragmentActivity implements OnMapReadyCallbac
             point11.x =  (16.377642);
             point12 = new MyPointDouble();
             point12.y =  (48.221041); //64.598780
-            point12.x =  (16.377739);
+            point12.x =  (16.377739);*/
 
             List<MyPointDouble> myLocations = new ArrayList<>();
             myLocations.add(point1);
@@ -150,8 +155,10 @@ public class MyLocationGPS extends FragmentActivity implements OnMapReadyCallbac
             myLocations.add(point10);
             myLocations.add(point11);
             myLocations.add(point12);
+            myLocations.add(point13);
 
             myLocHist = new ArrayList<>();
+
 
             for(int i = 0; i<myLocations.size(); i++){
                 MyPointDouble converted = new MyPointDouble();
@@ -167,7 +174,7 @@ public class MyLocationGPS extends FragmentActivity implements OnMapReadyCallbac
               //  double convX = convertingGpsCoordToXY.convertLat(myLocation.getLatitude());
               //  double convY = convertingGpsCoordToXY.convertLon(myLocation.getLongitude());
                 AverageDirection averageDirection = new AverageDirection();
-                double angle = averageDirection.AvgDirection(myLocHist);
+                double angle = averageDirection.AvgDirection(myLocations);
                 Toast.makeText(getApplicationContext(), angle + "", Toast.LENGTH_LONG).show();
               /*  Intent intent = new Intent(context, DisplayImage.class);
                 startActivity(intent);
