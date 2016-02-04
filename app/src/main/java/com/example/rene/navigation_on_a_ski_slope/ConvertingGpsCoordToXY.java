@@ -16,12 +16,9 @@ public class ConvertingGpsCoordToXY {
         lon = longitude;
         if(lon < 0){
             lon = lon * (-1);
-            lon = lon/180;
             return lon;
-        }else {
-            lon = lon/180;
-            return lon;
-        }
+        }else return lon;
+
     }
 
     /**
@@ -33,12 +30,9 @@ public class ConvertingGpsCoordToXY {
         lat = latitude;
         if(lat < 0){
             lat = lat * (-1);
-            lat = lat/90;
             return lat;
-        }else {
-            lat = lat/90;
-            return lat;
+        }else return lat;
         }
     }
-}
+
 

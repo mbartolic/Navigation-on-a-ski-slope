@@ -12,11 +12,11 @@ public class AverageDirection {
     public AverageDirection() {}
 
 
-    public double AvgDirection(List<MyPointDouble> myLocalHistory) {
+    public double AvgDirection(List<MyPointDouble> myLocalHistory, List<MyPointDouble> pathAfterTurn) {
         List<MyPointDouble> myLocHistX = new ArrayList<>();
         List<MyPointDouble> myLocHistY = new ArrayList<>();
         double angle, angleOfDirect;
-        angle = AvgDirectionXY(myLocalHistory);
+        angle = AvgDirectionXY(myLocalHistory, pathAfterTurn);
 
         if (angle == 0.0) {
             for (int i = 0; i < myLocalHistory.size(); i++) {
@@ -25,8 +25,7 @@ public class AverageDirection {
                 pointX.y = 0;
                 myLocHistX.add(pointX);
             }
-            angle = AvgDirectionXY(myLocHistX);
-            angleOfDirect = angle;
+            angle = AvgDirectionXY(myLocHistX, pathAfterTurn);
             if(angle == 0.0){
                 for (int i = 0; i < myLocalHistory.size(); i++) {
                     MyPointDouble pointY = new MyPointDouble();
@@ -34,7 +33,7 @@ public class AverageDirection {
                     pointY.y = myLocalHistory.get(i).y;
                     myLocHistY.add(pointY);
                 }
-                angle = AvgDirectionXY(myLocHistY);
+                angle = AvgDirectionXY(myLocHistY, pathAfterTurn);
                 angleOfDirect = angle;
             }else angleOfDirect = angle;
         }else angleOfDirect = angle;
@@ -48,7 +47,7 @@ public class AverageDirection {
      * @param myLocalHistory
      * @return
      */
-    public double AvgDirectionXY(List<MyPointDouble> myLocalHistory) {
+    public double AvgDirectionXY(List<MyPointDouble> myLocalHistory, List<MyPointDouble> pathAfterTurn) {
         double x1 = 0, y1 = 0, x2 = 0, y2 = 0;
         List<MyPointDouble> avgPoint = new ArrayList<>();
         boolean zastavica1 = false;
@@ -78,7 +77,7 @@ public class AverageDirection {
                 zastavica2 = false;
                 avgPoint.add(poin);
                 int numberOfPoints = avgPoint.size();
-                angle = futurePoints(numberOfPoints, avgPoint);
+                angle = futurePoints(numberOfPoints, avgPoint, pathAfterTurn);
             }
         }
         }
@@ -91,7 +90,7 @@ public class AverageDirection {
      * @param avgPoint
      * @return
      */
-    private double futurePoints (int numberOfPoints, List<MyPointDouble> avgPoint) {
+    private double futurePoints (int numberOfPoints, List<MyPointDouble> avgPoint, List<MyPointDouble> pathAfterTurn) {
         double angle = 0;
         MyPointDouble futurePoint = new MyPointDouble();
         if (numberOfPoints >= 2) {
@@ -99,32 +98,31 @@ public class AverageDirection {
             double futurey = avgPoint.get(numberOfPoints - 1).y - avgPoint.get(numberOfPoints - 2).y;
             futurePoint.x = avgPoint.get(numberOfPoints - 1).x + futurex;
             futurePoint.y = avgPoint.get(numberOfPoints - 1).y + futurey;
-            angle = angleBetweenPoints(futurePoint);
+            angle = angleBetweenPoints(futurePoint, pathAfterTurn);
         }
         return angle;
     }
-    ConvertingGpsCoordToXY convertingGpsCoordToXY =  new ConvertingGpsCoordToXY();
     MyPointDouble VectorAfterTurn =  new MyPointDouble();
     MyPointDouble VectorBeforeTurn = new MyPointDouble();
     MyPointDouble turn = new MyPointDouble();
-    MyPointDouble pathAfterTurn = new MyPointDouble();
+    MyPointDouble pathAfterTur = new MyPointDouble();
 
     /**
      * Calculates angle between points on junction.
      * @param PointAtTheMoment
      * @return
      */
-    private double angleBetweenPoints(MyPointDouble PointAtTheMoment) {
-        turn.x = convertingGpsCoordToXY.convertLat(48.221094);      //location of turn in wien converted
-        turn.y = convertingGpsCoordToXY.convertLat(16.377882);     //location if turn in wien converted
-        pathAfterTurn.x = convertingGpsCoordToXY.convertLat(48.221231);
-        pathAfterTurn.y = convertingGpsCoordToXY.convertLat(16.378046);
+    private double angleBetweenPoints(MyPointDouble PointAtTheMoment, List<MyPointDouble> pathAfterTurn) {
+        turn.x = pathAfterTurn.get(0).x;      //location of turn in wien converted
+        turn.y = pathAfterTurn.get(0).y;     //location if turn in wien converted
+        pathAfterTur.x = pathAfterTurn.get(1).x;
+        pathAfterTur.y =pathAfterTurn.get(1).y;
 
         VectorBeforeTurn.x = PointAtTheMoment.x - turn.x;
         VectorBeforeTurn.y = PointAtTheMoment.y - turn.y;
 
-        VectorAfterTurn.x = pathAfterTurn.x - turn.x;
-        VectorAfterTurn.y = pathAfterTurn.y - turn.y;
+        VectorAfterTurn.x = pathAfterTur.x - turn.x;
+        VectorAfterTurn.y = pathAfterTur.y - turn.y;
 
         double VBTA = Math.sqrt(Math.pow(VectorBeforeTurn.x, 2) + Math.pow(VectorBeforeTurn.y, 2));
         double VATA = Math.sqrt(Math.pow(VectorAfterTurn.x, 2) + Math.pow(VectorAfterTurn.y, 2));

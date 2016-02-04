@@ -50,8 +50,14 @@ public class MyLocationGPS extends FragmentActivity implements OnMapReadyCallbac
         @Override
         public void onMapLongClick(LatLng latLng) {
             MyPointDouble locInWien =  new MyPointDouble();
+            MyPointDouble locAfterTurn = new MyPointDouble();
+            List<MyPointDouble> turnPoint = new ArrayList<>();
             locInWien.y = 48.221094;      //location in wien
             locInWien.x = 16.377882;     //location in wien
+            locAfterTurn.y = 48.221231;
+            locAfterTurn.x =16.378046;
+            turnPoint.add(locInWien);
+            turnPoint.add(locAfterTurn);
          //   Location myLocation = mMap.getMyLocation();
           //  myl.setLatitude(myLocation.getLatitude());
           //  myl.setLongitude(myLocation.getLongitude());
@@ -63,48 +69,48 @@ public class MyLocationGPS extends FragmentActivity implements OnMapReadyCallbac
 
 
             //simulates user skiing
-            MyPointDouble point1, point2, point3, point4, point5, point6, point7, point8, point9, point10, point11, point12, point13;
+        /*    MyPointDouble point1, point2, point3, point4, point5, point6, point7, point8, point9, point10, point11, point12, point13;
             point1 = new MyPointDouble();
             point1.y = 48.221051;
             point1.x = 16.378234;
             point2 = new MyPointDouble();
-            point2.y = 48.221083;      //64.599018
+            point2.y = 48.221083;
             point2.x = 16.37820;
-            point3 = new MyPointDouble(); //right point
-            point3.y = 48.221105;   //64.599318   collect
-            point3.x = 16.378168;  //
+            point3 = new MyPointDouble();
+            point3.y = 48.221105;
+            point3.x = 16.378168;
             point4 = new MyPointDouble();
             point4.y = 48.221072;
-            point4.x = 16.378140;     //64.599184
+            point4.x = 16.378140;
             point5 = new MyPointDouble();
-            point5.y = 48.221030;      //64.598910
+            point5.y = 48.221030;
             point5.x = 16.378116;
             point6 = new MyPointDouble();
-            point6.y =48.221048; //64.598934
+            point6.y =48.221048;
             point6.x =16.378092;
-            point7 = new MyPointDouble(); //left point
-            point7.y =48.221087;   //64.598722  collect
-            point7.x =16.378090;  //
+            point7 = new MyPointDouble();
+            point7.y =48.221087;
+            point7.x =16.378090;
             point8 = new MyPointDouble();
-            point8.y = 48.221110;      //64.598848
+            point8.y = 48.221110;
             point8.x = 16.378060;
             point9 = new MyPointDouble();
-            point9.y = 48.221077;      //64.599061
+            point9.y = 48.221077;
             point9.x = 16.378031;
-            point10 = new MyPointDouble();  //right point collect
-            point10.y = 48.221036;    //64.599122
-            point10.x = 16.377999;   //
+            point10 = new MyPointDouble();
+            point10.y = 48.221036;
+            point10.x = 16.377999;
             point11 = new MyPointDouble();
-            point11.y = 48.221067;     //64.598926
+            point11.y = 48.221067;
             point11.x = 16.377978;
             point12 = new MyPointDouble();
-            point12.y =48.221115;   //64.598989  collect
+            point12.y =48.221115;
             point12.x =16.377959;
             point13 = new MyPointDouble();
-            point13.y =48.221115;   //64.598989  collect
-            point13.x =16.377959;
+            point13.y =48.221098;
+            point13.x =16.37796;*/
 
-/*
+
             MyPointDouble point1, point2, point3, point4, point5, point6, point7, point8, point9, point10, point11, point12;
             point1 = new MyPointDouble();
             point1.y =  48.219962;   //64.598517
@@ -141,7 +147,7 @@ public class MyLocationGPS extends FragmentActivity implements OnMapReadyCallbac
             point11.x =  (16.377642);
             point12 = new MyPointDouble();
             point12.y =  (48.221041); //64.598780
-            point12.x =  (16.377739);*/
+            point12.x =  (16.377739);
 
             List<MyPointDouble> myLocations = new ArrayList<>();
             myLocations.add(point1);
@@ -156,7 +162,7 @@ public class MyLocationGPS extends FragmentActivity implements OnMapReadyCallbac
             myLocations.add(point10);
             myLocations.add(point11);
             myLocations.add(point12);
-            myLocations.add(point13);
+       //     myLocations.add(point13);
 
             myLocHist = new ArrayList<>();
 
@@ -169,13 +175,10 @@ public class MyLocationGPS extends FragmentActivity implements OnMapReadyCallbac
             }
 
            // if(distance > 100) {
-              //  Intent intent = new Intent(context, DisplayImage.class);
-              //  startActivity(intent);
-                  //slanje gps podataka za konvertiranje
               //  double convX = convertingGpsCoordToXY.convertLat(myLocation.getLatitude());
               //  double convY = convertingGpsCoordToXY.convertLon(myLocation.getLongitude());
                 AverageDirection averageDirection = new AverageDirection();
-                double angle = averageDirection.AvgDirection(myLocHist);
+                double angle = averageDirection.AvgDirection(myLocHist, turnPoint);
                 Toast.makeText(getApplicationContext(), angle + "", Toast.LENGTH_LONG).show();
                 DisplayImage displayImage = new DisplayImage();
                 Intent intent = new Intent(context, DisplayImage.class);
