@@ -36,6 +36,8 @@ public class OnSlope extends AppCompatActivity {
         skiLocation2.setLatitude(48.221794);
         skiLocation2.setLongitude(16.382114);
         skiLocation3 = new Location("skiLocation3");
+        //      skiLocation3.setLatitude(48.221194);
+        //      skiLocation3.setLongitude(16.377282);
         skiLocation3.setLatitude(48.222537);
         skiLocation3.setLongitude(16.382457);
         skiLocation4 = new Location("skiLocation4");
@@ -128,12 +130,12 @@ public class OnSlope extends AppCompatActivity {
 
             if (min <= 100) {
                 flag1 = 0;
-                Toast.makeText(getApplicationContext(), min + " metara",
+                Toast.makeText(getApplicationContext(), min + " metara. Zastaviavica1: "+ flag1+"",
                         Toast.LENGTH_SHORT).show();
             }
             else {
                 flag1++;
-                Toast.makeText(getApplicationContext(), min + " metara",
+                Toast.makeText(getApplicationContext(), min + " metara. Zastaviavica1: "+ flag1+"",
                         Toast.LENGTH_SHORT).show();
                 if (flag1 > 3) {
                     flag2++;

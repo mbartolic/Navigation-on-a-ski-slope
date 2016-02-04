@@ -1,6 +1,7 @@
 package com.example.rene.navigation_on_a_ski_slope;
 
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.support.v4.app.FragmentActivity;
@@ -174,12 +175,13 @@ public class MyLocationGPS extends FragmentActivity implements OnMapReadyCallbac
               //  double convX = convertingGpsCoordToXY.convertLat(myLocation.getLatitude());
               //  double convY = convertingGpsCoordToXY.convertLon(myLocation.getLongitude());
                 AverageDirection averageDirection = new AverageDirection();
-                double angle = averageDirection.AvgDirection(myLocations);
+                double angle = averageDirection.AvgDirection(myLocHist);
                 Toast.makeText(getApplicationContext(), angle + "", Toast.LENGTH_LONG).show();
-              /*  Intent intent = new Intent(context, DisplayImage.class);
-                startActivity(intent);
                 DisplayImage displayImage = new DisplayImage();
-            */
+                Intent intent = new Intent(context, DisplayImage.class);
+                intent.putExtra("EXTRA_ANGLE", angle);
+                startActivity(intent);
+
             }
       //  }
 
