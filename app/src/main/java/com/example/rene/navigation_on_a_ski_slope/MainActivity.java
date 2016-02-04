@@ -15,11 +15,8 @@ import com.example.utils.Constants;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements CoordiantesView {
+public class MainActivity extends AppCompatActivity {
 
-    //Objekt klase koja implementira sucelje CoordinatesPresenter
-    CoordinatesPresenter coordinatesPresenter;
-    private static final String LOG_KEY = "coordianes";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +24,6 @@ public class MainActivity extends AppCompatActivity implements CoordiantesView {
         getSupportActionBar().hide();               // removes title bar from main activity
         setContentView(R.layout.activity_main);     // connecting main activity with xml file
         addListenerToButton();                // calling function for listening button
-
-        //Inicijalizacija klase koja implementira sucelje CoordinatesPresenter
-        coordinatesPresenter = new CoordinatesPresenterImpl(this);
-        //Dohvacanje koordinata preko sucelja CoordinatesPresenter
-        coordinatesPresenter.getData(Constants.SOURCE_POINTS, Constants.DESTINATION_POINTS, Constants.CAR_ROUTE_TYPE, Constants.VOICE_INSTRUCTIONS, Constants.LANGUAGE);
     }
 
 
@@ -63,9 +55,5 @@ public class MainActivity extends AppCompatActivity implements CoordiantesView {
         });
     }
 
-    @Override
-    public void storeFetchedCoordinates(Coordinates coordinates) {
-        Log.e(LOG_KEY, coordinates.getPaths().get(0).getInstructions().get(0).getText());
-    }
 }
 

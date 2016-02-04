@@ -7,6 +7,13 @@ import android.location.LocationListener;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.widget.Toast;
+
+import com.example.model.Coordinates;
+import com.example.model.Instruction;
+import com.example.mvp.presenter.CoordinatesPresenter;
+import com.example.mvp.presenter.impl.CoordinatesPresenterImpl;
+import com.example.mvp.view.CoordiantesView;
+import com.example.utils.Constants;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -15,8 +22,11 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyLocationGPS extends FragmentActivity implements OnMapReadyCallback, LocationListener {
+public class MyLocationGPS extends FragmentActivity implements OnMapReadyCallback, LocationListener, CoordiantesView {
 
+    //Objekt klase koja implementira sucelje CoordinatesPresenter
+    CoordinatesPresenter coordinatesPresenter;
+    private static final String LOG_KEY = "coordianes";
     private GoogleMap mMap; // creating object type map
     DistanceFromPoint distanceFromPoint;
   //  Location loc =  new Location("Loc");
@@ -30,8 +40,34 @@ public class MyLocationGPS extends FragmentActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager() //deafault
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-            }
 
+        //Inicijalizacija klase koja implementira sucelje CoordinatesPresenter
+        coordinatesPresenter = new CoordinatesPresenterImpl(this);
+        //Dohvacanje koordinata preko sucelja CoordinatesPresenter
+        coordinatesPresenter.getData(Constants.SOURCE_POINTS, Constants.DESTINATION_POINTS, Constants.CAR_ROUTE_TYPE, Constants.VOICE_INSTRUCTIONS, Constants.LANGUAGE);
+    }
+
+    public List<MyPointDouble> coordinatePath = new ArrayList<>();
+
+    public void storeFetchedCoordinates(Coordinates coordinates) {
+        for (Instruction instruction : coordinates.getPaths().get(0).getInstructions()) {
+            MyPointDouble coord=new MyPointDouble();
+
+            coord.x=(Double.parseDouble(instruction.getCoordinate().get(0)));
+            coord.y=(Double.parseDouble(instruction.getCoordinate().get(1)));
+            coordinatePath.add(coord);
+
+        }
+    }
+
+    public List<Integer> signList=new ArrayList<>();
+    public void storeFetchedSign(Coordinates coordinates) {
+        for (Instruction instruction : coordinates.getPaths().get(0).getInstructions()) {
+            int i;
+            i = (instruction.getSign());
+            signList.add(i);
+        }
+    }
     /**
      * Creates Google Map and shows the current location on map.
      * @param googleMap

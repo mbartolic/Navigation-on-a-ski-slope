@@ -130,12 +130,12 @@ public class OnSlope extends AppCompatActivity {
 
             if (min <= 100) {
                 flag1 = 0;
-                Toast.makeText(getApplicationContext(), min + " metara. Zastaviavica1: "+ flag1+"",
+                Toast.makeText(getApplicationContext(), min + " metara. Zastavica1: "+ flag1+"",
                         Toast.LENGTH_SHORT).show();
             }
             else {
                 flag1++;
-                Toast.makeText(getApplicationContext(), min + " metara. Zastaviavica1: "+ flag1+"",
+                Toast.makeText(getApplicationContext(), min + " metara. Zastavica1: "+ flag1+"",
                         Toast.LENGTH_SHORT).show();
                 if (flag1 > 3) {
                     flag2++;
