@@ -1,12 +1,16 @@
 package com.example.mvp.presenter.impl;
 
+import android.widget.Toast;
+
 import com.example.model.Coordinates;
+import com.example.model.Instruction;
 import com.example.mvp.interactor.CoordiantesInteractor;
 import com.example.mvp.interactor.impl.CoordiantesInteractorImpl;
 import com.example.mvp.listener.OnCoordinatesFetched;
 import com.example.mvp.presenter.CoordinatesPresenter;
 import com.example.mvp.view.CoordiantesView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,13 +21,12 @@ public class CoordinatesPresenterImpl implements CoordinatesPresenter, OnCoordin
     private CoordiantesInteractor coordiantesInteractor;
     private CoordiantesView view;
 
-    public CoordinatesPresenterImpl(CoordiantesView view){
+    public CoordinatesPresenterImpl(CoordiantesView view) {
         coordiantesInteractor = new CoordiantesInteractorImpl();
         this.view = view;
     }
 
     /**
-     *
      * @param sourcePoint
      * @param destionationPoint
      * @param routeType
@@ -36,12 +39,11 @@ public class CoordinatesPresenterImpl implements CoordinatesPresenter, OnCoordin
     }
 
     /**
-     *
      * @param coordinates
      */
     @Override
     public void fetchedCoordinatesData(Coordinates coordinates) {
         //TODO retrieve data and store in db
-        view.storeFetchedCoordinates(coordinates);
+            view.storeFetchedCoordinates(coordinates);
+        }
     }
-}

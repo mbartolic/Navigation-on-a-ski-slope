@@ -6,8 +6,10 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import com.example.db.CoordinatesDB;
 import com.example.model.Coordinates;
 import com.example.model.Instruction;
 import com.example.mvp.presenter.CoordinatesPresenter;
@@ -22,12 +24,12 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyLocationGPS extends FragmentActivity implements OnMapReadyCallback, LocationListener, CoordiantesView {
+public class MyLocationGPS extends AppCompatActivity implements LocationListener, CoordiantesView {
 
     //Objekt klase koja implementira sucelje CoordinatesPresenter
     CoordinatesPresenter coordinatesPresenter;
     private static final String LOG_KEY = "coordianes";
-    private GoogleMap mMap; // creating object type map
+
     DistanceFromPoint distanceFromPoint;
   //  Location loc =  new Location("Loc");
   //  Location myl = new Location("Myloc");
@@ -37,9 +39,6 @@ public class MyLocationGPS extends FragmentActivity implements OnMapReadyCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_location_gps); //connecting with xml file
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager() //deafault
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
 
         //Inicijalizacija klase koja implementira sucelje CoordinatesPresenter
         coordinatesPresenter = new CoordinatesPresenterImpl(this);
@@ -47,45 +46,41 @@ public class MyLocationGPS extends FragmentActivity implements OnMapReadyCallbac
         coordinatesPresenter.getData(Constants.SOURCE_POINTS, Constants.DESTINATION_POINTS, Constants.CAR_ROUTE_TYPE, Constants.VOICE_INSTRUCTIONS, Constants.LANGUAGE);
     }
 
-    public List<MyPointDouble> coordinatePath = new ArrayList<>();
+
 
     public void storeFetchedCoordinates(Coordinates coordinates) {
+        MyPointDouble coord=new MyPointDouble();
         for (Instruction instruction : coordinates.getPaths().get(0).getInstructions()) {
-            MyPointDouble coord=new MyPointDouble();
-
             coord.x=(Double.parseDouble(instruction.getCoordinate().get(0)));
             coord.y=(Double.parseDouble(instruction.getCoordinate().get(1)));
-            coordinatePath.add(coord);
 
+            Toast.makeText(getApplicationContext(), instruction.getCoordinate().get(0) + " druga koordimata"+ instruction.getCoordinate().get(1)+"" ,
+                    Toast.LENGTH_SHORT).show();
         }
     }
 
-    public List<Integer> signList=new ArrayList<>();
+//OVAJ DIO NE RADI
     public void storeFetchedSign(Coordinates coordinates) {
+        int i=0;
         for (Instruction instruction : coordinates.getPaths().get(0).getInstructions()) {
-            int i;
             i = (instruction.getSign());
-            signList.add(i);
+
+            Toast.makeText(getApplicationContext(), i +"" ,
+                    Toast.LENGTH_SHORT).show();
         }
     }
-    /**
-     * Creates Google Map and shows the current location on map.
-     * @param googleMap
-     */
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;       //new object google map
-        mMap.setMyLocationEnabled(true);    //enabling current location (showing it on map)
-        mMap.setOnMapLongClickListener(myOnMapLongClickListener);   //creating listener on map
-    }
+
 
     /**
      * Shows the angle on long click.
      */
-    GoogleMap.OnMapLongClickListener myOnMapLongClickListener = new GoogleMap.OnMapLongClickListener() {
-        @Override
-        public void onMapLongClick(LatLng latLng) {
-            MyPointDouble locInWien =  new MyPointDouble();
+    @Override
+    public void onStart(){
+        super.onStart();
+
+
+
+        MyPointDouble locInWien =  new MyPointDouble();
             MyPointDouble locAfterTurn = new MyPointDouble();
             List<MyPointDouble> turnPoint = new ArrayList<>();
             locInWien.y = 48.221094;      //location in wien
@@ -221,21 +216,51 @@ public class MyLocationGPS extends FragmentActivity implements OnMapReadyCallbac
                 intent.putExtra("EXTRA_ANGLE", angle);
                 startActivity(intent);
 
+
+
             }
-      //  }
+
+
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+
+
+    }
+
+@Override
+    protected void onStop(){
+        super.onStop();
+    finish();
+    }
+
+
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
+    //  }
 
     };
-
-
-    @Override
-    public void onLocationChanged(Location location) { }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) { }
-
-    @Override
-    public void onProviderEnabled(String provider) { }
-
-    @Override
-    public void onProviderDisabled(String provider) { }
-}

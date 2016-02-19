@@ -57,6 +57,7 @@ public class CoordiantesInteractorImpl implements CoordiantesInteractor, Callbac
     public void success(Coordinates coordinates, Response response) {
 
         listener.fetchedCoordinatesData(coordinates);
+
     }
 
     /**

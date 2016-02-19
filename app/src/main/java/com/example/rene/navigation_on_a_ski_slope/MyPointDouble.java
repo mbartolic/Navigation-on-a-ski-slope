@@ -7,5 +7,7 @@ public class MyPointDouble {
 
     public double x,y;
 
+
     public MyPointDouble() {}
+
 }
