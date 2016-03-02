@@ -154,8 +154,7 @@ public class OnSlope extends AppCompatActivity {
     @Override
     protected void onStop(){
         super.onStop();
-        Toast.makeText(getApplicationContext(),  " glomaZni penis ",
-                Toast.LENGTH_SHORT).show();
+
         finish();
     }
 
