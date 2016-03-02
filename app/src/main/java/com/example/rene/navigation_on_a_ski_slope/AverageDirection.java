@@ -9,6 +9,7 @@ import java.util.List;
  */
 
 public class AverageDirection {
+
     public AverageDirection() {}
 
 

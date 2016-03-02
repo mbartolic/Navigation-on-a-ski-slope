@@ -52,7 +52,7 @@ public class OnSlope extends AppCompatActivity {
         skiLocations.add(skiLocation4);
 
 
-        DistanceFromPoint distanceFromPoint = new DistanceFromPoint();
+
 
 
         Location point1, point2, point3, point4, point5, point6, point7, point8, point9, point10, point11, point12;
@@ -108,46 +108,6 @@ public class OnSlope extends AppCompatActivity {
         trackLocations.add(point11);
         trackLocations.add(point12);
 
-        float distance = distanceFromPoint.getDistance(skiLocation, point1);
-
-        int flag1 = 0;
-
-
-        for (int i = 0; i < skiLocations.size(); i++) {
-            // dodati dio koji simulira kretanje skijasa, dakle: for petlja koja ce ici kroz listu
-            float min = 1000;
-            for (int j = 0; j < trackLocations.size(); j++) {
-                float distanceFromSlope = distanceFromPoint.getDistance(skiLocations.get(i), trackLocations.get(j));
-
-                float currentDistance = distanceFromSlope;
-                if (currentDistance < min) {
-                    min = currentDistance;
-                }
-
-            }
-            //dolje navedeni dio koda nesmije biti ukljucen u drugoj for petlji, ali mora biti u prvoj
-
-
-            if (min <= 100) {
-                flag1 = 0;
-                Toast.makeText(getApplicationContext(), min + " metara. Zastavica1: "+ flag1+"",
-                        Toast.LENGTH_SHORT).show();
-            }
-            else {
-                flag1++;
-                Toast.makeText(getApplicationContext(), min + " metara. Zastavica1: "+ flag1+"",
-                        Toast.LENGTH_SHORT).show();
-                if (flag1 > 3) {
-                    flag2++;
-                    Toast.makeText(getApplicationContext(), " We can assume that user has left the slope",
-                            Toast.LENGTH_LONG).show();
-                    //napisat notice da se maknio sa staze
-                }
-            }
-
-
-
-        }
 
     }
 

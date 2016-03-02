@@ -4,22 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-import com.example.db.CoordinatesDB;
 import com.example.model.Coordinates;
 import com.example.model.Instruction;
 import com.example.mvp.presenter.CoordinatesPresenter;
 import com.example.mvp.presenter.impl.CoordinatesPresenterImpl;
 import com.example.mvp.view.CoordiantesView;
 import com.example.utils.Constants;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +23,8 @@ public class MyLocationGPS extends AppCompatActivity implements LocationListener
     //Objekt klase koja implementira sucelje CoordinatesPresenter
     CoordinatesPresenter coordinatesPresenter;
     private static final String LOG_KEY = "coordianes";
+    List<Location> trackLocations;
+
 
     DistanceFromPoint distanceFromPoint;
   //  Location loc =  new Location("Loc");
@@ -78,8 +74,10 @@ public class MyLocationGPS extends AppCompatActivity implements LocationListener
     public void onStart(){
         super.onStart();
 
+        Intent inte = new Intent();
+        trackLocations = inte.getParcelableExtra("trackLoc");
 
-
+//-----------------------------------------------------------------------------------------------------------------------//
         MyPointDouble locInWien =  new MyPointDouble();
             MyPointDouble locAfterTurn = new MyPointDouble();
             List<MyPointDouble> turnPoint = new ArrayList<>();
@@ -210,13 +208,47 @@ public class MyLocationGPS extends AppCompatActivity implements LocationListener
               //  double convY = convertingGpsCoordToXY.convertLon(myLocation.getLongitude());
                 AverageDirection averageDirection = new AverageDirection();
                 double angle = averageDirection.AvgDirection(myLocHist, turnPoint);
-                Toast.makeText(getApplicationContext(), angle + "", Toast.LENGTH_LONG).show();
+             //   Toast.makeText(getApplicationContext(), angle + "", Toast.LENGTH_LONG).show();
                 DisplayImage displayImage = new DisplayImage();
                 Intent intent = new Intent(context, DisplayImage.class);
                 intent.putExtra("EXTRA_ANGLE", angle);
                 startActivity(intent);
 
+        //--------------------------------------------------------------------------------------------------------------//
+        //--------------------------------------------------------------------------------------------------------------//
+        Location skiLocation, skiLocation1, skiLocation2, skiLocation3, skiLocation4;
+        skiLocation = new Location("skiLocation");
+        skiLocation.setLatitude(48.221194);      //skier location in Wien, for dynamic use we should use current location of skier
+        skiLocation.setLongitude(16.377282);
+        skiLocation1 = new Location("skiLocation1");
+        skiLocation1.setLatitude(48.220822);
+        skiLocation1.setLongitude(16.381717);
+        skiLocation2 = new Location("skiLocation2");
+        skiLocation2.setLatitude(48.221794);
+        skiLocation2.setLongitude(16.382114);
+        skiLocation3 = new Location("skiLocation3");
+        //      skiLocation3.setLatitude(48.221194);
+        //      skiLocation3.setLongitude(16.377282);
+        skiLocation3.setLatitude(48.222537);
+        skiLocation3.setLongitude(16.382457);
+        skiLocation4 = new Location("skiLocation4");
+        skiLocation4.setLatitude(48.223602);
+        skiLocation4.setLongitude(16.382918);
 
+        List<Location> skiLocations = new ArrayList<>();
+        skiLocations.add(skiLocation);
+        skiLocations.add(skiLocation1);
+        skiLocations.add(skiLocation2);
+        skiLocations.add(skiLocation3);
+        skiLocations.add(skiLocation4);
+
+
+        UserLocationStatus userLocationStatus = new UserLocationStatus();
+        String mess = userLocationStatus.CalculatingIfUserLeftSlope(trackLocations, skiLocations);
+
+        Toast.makeText(getApplicationContext(), mess + "", Toast.LENGTH_LONG).show();
+
+        //------------------------------------------------------------------------------------------------------------------//
 
             }
 
