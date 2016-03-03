@@ -12,7 +12,7 @@ public class AverageDirection {
 
     public AverageDirection() {}
 
-
+/*
     public double AvgDirection(List<MyPointDouble> myLocalHistory, List<MyPointDouble> pathAfterTurn) {
         List<MyPointDouble> myLocHistX = new ArrayList<>();
         List<MyPointDouble> myLocHistY = new ArrayList<>();
@@ -40,7 +40,7 @@ public class AverageDirection {
         }else angleOfDirect = angle;
 
         return angleOfDirect;
-    }
+    }*/
 
 
     /**
@@ -48,7 +48,7 @@ public class AverageDirection {
      * @param myLocalHistory
      * @return
      */
-    public double AvgDirectionXY(List<MyPointDouble> myLocalHistory, List<MyPointDouble> pathAfterTurn) {
+    public double AvgDirection(List<MyPointDouble> myLocalHistory, List<MyPointDouble> pathAfterTurn) {
         double x1 = 0, y1 = 0, x2 = 0, y2 = 0;
         List<MyPointDouble> avgPoint = new ArrayList<>();
         boolean zastavica1 = false;
@@ -58,13 +58,13 @@ public class AverageDirection {
         int size = myLocalHistory.size();
         for(int i = 2; i<size; i++){
         if (myLocalHistory.size() > 3) {
-            if ((myLocalHistory.get(i).x + myLocalHistory.get(i).y) < (myLocalHistory.get(i - 1).x + myLocalHistory.get(i - 1).y) && (myLocalHistory.get(i - 1).x + myLocalHistory.get(i - 1).y > (myLocalHistory.get(i - 2).x + myLocalHistory.get(i - 2).y))) {
+            if ( ((myLocalHistory.get(i).x < myLocalHistory.get(i - 1).x) && (myLocalHistory.get(i - 1).x > myLocalHistory.get(i - 2).x) ) || ( ((myLocalHistory.get(i).y) < myLocalHistory.get(i - 1).y) && (myLocalHistory.get(i - 1).y > myLocalHistory.get(i - 2).y) ) ){
                 x1 = myLocalHistory.get(i - 1).x;
                 y1 = myLocalHistory.get(i - 1).y;
                 //left
                 zastavica1 = true;
             }
-            if ((myLocalHistory.get(i).x + myLocalHistory.get(i).y) > (myLocalHistory.get(i - 1).x + myLocalHistory.get(i - 1).y) && (myLocalHistory.get(i - 1).x + myLocalHistory.get(i - 1).y) < (myLocalHistory.get(i - 2).x + myLocalHistory.get(i - 2).y)) {
+            if  ( ((myLocalHistory.get(i).x > myLocalHistory.get(i - 1).x) && (myLocalHistory.get(i - 1).x < myLocalHistory.get(i - 2).x) ) || ( ((myLocalHistory.get(i).y) > myLocalHistory.get(i - 1).y) && (myLocalHistory.get(i - 1).y < myLocalHistory.get(i - 2).y) ) ) {
                 x2 = myLocalHistory.get(i - 1).x;
                 y2 = myLocalHistory.get(i - 1).y;
                 //right

@@ -35,7 +35,8 @@ public class MyLocationGPS extends AppCompatActivity implements LocationListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_location_gps); //connecting with xml file
-
+        Intent intent = new Intent();
+        trackLocations = intent.getParcelableExtra("trackLoc");
         //Inicijalizacija klase koja implementira sucelje CoordinatesPresenter
         coordinatesPresenter = new CoordinatesPresenterImpl(this);
         //Dohvacanje koordinata preko sucelja CoordinatesPresenter
@@ -98,7 +99,7 @@ public class MyLocationGPS extends AppCompatActivity implements LocationListener
 
 
             //simulates user skiing
-        /*    MyPointDouble point1, point2, point3, point4, point5, point6, point7, point8, point9, point10, point11, point12, point13;
+    /*        MyPointDouble point1, point2, point3, point4, point5, point6, point7, point8, point9, point10, point11, point12, point13;
             point1 = new MyPointDouble();
             point1.y = 48.221051;
             point1.x = 16.378234;
@@ -142,41 +143,41 @@ public class MyLocationGPS extends AppCompatActivity implements LocationListener
 
             MyPointDouble point1, point2, point3, point4, point5, point6, point7, point8, point9, point10, point11, point12;
             point1 = new MyPointDouble();
-            point1.y =  48.219962;   //64.598517
-            point1.x =  16.378555;
+            point1.y =  48.221551;   //64.598517
+            point1.x =  16.377165;
             point2 = new MyPointDouble();
-            point2.y = 48.220169;  //64.598853
-            point2.x = 16.378684;
+            point2.y = 48.221552;  //64.598853
+            point2.x = 16.377251;
             point3 = new MyPointDouble(); //right point
-            point3.y = (48.220441);   //64.599232   collect
-            point3.x = (16.378791);  //
+            point3.y = (48.221537);   //64.599232   collect
+            point3.x = (16.377366);  //
             point4 = new MyPointDouble();
-            point4.y = (48.220412);
-            point4.x = (16.378330);     //64.598742
+            point4.y = (48.221482);
+            point4.x = (16.377351);     //64.598742
             point5 = new MyPointDouble();
-            point5.y =  (48.220376);      //64.598449
-            point5.x =  (16.378073);
+            point5.y =  (48.221421);      //64.598449
+            point5.x =  (16.377342);
             point6 = new MyPointDouble(); //left point
-            point6.y =  (48.220383);   //64.598166  collect
-            point6.x =  (16.377783);  //
+            point6.y =  (48.221388);   //64.598166  collect
+            point6.x =  (16.377484);  //
             point7 = new MyPointDouble();
-            point7.y =  (48.220590);      //64.598555
-            point7.x =  (16.377965);
+            point7.y =  (48.221381);      //64.598555
+            point7.x =  (16.377598);
             point8 = new MyPointDouble();
-            point8.y =  (48.220762);      //64.598866
-            point8.x =  (16.378104);
+            point8.y =  (48.221304);      //64.598866
+            point8.x =  (16.377589);
             point9 = new MyPointDouble();  //right point collect
-            point9.y =  (48.220948);    //64.599234
-            point9.x =  (16.378286);   //
+            point9.y =  (48.221245);    //64.599234
+            point9.x =  (16.377578);   //
             point10 = new MyPointDouble();
-            point10.y =  (48.220898);     //64.598808
-            point10.x =  (16.377910);
+            point10.y =  (48.221227);     //64.598808
+            point10.x =  (16.377656);
             point11 = new MyPointDouble();
-            point11.y =  (48.220877);   //64.598519  collect
-            point11.x =  (16.377642);
+            point11.y =  (48.221225);   //64.598519  collect
+            point11.x =  (16.377753);
             point12 = new MyPointDouble();
-            point12.y =  (48.221041); //64.598780
-            point12.x =  (16.377739);
+            point12.y =  (48.221191); //64.598780
+            point12.x =  (16.377743);
 
             List<MyPointDouble> myLocations = new ArrayList<>();
             myLocations.add(point1);
@@ -191,7 +192,7 @@ public class MyLocationGPS extends AppCompatActivity implements LocationListener
             myLocations.add(point10);
             myLocations.add(point11);
             myLocations.add(point12);
-       //     myLocations.add(point13);
+            //myLocations.add(point13);
 
             myLocHist = new ArrayList<>();
 
@@ -208,7 +209,7 @@ public class MyLocationGPS extends AppCompatActivity implements LocationListener
               //  double convY = convertingGpsCoordToXY.convertLon(myLocation.getLongitude());
                 AverageDirection averageDirection = new AverageDirection();
                 double angle = averageDirection.AvgDirection(myLocHist, turnPoint);
-             //   Toast.makeText(getApplicationContext(), angle + "", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), angle + "", Toast.LENGTH_LONG).show();
                 DisplayImage displayImage = new DisplayImage();
                 Intent intent = new Intent(context, DisplayImage.class);
                 intent.putExtra("EXTRA_ANGLE", angle);
@@ -216,7 +217,7 @@ public class MyLocationGPS extends AppCompatActivity implements LocationListener
 
         //--------------------------------------------------------------------------------------------------------------//
         //--------------------------------------------------------------------------------------------------------------//
-        Location skiLocation, skiLocation1, skiLocation2, skiLocation3, skiLocation4;
+    /*    Location skiLocation, skiLocation1, skiLocation2, skiLocation3, skiLocation4;
         skiLocation = new Location("skiLocation");
         skiLocation.setLatitude(48.221194);      //skier location in Wien, for dynamic use we should use current location of skier
         skiLocation.setLongitude(16.377282);
@@ -246,7 +247,7 @@ public class MyLocationGPS extends AppCompatActivity implements LocationListener
         UserLocationStatus userLocationStatus = new UserLocationStatus();
         String mess = userLocationStatus.CalculatingIfUserLeftSlope(trackLocations, skiLocations);
 
-        Toast.makeText(getApplicationContext(), mess + "", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), mess + "", Toast.LENGTH_LONG).show();*/
 
         //------------------------------------------------------------------------------------------------------------------//
 
