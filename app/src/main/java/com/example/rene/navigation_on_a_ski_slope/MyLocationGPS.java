@@ -161,7 +161,32 @@ public class MyLocationGPS extends AppCompatActivity implements LocationListener
             myLocations.add(point13);
         }else if (track == 3) {
 
-            //Treba unjeti podatke za trecu stazu
+            MyPointDouble point1, point2, point3, point4, point5, point6;
+            point1 = new MyPointDouble();
+            point1.y = 46.309478;
+            point1.x = 16.347105;
+            point2 = new MyPointDouble();
+            point2.y = 46.30938;
+            point2.x = 16.34700;
+            point3 = new MyPointDouble();
+            point3.y = 46.30942;
+            point3.x = 16.34713;
+            point4 = new MyPointDouble();
+            point4.y = 46.30858;
+            point4.x = 16.378140;
+            point5 = new MyPointDouble();
+            point5.y = 46.30851;
+            point5.x = 16.34702;
+            point6 = new MyPointDouble();
+            point6.y =46.308527;
+            point6.x =16.347021;
+            myLocations = new ArrayList<>();
+            myLocations.add(point1);
+            myLocations.add(point2);
+            myLocations.add(point3);
+            myLocations.add(point4);
+            myLocations.add(point5);
+            myLocations.add(point6);
 
         }
 
