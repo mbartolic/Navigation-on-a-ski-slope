@@ -124,10 +124,9 @@ public class MyLocationGPS extends AppCompatActivity implements LocationListener
             myTrackPointsList.add(point5);
             myTrackPointsList.add(point6);
 
-<<<<<<< HEAD
+
         }else if (track == 3) {
             //Treba unjeti podatke za trecu stazu
-=======
             MyPointDouble point1, point2, point3, point4, point5, point6;
             point1 = new MyPointDouble();
             point1.y = 46.309478;
@@ -154,8 +153,6 @@ public class MyLocationGPS extends AppCompatActivity implements LocationListener
             myLocations.add(point4);
             myLocations.add(point5);
             myLocations.add(point6);
-
->>>>>>> origin/master
         }
         turnLR = turnLeftRight(myTrackPointsList);  //detect if turn is left or right
         int trackID = turningPoint(myTrackPointsList); //detect in which point is turning
