@@ -6,26 +6,28 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.KeyEvent;
 import android.widget.Toast;
-
 import com.example.model.Coordinates;
 import com.example.model.Instruction;
 import com.example.mvp.presenter.CoordinatesPresenter;
 import com.example.mvp.presenter.impl.CoordinatesPresenterImpl;
 import com.example.mvp.view.CoordiantesView;
 import com.example.utils.Constants;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyLocationGPS extends AppCompatActivity implements LocationListener, CoordiantesView {
+public class MyLocationGPS extends AppCompatActivity implements LocationListener, CoordiantesView{
 
     //Objekt klase koja implementira sucelje CoordinatesPresenter
     CoordinatesPresenter coordinatesPresenter;
     private static final String LOG_KEY = "coordianes";
     int track;
-    List<MyPointDouble> myLocations = null;
+    List<MyTrackPoints> myTrackPointsList = null;
+    ArrayList<MyPointDouble> myLocations = null;
+    List<MyPointDouble> turnPoint = new ArrayList<>();
+    MyPointDouble locTurn =  new MyPointDouble();
+    MyPointDouble locAfterTurn = new MyPointDouble();
+    String turnLR;
 
     DistanceFromPoint distanceFromPoint;
   //  Location loc =  new Location("Loc");
@@ -35,139 +37,128 @@ public class MyLocationGPS extends AppCompatActivity implements LocationListener
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_location_gps); //connecting with xml file
+        setContentView(R.layout.activity_my_location_gps);
 
         //Inicijalizacija klase koja implementira sucelje CoordinatesPresenter
         coordinatesPresenter = new CoordinatesPresenterImpl(this);
         //Dohvacanje koordinata preko sucelja CoordinatesPresenter
         coordinatesPresenter.getData(Constants.SOURCE_POINTS, Constants.DESTINATION_POINTS, Constants.CAR_ROUTE_TYPE, Constants.VOICE_INSTRUCTIONS, Constants.LANGUAGE);
+
         if (savedInstanceState == null) {
             Bundle bundle = getIntent().getExtras();
             if(bundle == null) {
-                track= 0;
+                track = 0;
             } else {
                 track = getIntent().getExtras().getInt("track");
             }
         }
 
         if(track == 1){
-
-            MyPointDouble point1, point2, point3, point4, point5, point6, point7, point8, point9, point10, point11, point12;
-            point1 = new MyPointDouble();
-            point1.y =  48.221551;   //64.598517
+            MyTrackPoints point1, point2, point3, point4, point5, point6;
+            point1 = new MyTrackPoints();
+            point1.y =  48.221551;
             point1.x =  16.377165;
-            point2 = new MyPointDouble();
-            point2.y = 48.221552;  //64.598853
+            point1.turn = 0;
+            point2 = new MyTrackPoints();
+            point2.y = 48.221552;
             point2.x = 16.377251;
-            point3 = new MyPointDouble(); //right point
-            point3.y = (48.221537);   //64.599232   collect
-            point3.x = (16.377366);  //
-            point4 = new MyPointDouble();
+            point2.turn = 0;
+            point3 = new MyTrackPoints();
+            point3.y = (48.221537);
+            point3.x = (16.377366);
+            point3.turn = 0;
+            point4 = new MyTrackPoints();
             point4.y = (48.221482);
-            point4.x = (16.377351);     //64.598742
-            point5 = new MyPointDouble();
-            point5.y =  (48.221421);      //64.598449
-            point5.x =  (16.377342);
-            point6 = new MyPointDouble(); //left point
-            point6.y =  (48.221388);   //64.598166  collect
-            point6.x =  (16.377484);  //
-            point7 = new MyPointDouble();
-            point7.y =  (48.221381);      //64.598555
-            point7.x =  (16.377598);
-            point8 = new MyPointDouble();
-            point8.y =  (48.221304);      //64.598866
-            point8.x =  (16.377589);
-            point9 = new MyPointDouble();  //right point collect
-            point9.y =  (48.221245);    //64.599234
-            point9.x =  (16.377578);   //
-            point10 = new MyPointDouble();
-            point10.y =  (48.221227);     //64.598808
-            point10.x =  (16.377656);
-            point11 = new MyPointDouble();
-            point11.y =  (48.221225);   //64.598519  collect
-            point11.x =  (16.377753);
-            point12 = new MyPointDouble();
-            point12.y =  (48.221191); //64.598780
-            point12.x =  (16.377743);
+            point4.x = (16.377351);
+            point4.turn = 0;
+            point5 = new MyTrackPoints();
+            point5.y =  (48.221421);
+            point5.x =  (16.377342);        //turning point
+            point5.turn = 1;
+            point6 = new MyTrackPoints();
+            point6.y =  (48.221388);
+            point6.x =  (16.377484);
+            point6.turn = 0;
 
-            myLocations = new ArrayList<>();
-            myLocations.add(point1);
-            myLocations.add(point2);
-            myLocations.add(point3);
-            myLocations.add(point4);
-            myLocations.add(point5);
-            myLocations.add(point6);
-            myLocations.add(point7);
-            myLocations.add(point8);
-            myLocations.add(point9);
-            myLocations.add(point10);
-            myLocations.add(point11);
-            myLocations.add(point12);
+            myTrackPointsList = new ArrayList<>();
+            myTrackPointsList.add(point1);
+            myTrackPointsList.add(point2);
+            myTrackPointsList.add(point3);
+            myTrackPointsList.add(point4);
+            myTrackPointsList.add(point5);
+            myTrackPointsList.add(point6);
+
+
         }else if (track == 2){
-            MyPointDouble point1, point2, point3, point4, point5, point6, point7, point8, point9, point10, point11, point12, point13;
-            point1 = new MyPointDouble();
-            point1.y = 48.221051;
-            point1.x = 16.378234;
-            point2 = new MyPointDouble();
-            point2.y = 48.221083;
-            point2.x = 16.37820;
-            point3 = new MyPointDouble();
-            point3.y = 48.221105;
-            point3.x = 16.378168;
-            point4 = new MyPointDouble();
-            point4.y = 48.221072;
-            point4.x = 16.378140;
-            point5 = new MyPointDouble();
-            point5.y = 48.221030;
-            point5.x = 16.378116;
-            point6 = new MyPointDouble();
-            point6.y =48.221048;
-            point6.x =16.378092;
-            point7 = new MyPointDouble();
-            point7.y =48.221087;
-            point7.x =16.378090;
-            point8 = new MyPointDouble();
-            point8.y = 48.221110;
-            point8.x = 16.378060;
-            point9 = new MyPointDouble();
-            point9.y = 48.221077;
-            point9.x = 16.378031;
-            point10 = new MyPointDouble();
-            point10.y = 48.221036;
-            point10.x = 16.377999;
-            point11 = new MyPointDouble();
-            point11.y = 48.221067;
-            point11.x = 16.377978;
-            point12 = new MyPointDouble();
-            point12.y =48.221115;
-            point12.x =16.377959;
-            point13 = new MyPointDouble();
-            point13.y =48.221098;
-            point13.x =16.37796;
+            MyTrackPoints point1, point2, point3, point4, point5, point6;
+            point1 = new MyTrackPoints();
+            point1.y =  48.221551;
+            point1.x =  16.377165;
+            point1.turn = 0;
+            point2 = new MyTrackPoints();
+            point2.y = 48.221552;
+            point2.x = 16.377251;
+            point2.turn = 0;
+            point3 = new MyTrackPoints();
+            point3.y = (48.221537);
+            point3.x = (16.377366);
+            point3.turn = 0;
+            point4 = new MyTrackPoints();
+            point4.y = (48.221482);
+            point4.x = (16.377351);
+            point4.turn = 0;
+            point5 = new MyTrackPoints();
+            point5.y =  (48.221421);
+            point5.x =  (16.377342);        //turning point
+            point5.turn = 1;
+            point6 = new MyTrackPoints();
+            point6.y =  (48.221388);
+            point6.x =  (16.377484);
+            point6.turn = 0;
 
-            myLocations = new ArrayList<>();
-            myLocations.add(point1);
-            myLocations.add(point2);
-            myLocations.add(point3);
-            myLocations.add(point4);
-            myLocations.add(point5);
-            myLocations.add(point6);
-            myLocations.add(point7);
-            myLocations.add(point8);
-            myLocations.add(point9);
-            myLocations.add(point10);
-            myLocations.add(point11);
-            myLocations.add(point12);
-            myLocations.add(point13);
+            myTrackPointsList = new ArrayList<>();
+            myTrackPointsList.add(point1);
+            myTrackPointsList.add(point2);
+            myTrackPointsList.add(point3);
+            myTrackPointsList.add(point4);
+            myTrackPointsList.add(point5);
+            myTrackPointsList.add(point6);
+
         }else if (track == 3) {
-
             //Treba unjeti podatke za trecu stazu
-
         }
+        turnLR = turnLeftRight(myTrackPointsList);  //detect if turn is left or right
+        int trackID = turningPoint(myTrackPointsList); //detect in which point is turning
 
+        locTurn.y = myTrackPointsList.get(trackID).y;
+        locTurn.x = myTrackPointsList.get(trackID).x;
+        locAfterTurn.y = myTrackPointsList.get(trackID + 1).y;
+        locAfterTurn.x = myTrackPointsList.get(trackID + 1).x;
+        turnPoint.add(locTurn);
+        turnPoint.add(locAfterTurn);
     }
 
+    public String turnLeftRight(List<MyTrackPoints> myTrPointList) {
+        String turn = null;
+        for (int i = 0; i < myTrPointList.size(); i++) {
+                if (myTrPointList.get(i).turn > 0) {
+                    turn =  "right";
+                } else if (myTrPointList.get(i).turn < 0) {
+                    turn = "left";
+                }
+        }
+        return turn;
+    }
 
+    public int turningPoint(List<MyTrackPoints> myTrPointList){
+        int j = 0;
+        for(int i = 0; i < myTrPointList.size(); i++) {
+            if (myTrPointList.get(i).turn != 0) {
+                j = i;
+            }
+        }
+        return j;
+    }
 
     public void storeFetchedCoordinates(Coordinates coordinates) {
         MyPointDouble coord=new MyPointDouble();
@@ -179,7 +170,7 @@ public class MyLocationGPS extends AppCompatActivity implements LocationListener
                     Toast.LENGTH_SHORT).show();
         }
     }
-
+/*
 //OVAJ DIO NE RADI
     public void storeFetchedSign(Coordinates coordinates) {
         int i=0;
@@ -189,13 +180,7 @@ public class MyLocationGPS extends AppCompatActivity implements LocationListener
             Toast.makeText(getApplicationContext(), i +"" ,
                     Toast.LENGTH_SHORT).show();
         }
-    }
-
-
-    @Override
-    public boolean onKeyLongPress(int keyCode, KeyEvent event) {
-        return super.onKeyLongPress(keyCode, event);
-    }
+    }*/
 
     /**
      * Shows the angle on long click.
@@ -203,17 +188,79 @@ public class MyLocationGPS extends AppCompatActivity implements LocationListener
     @Override
     public void onStart(){
         super.onStart();
-
 //------------------------------- Rene algoritam pocetak----------------------------------------------------------------------------------------//
-        MyPointDouble locInWien =  new MyPointDouble();
-            MyPointDouble locAfterTurn = new MyPointDouble();
-            List<MyPointDouble> turnPoint = new ArrayList<>();
-            locInWien.y = 48.221094;      //location in wien
-            locInWien.x = 16.377882;     //location in wien
-            locAfterTurn.y = 48.221231;
-            locAfterTurn.x =16.378046;
-            turnPoint.add(locInWien);
-            turnPoint.add(locAfterTurn);
+
+        MyPointDouble point1, point2, point3, point4, point5, point6, point7, point8, point9, point10, point11, point12, point13, point14, point15, point16, point17;
+        point1 = new MyPointDouble();
+        point1.y =  46.302580;
+        point1.x =  16.337077;
+        point2 = new MyPointDouble();
+        point2.y = 46.302571;
+        point2.x = 16.337106;
+        point3 = new MyPointDouble();
+        point3.y = 46.302545;
+        point3.x = 16.337145;
+        point4 = new MyPointDouble();
+        point4.y = 46.302511;
+        point4.x = 16.337123;
+        point5 = new MyPointDouble();
+        point5.y =  46.302473;
+        point5.x =  16.337096;        //turning point
+        point6 = new MyPointDouble();
+        point6.y =  46.302427;
+        point6.x =  16.337153;
+        point7 = new MyPointDouble();
+        point7.y =  46.302403;
+        point7.x =  16.337206;
+        point8 = new MyPointDouble();
+        point8.y = 46.302351;
+        point8.x = 16.337229;
+        point9 = new MyPointDouble();
+        point9.y = 46.302276;
+        point9.x = 16.337227;
+        point10 = new MyPointDouble();
+        point10.y = 46.302192;
+        point10.x = 16.337217;
+        point11 = new MyPointDouble();
+        point11.y =  46.302129;
+        point11.x =  16.337271;        //turning point
+        point12 = new MyPointDouble();
+        point12.y =  46.302081;
+        point12.x =  16.337337;
+        point13 = new MyPointDouble();
+        point13.y = 46.302017;
+        point13.x = 16.337333;
+        point14 = new MyPointDouble();
+        point14.y =  46.301974;
+        point14.x =  16.337286;        //turning point
+        point15 = new MyPointDouble();
+        point15.y =  46.301908;
+        point15.x =  16.337359;
+        point16 = new MyPointDouble();
+        point16.y = 46.301860;
+        point16.x = 16.337426;
+        point17 = new MyPointDouble();
+        point17.y =  46.301816;
+        point17.x =  16.337391;
+
+        myLocations = new ArrayList<>();
+        myLocations.add(point1);
+        myLocations.add(point2);
+        myLocations.add(point3);
+        myLocations.add(point4);
+        myLocations.add(point5);
+        myLocations.add(point6);
+        myLocations.add(point7);
+        myLocations.add(point8);
+        myLocations.add(point9);
+        myLocations.add(point10);
+        myLocations.add(point11);
+        myLocations.add(point12);
+        myLocations.add(point13);
+        myLocations.add(point14);
+        myLocations.add(point15);
+        myLocations.add(point16);
+        myLocations.add(point17);
          //   Location myLocation = mMap.getMyLocation();
           //  myl.setLatitude(myLocation.getLatitude());
           //  myl.setLongitude(myLocation.getLongitude());
@@ -222,31 +269,26 @@ public class MyLocationGPS extends AppCompatActivity implements LocationListener
            // Toast.makeText(getApplicationContext(), distance + "", Toast.LENGTH_LONG).show();
             ConvertingGpsCoordToXY convertingGpsCoordToXY = new ConvertingGpsCoordToXY();
             List<MyPointDouble> myLocHist;
-
-
-            //simulates user skiing
-
-
             myLocHist = new ArrayList<>();
 
-
-            for(int i = 0; i< myLocations.size(); i++){
+            for(int i = 0; i< myLocations.size(); i++) {
                 MyPointDouble converted = new MyPointDouble();
                 converted.y = convertingGpsCoordToXY.convertLon(myLocations.get(i).y);
                 converted.x = convertingGpsCoordToXY.convertLat(myLocations.get(i).x);
                 myLocHist.add(converted);
             }
-
            // if(distance > 100) {
               //  double convX = convertingGpsCoordToXY.convertLat(myLocation.getLatitude());
               //  double convY = convertingGpsCoordToXY.convertLon(myLocation.getLongitude());
-                AverageDirection averageDirection = new AverageDirection();
-                double angle = averageDirection.AvgDirection(myLocHist, turnPoint);
-                Toast.makeText(getApplicationContext(), angle + "", Toast.LENGTH_LONG).show();
-                DisplayImage displayImage = new DisplayImage();
-                Intent intent = new Intent(context, DisplayImage.class);
-                intent.putExtra("EXTRA_ANGLE", angle);
-                startActivity(intent);
+
+        AverageDirection averageDirection = new AverageDirection();
+        double angle = averageDirection.AvgDirection(myLocHist, turnPoint);
+        Toast.makeText(getApplicationContext(), angle + "", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(context, DisplayImage.class);
+        intent.putExtra("EXTRA_ANGLE", angle);
+        intent.putExtra("turnLR", turnLR);
+        startActivity(intent);
+
 
         //-------------------------------- Rene algoritam kraj------------------------------------------------------------------------------//
         //------------------------------ Vunak Vunce algoritam pocetak-----------------------------------------------------------------------------//
