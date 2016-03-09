@@ -64,20 +64,20 @@ public class MyLocationGPS extends AppCompatActivity implements LocationListener
             point2.x = 16.377251;
             point2.turn = 0;
             point3 = new MyTrackPoints();
-            point3.y = (48.221537);
-            point3.x = (16.377366);
+            point3.y = 48.221537;
+            point3.x = 16.377366;
             point3.turn = 0;
             point4 = new MyTrackPoints();
-            point4.y = (48.221482);
-            point4.x = (16.377351);
+            point4.y = 48.221482;
+            point4.x = 16.377351;
             point4.turn = 0;
             point5 = new MyTrackPoints();
-            point5.y =  (48.221421);
-            point5.x =  (16.377342);        //turning point
+            point5.y =  48.221421;
+            point5.x =  16.377342;        //turning point
             point5.turn = 1;
             point6 = new MyTrackPoints();
-            point6.y =  (48.221388);
-            point6.x =  (16.377484);
+            point6.y =  48.221388;
+            point6.x =  16.377484;
             point6.turn = 0;
 
             myTrackPointsList = new ArrayList<>();
@@ -92,28 +92,28 @@ public class MyLocationGPS extends AppCompatActivity implements LocationListener
         }else if (track == 2){
             MyTrackPoints point1, point2, point3, point4, point5, point6;
             point1 = new MyTrackPoints();
-            point1.y =  48.221551;
-            point1.x =  16.377165;
+            point1.y =  46.306511;
+            point1.x =  16.344795;
             point1.turn = 0;
             point2 = new MyTrackPoints();
-            point2.y = 48.221552;
-            point2.x = 16.377251;
+            point2.y = 46.306828;
+            point2.x = 16.344650;
             point2.turn = 0;
             point3 = new MyTrackPoints();
-            point3.y = (48.221537);
-            point3.x = (16.377366);
-            point3.turn = 0;
+            point3.y = 46.307087;
+            point3.x = 16.344553;
+            point3.turn = 1;                //turning point
             point4 = new MyTrackPoints();
-            point4.y = (48.221482);
-            point4.x = (16.377351);
+            point4.y = 46.307154;
+            point4.x = 16.344864;
             point4.turn = 0;
             point5 = new MyTrackPoints();
-            point5.y =  (48.221421);
-            point5.x =  (16.377342);        //turning point
-            point5.turn = 1;
+            point5.y =  46.307213;
+            point5.x =  16.345132;
+            point5.turn = 0;
             point6 = new MyTrackPoints();
-            point6.y =  (48.221388);
-            point6.x =  (16.377484);
+            point6.y =  46.307289;
+            point6.x =  16.345642;
             point6.turn = 0;
 
             myTrackPointsList = new ArrayList<>();
@@ -126,33 +126,39 @@ public class MyLocationGPS extends AppCompatActivity implements LocationListener
 
 
         }else if (track == 3) {
-            //Treba unjeti podatke za trecu stazu
-            MyPointDouble point1, point2, point3, point4, point5, point6;
-            point1 = new MyPointDouble();
+            //Treba unjeti podatke za trecu stazu,      edit: netreba uneseni su
+            MyTrackPoints point1, point2, point3, point4, point5, point6;
+            point1 = new MyTrackPoints();
             point1.y = 46.309478;
             point1.x = 16.347105;
-            point2 = new MyPointDouble();
+            point1.turn = 0;
+            point2 = new MyTrackPoints();
             point2.y = 46.30938;
             point2.x = 16.34700;
-            point3 = new MyPointDouble();
+            point2.turn = 1;
+            point3 = new MyTrackPoints();
             point3.y = 46.30942;
             point3.x = 16.34713;
-            point4 = new MyPointDouble();
+            point3.turn = 0;
+            point4 = new MyTrackPoints();
             point4.y = 46.30858;
             point4.x = 16.378140;
-            point5 = new MyPointDouble();
+            point4.turn = 1;
+            point5 = new MyTrackPoints();
             point5.y = 46.30851;
             point5.x = 16.34702;
-            point6 = new MyPointDouble();
-            point6.y =46.308527;
-            point6.x =16.347021;
-            myLocations = new ArrayList<>();
-            myLocations.add(point1);
-            myLocations.add(point2);
-            myLocations.add(point3);
-            myLocations.add(point4);
-            myLocations.add(point5);
-            myLocations.add(point6);
+            point5.turn = 0;
+            point6 = new MyTrackPoints();
+            point6.y = 46.308527;
+            point6.x = 16.347021;
+            point6.turn = 0;
+            myTrackPointsList = new ArrayList<>();
+            myTrackPointsList.add(point1);
+            myTrackPointsList.add(point2);
+            myTrackPointsList.add(point3);
+            myTrackPointsList.add(point4);
+            myTrackPointsList.add(point5);
+            myTrackPointsList.add(point6);
         }
         turnLR = turnLeftRight(myTrackPointsList);  //detect if turn is left or right
         int trackID = turningPoint(myTrackPointsList); //detect in which point is turning
