@@ -1,11 +1,13 @@
 package com.example.rene.navigation_on_a_ski_slope;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.example.model.Coordinates;
 import com.example.model.Instruction;
@@ -16,9 +18,10 @@ import com.example.utils.Constants;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyLocationGPS extends AppCompatActivity implements LocationListener, CoordiantesView{
+public class MyLocationGPS extends Activity implements LocationListener, CoordiantesView{
 
     //Objekt klase koja implementira sucelje CoordinatesPresenter
+    private LocationManager mLocMgr;
     CoordinatesPresenter coordinatesPresenter;
     private static final String LOG_KEY = "coordianes";
     int track;
@@ -28,6 +31,13 @@ public class MyLocationGPS extends AppCompatActivity implements LocationListener
     MyPointDouble locTurn =  new MyPointDouble();
     MyPointDouble locAfterTurn = new MyPointDouble();
     String turnLR;
+    LocationManager lm;
+    TextView rene;
+
+
+    Location myLocation ;
+    List<MyPointDouble> myLocHist;
+    MyPointDouble point;
 
     DistanceFromPoint distanceFromPoint;
   //  Location loc =  new Location("Loc");
@@ -37,13 +47,28 @@ public class MyLocationGPS extends AppCompatActivity implements LocationListener
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_location_gps);
-
+        setContentView(R.layout.test_con);
+        rene = (TextView) findViewById(R.id.rene);
+        myLocations = new ArrayList<MyPointDouble>();
+        mLocMgr = (LocationManager) getSystemService(LOCATION_SERVICE);
+        mLocMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                6000, 0, this);
         //Inicijalizacija klase koja implementira sucelje CoordinatesPresenter
         coordinatesPresenter = new CoordinatesPresenterImpl(this);
         //Dohvacanje koordinata preko sucelja CoordinatesPresenter
         coordinatesPresenter.getData(Constants.SOURCE_POINTS, Constants.DESTINATION_POINTS, Constants.CAR_ROUTE_TYPE, Constants.VOICE_INSTRUCTIONS, Constants.LANGUAGE);
+        /*lm   = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
+        lm = (LocationManager)this.getSystemService(LOCATION_SERVICE);
+        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER); //<5>*/
+        //mLocMgr = (LocationManager) getSystemService(LOCATION_SERVICE);
+        //mLocMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+            //    500, 0, this);
+        //if (location != null) {
+
+          //  this.onLocationChanged(location); //<6>
+        //}
+        //lm.requestLocationUpdates("cxy",1000,1,locationListener);
         if (savedInstanceState == null) {
             Bundle bundle = getIntent().getExtras();
             if(bundle == null) {
@@ -56,28 +81,28 @@ public class MyLocationGPS extends AppCompatActivity implements LocationListener
         if(track == 1){
             MyTrackPoints point1, point2, point3, point4, point5, point6;
             point1 = new MyTrackPoints();
-            point1.y =  48.221551;
-            point1.x =  16.377165;
+            point1.y =  46.302318;
+            point1.x =  16.337191;
             point1.turn = 0;
             point2 = new MyTrackPoints();
-            point2.y = 48.221552;
-            point2.x = 16.377251;
+            point2.y = 46.302167;
+            point2.x = 16.337246;
             point2.turn = 0;
             point3 = new MyTrackPoints();
-            point3.y = 48.221537;
-            point3.x = 16.377366;
+            point3.y = 46.302071;
+            point3.x = 16.337299;
             point3.turn = 0;
             point4 = new MyTrackPoints();
-            point4.y = 48.221482;
-            point4.x = 16.377351;
+            point4.y = 46.301957;
+            point4.x = 16.337345;
             point4.turn = 0;
             point5 = new MyTrackPoints();
-            point5.y =  48.221421;
-            point5.x =  16.377342;        //turning point
+            point5.y =  46.301817;
+            point5.x =  16.337339;        //turning point
             point5.turn = 1;
             point6 = new MyTrackPoints();
-            point6.y =  48.221388;
-            point6.x =  16.377484;
+            point6.y =  46.301776;
+            point6.x =  16.337222;
             point6.turn = 0;
 
             myTrackPointsList = new ArrayList<>();
@@ -126,7 +151,6 @@ public class MyLocationGPS extends AppCompatActivity implements LocationListener
 
 
         }else if (track == 3) {
-            //Treba unjeti podatke za trecu stazu,      edit: netreba uneseni su
             MyTrackPoints point1, point2, point3, point4, point5, point6;
             point1 = new MyTrackPoints();
             point1.y = 46.309478;
@@ -194,12 +218,14 @@ public class MyLocationGPS extends AppCompatActivity implements LocationListener
     }
 
     public void storeFetchedCoordinates(Coordinates coordinates) {
-        MyPointDouble coord=new MyPointDouble();
+        MyPointDouble coord;
+        List<MyPointDouble> mypp = new ArrayList<>();
         for (Instruction instruction : coordinates.getPaths().get(0).getInstructions()) {
+            coord=new MyPointDouble();
             coord.x=(Double.parseDouble(instruction.getCoordinate().get(0)));
             coord.y=(Double.parseDouble(instruction.getCoordinate().get(1)));
-
-            Toast.makeText(getApplicationContext(), instruction.getCoordinate().get(0) + " druga koordimata"+ instruction.getCoordinate().get(1)+"" ,
+            mypp.add(coord);
+            Toast.makeText(getApplicationContext(), coord.x + " druga kordinata"+ coord.y +"" ,
                     Toast.LENGTH_SHORT).show();
         }
     }
@@ -214,7 +240,6 @@ public class MyLocationGPS extends AppCompatActivity implements LocationListener
                     Toast.LENGTH_SHORT).show();
         }
     }*/
-
     /**
      * Shows the angle on long click.
      */
@@ -222,7 +247,7 @@ public class MyLocationGPS extends AppCompatActivity implements LocationListener
     public void onStart(){
         super.onStart();
 //------------------------------- Rene algoritam pocetak----------------------------------------------------------------------------------------//
-
+/*
         MyPointDouble point1, point2, point3, point4, point5, point6, point7, point8, point9, point10, point11, point12, point13, point14, point15, point16, point17;
         point1 = new MyPointDouble();
         point1.y =  46.302580;
@@ -321,7 +346,7 @@ public class MyLocationGPS extends AppCompatActivity implements LocationListener
         intent.putExtra("EXTRA_ANGLE", angle);
         intent.putExtra("turnLR", turnLR);
         startActivity(intent);
-
+*/
 
         //-------------------------------- Rene algoritam kraj------------------------------------------------------------------------------//
         //------------------------------ Vunak Vunce algoritam pocetak-----------------------------------------------------------------------------//
@@ -381,10 +406,51 @@ public class MyLocationGPS extends AppCompatActivity implements LocationListener
     finish();
     }
 
+    private LocationManager locationManager;
+    private LocationListener locationListener;
 
 
     @Override
     public void onLocationChanged(Location location) {
+        rene.setText("radi");
+        Toast.makeText(getApplicationContext(),"YUPIIIIIIIIIIII", Toast.LENGTH_LONG).show();
+
+        ConvertingGpsCoordToXY convertingGpsCoordToXY = new ConvertingGpsCoordToXY();
+
+        myLocation = new Location(location);
+        myLocHist = new ArrayList<>();
+        //myLocation.setLatitude(location.getLatitude());
+        //myLocation.setLongitude(location.getLongitude());
+        distanceFromPoint = new DistanceFromPoint();
+        Location l1 = new Location(LocationManager.GPS_PROVIDER);
+
+        l1.setLongitude(locTurn.x);
+        l1.setLatitude(locTurn.y);
+        float distance = distanceFromPoint.getDistance(l1,myLocation);
+
+        point = new MyPointDouble();
+        point.y =  location.getLongitude();
+        point.x =  location.getLatitude();
+        myLocations.add(point);
+
+        Toast.makeText(getApplicationContext(),point.y + ", " + point.x + ", udaljenost: " + distance + ".", Toast.LENGTH_LONG).show();
+
+
+         if(distance < 10) {
+             for(int i = 0; i< myLocations.size(); i++) {
+                 MyPointDouble converted = new MyPointDouble();
+                 converted.y = convertingGpsCoordToXY.convertLon(myLocations.get(i).y);
+                 converted.x = convertingGpsCoordToXY.convertLat(myLocations.get(i).x);
+                 myLocHist.add(converted);
+             }
+             AverageDirection averageDirection = new AverageDirection();
+             double angle = averageDirection.AvgDirection(myLocHist, turnPoint);
+             Toast.makeText(getApplicationContext(), angle + "", Toast.LENGTH_LONG).show();
+             Intent intent = new Intent(context, DisplayImage.class);
+             intent.putExtra("EXTRA_ANGLE", angle);
+             intent.putExtra("turnLR", turnLR);
+             startActivity(intent);
+         }
 
     }
 
