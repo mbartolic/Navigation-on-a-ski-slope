@@ -10,15 +10,15 @@
         android:layout_height="150dp"
         android:id="@+id/imageView"
         android:background="@mipmap/photoo"
-        android:layout_marginTop="103dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="39dp" />
 
     <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/progressBar"
-        android:layout_marginBottom="68dp"
+        android:layout_marginBottom="37dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
