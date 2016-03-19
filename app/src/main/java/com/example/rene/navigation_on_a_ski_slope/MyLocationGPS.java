@@ -142,28 +142,28 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
         }else if (track == 3) {
             MyTrackPoints point1, point2, point3, point4, point5, point6;
             point1 = new MyTrackPoints();
-            point1.x = 46.309478;
-            point1.y = 16.347105;
+            point1.x = 46.309225;
+            point1.y = 16.346991;
             point1.turn = 0;
             point2 = new MyTrackPoints();
-            point2.x = 46.30938;
-            point2.y = 16.34700;
+            point2.x = 46.309436;
+            point2.y = 16.346951;
             point2.turn = 1;
             point3 = new MyTrackPoints();
-            point3.x = 46.30942;
-            point3.y = 16.34713;
+            point3.x = 46.309499;
+            point3.y = 16.347198;
             point3.turn = 0;
             point4 = new MyTrackPoints();
-            point4.x = 46.30858;
-            point4.y = 16.378140;
-            point4.turn = 1;
+            point4.x = 46.309566;
+            point4.y = 16.347455;
+            point4.turn = 0;
             point5 = new MyTrackPoints();
-            point5.x = 46.30851;
-            point5.y = 16.34702;
+            point5.x = 46.309625;
+            point5.y = 16.347761;
             point5.turn = 0;
             point6 = new MyTrackPoints();
-            point6.x = 46.308527;
-            point6.y = 16.347021;
+            point6.x = 46.309940;
+            point6.y = 16.349011;
             point6.turn = 0;
             myTrackPointsList = new ArrayList<>();
             myTrackPointsList.add(point1);
@@ -253,7 +253,7 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
     mLocMgr.removeUpdates(this);
     finish();
     }
-
+    int counter=0;
     @Override
     public void onLocationChanged(Location location) {
         ConvertingGpsCoordToXY convertingGpsCoordToXY = new ConvertingGpsCoordToXY();
@@ -301,8 +301,13 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
             loc.setLatitude(myTrackPointsList.get(i).x);
             myLocLeftSlopeTrack.add(loc);
         }
+
+        String mess = null;
         UserLocationStatus userLocationStatus = new UserLocationStatus();
-        String mess = userLocationStatus.CalculatingIfUserLeftSlope(myLocLeftSlopeTrack, myLocLeftSlopeSkii);
+        counter = userLocationStatus.CalculatingIfUserLeftSlope(myLocLeftSlopeTrack, myLocation, counter);
+        if (counter>4) {
+            mess = " We can assume that user has left the slope";
+        }
 
         TextView textView2;
         textView2 = (TextView) findViewById(R.id.editText);

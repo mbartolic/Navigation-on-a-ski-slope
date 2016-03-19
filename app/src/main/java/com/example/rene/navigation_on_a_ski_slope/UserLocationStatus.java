@@ -10,40 +10,32 @@ import java.util.List;
 public class UserLocationStatus {
 
     DistanceFromPoint distanceFromPoint = new DistanceFromPoint();
-    String message;
+
 
     public UserLocationStatus() { }
 
-    public String CalculatingIfUserLeftSlope(List<Location> trackLocations,List<Location> skiLocations) {
-        int flag1 = 0;
-        for (int i = 0; i < skiLocations.size(); i++) {
+    public int CalculatingIfUserLeftSlope(List<Location> trackLocations, Location skiLocation, int flag1) {
 
-            float min = 1000;
-            for (int j = 0; j < trackLocations.size(); j++) {
-                float distanceFromSlope = distanceFromPoint.getDistance(skiLocations.get(i), trackLocations.get(j));
 
-                float currentDistance = distanceFromSlope;
-                if (currentDistance < min) {
-                    min = currentDistance;
-                }
+
+        float min = 1000;
+        for (int j = 0; j < trackLocations.size(); j++) {
+            float distanceFromSlope = distanceFromPoint.getDistance(skiLocation, trackLocations.get(j));
+
+            float currentDistance = distanceFromSlope;
+            if (currentDistance < min) {
+                min = currentDistance;
             }
-
-            if (min <= 100) {
-                flag1 = 0;
-            } else {
-                flag1++;
-                if (flag1 > 3) {
-
-                  message = " We can assume that user has left the slope";
-
-                }else
-                {
-                    message = null;
-                }
-            }
-
-
         }
-        return message;
+
+        if (min <= 100) {
+            flag1 = 0;
+        } else {
+            flag1++;
+        }
+
+
+
+        return flag1;
     }
 }
