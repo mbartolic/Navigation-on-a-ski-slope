@@ -12,36 +12,6 @@ public class AverageDirection {
 
     public AverageDirection() {}
 
-/*
-    public double AvgDirection(List<MyPointDouble> myLocalHistory, List<MyPointDouble> pathAfterTurn) {
-        List<MyPointDouble> myLocHistX = new ArrayList<>();
-        List<MyPointDouble> myLocHistY = new ArrayList<>();
-        double angle, angleOfDirect;
-        angle = AvgDirectionXY(myLocalHistory, pathAfterTurn);
-
-        if (angle == 0.0) {
-            for (int i = 0; i < myLocalHistory.size(); i++) {
-                MyPointDouble pointX = new MyPointDouble();
-                pointX.x = myLocalHistory.get(i).x;
-                pointX.y = 0;
-                myLocHistX.add(pointX);
-            }
-            angle = AvgDirectionXY(myLocHistX, pathAfterTurn);
-            if(angle == 0.0){
-                for (int i = 0; i < myLocalHistory.size(); i++) {
-                    MyPointDouble pointY = new MyPointDouble();
-                    pointY.x = 0;
-                    pointY.y = myLocalHistory.get(i).y;
-                    myLocHistY.add(pointY);
-                }
-                angle = AvgDirectionXY(myLocHistY, pathAfterTurn);
-                angleOfDirect = angle;
-            }else angleOfDirect = angle;
-        }else angleOfDirect = angle;
-
-        return angleOfDirect;
-    }*/
-
 
     /**
      * Calculates average direction of the skier. The method needs at least three endpoints to work properly.

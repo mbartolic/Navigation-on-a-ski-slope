@@ -70,28 +70,28 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
         if(track == 1){
             MyTrackPoints point1, point2, point3, point4, point5, point6;
             point1 = new MyTrackPoints();
-            point1.y =  46.302318;
-            point1.x =  16.337191;
+            point1.x =  46.302318;
+            point1.y =  16.337191;
             point1.turn = 0;
             point2 = new MyTrackPoints();
-            point2.y = 46.302167;
-            point2.x = 16.337246;
+            point2.x = 46.302167;
+            point2.y = 16.337246;
             point2.turn = 0;
             point3 = new MyTrackPoints();
-            point3.y = 46.302071;
-            point3.x = 16.337299;
+            point3.x = 46.302071;
+            point3.y = 16.337299;
             point3.turn = 0;
             point4 = new MyTrackPoints();
-            point4.y = 46.301957;
-            point4.x = 16.337345;
+            point4.x = 46.301957;
+            point4.y = 16.337345;
             point4.turn = 0;
             point5 = new MyTrackPoints();
-            point5.y =  46.301817;
-            point5.x =  16.337339;        //turning point
+            point5.x =  46.301817;
+            point5.y =  16.337339;        //turning point
             point5.turn = 1;
             point6 = new MyTrackPoints();
-            point6.y =  46.301776;
-            point6.x =  16.337222;
+            point6.x =  46.301776;
+            point6.y =  16.337222;
             point6.turn = 0;
 
             myTrackPointsList = new ArrayList<>();
@@ -106,28 +106,28 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
         }else if (track == 2){
             MyTrackPoints point1, point2, point3, point4, point5, point6;
             point1 = new MyTrackPoints();
-            point1.y =  46.302318;
-            point1.x =  16.337191;
+            point1.x =  46.302318;
+            point1.y =  16.337191;
             point1.turn = 0;
             point2 = new MyTrackPoints();
-            point2.y = 46.302167;
-            point2.x = 16.337246;
+            point2.x = 46.302167;
+            point2.y = 16.337246;
             point2.turn = 0;
             point3 = new MyTrackPoints();
-            point3.y = 46.302071;
-            point3.x = 16.337299;
+            point3.x = 46.302071;
+            point3.y = 16.337299;
             point3.turn = 0;
             point4 = new MyTrackPoints();
-            point4.y = 46.301957;
-            point4.x = 16.337345;
+            point4.x = 46.301957;
+            point4.y = 16.337345;
             point4.turn = 0;
             point5 = new MyTrackPoints();
-            point5.y =  46.301817;
-            point5.x =  16.337339;        //turning point
+            point5.x =  46.301817;
+            point5.y =  16.337339;        //turning point
             point5.turn = 1;
             point6 = new MyTrackPoints();
-            point6.y =  46.301776;
-            point6.x =  16.337222;
+            point6.x =  46.301776;
+            point6.y =  16.337222;
             point6.turn = 0;
 
             myTrackPointsList = new ArrayList<>();
@@ -142,28 +142,28 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
         }else if (track == 3) {
             MyTrackPoints point1, point2, point3, point4, point5, point6;
             point1 = new MyTrackPoints();
-            point1.y = 46.309478;
-            point1.x = 16.347105;
+            point1.x = 46.309478;
+            point1.y = 16.347105;
             point1.turn = 0;
             point2 = new MyTrackPoints();
-            point2.y = 46.30938;
-            point2.x = 16.34700;
+            point2.x = 46.30938;
+            point2.y = 16.34700;
             point2.turn = 1;
             point3 = new MyTrackPoints();
-            point3.y = 46.30942;
-            point3.x = 16.34713;
+            point3.x = 46.30942;
+            point3.y = 16.34713;
             point3.turn = 0;
             point4 = new MyTrackPoints();
-            point4.y = 46.30858;
-            point4.x = 16.378140;
+            point4.x = 46.30858;
+            point4.y = 16.378140;
             point4.turn = 1;
             point5 = new MyTrackPoints();
-            point5.y = 46.30851;
-            point5.x = 16.34702;
+            point5.x = 46.30851;
+            point5.y = 16.34702;
             point5.turn = 0;
             point6 = new MyTrackPoints();
-            point6.y = 46.308527;
-            point6.x = 16.347021;
+            point6.x = 46.308527;
+            point6.y = 16.347021;
             point6.turn = 0;
             myTrackPointsList = new ArrayList<>();
             myTrackPointsList.add(point1);
@@ -263,8 +263,8 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
         distanceFromPoint = new DistanceFromPoint();
         Location l1 = new Location(LocationManager.GPS_PROVIDER);
 
-        l1.setLongitude(locTurn.x);
-        l1.setLatitude(locTurn.y);
+        l1.setLongitude(locTurn.y);
+        l1.setLatitude(locTurn.x);
         float distance = distanceFromPoint.getDistance(l1,myLocation);
 
         point = new MyPointDouble();
@@ -280,8 +280,8 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
          if(distance < 10) {
              for(int i = 0; i< myLocations.size(); i++) {
                  MyPointDouble converted = new MyPointDouble();
-                 converted.y = convertingGpsCoordToXY.convertLon(myLocations.get(i).y);
-                 converted.x = convertingGpsCoordToXY.convertLat(myLocations.get(i).x);
+                 converted.x = convertingGpsCoordToXY.convertLon(myLocations.get(i).x);
+                 converted.y = convertingGpsCoordToXY.convertLat(myLocations.get(i).y);
                  myLocHist.add(converted);
              }
              AverageDirection averageDirection = new AverageDirection();
@@ -309,6 +309,8 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
         if(mess != null) {
             textView2.setText(mess);
             textView2.setTextColor(Color.RED);
+        }else{
+            textView2.setText("");
         }
     }
 

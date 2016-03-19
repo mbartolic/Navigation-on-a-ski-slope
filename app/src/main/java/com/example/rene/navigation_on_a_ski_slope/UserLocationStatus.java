@@ -36,6 +36,9 @@ public class UserLocationStatus {
 
                   message = " We can assume that user has left the slope";
 
+                }else
+                {
+                    message = null;
                 }
             }
 
