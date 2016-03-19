@@ -3,19 +3,10 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="1"
-   >
+    android:id="@+id/skiDistFromTurn">
 
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="266dp"
-        android:id="@+id/imageView3"
-        android:src="@drawable/photoo"
-
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
+      <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -27,5 +18,15 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:textAlignment="center" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Distance"
+        android:id="@+id/distanceTxt"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="90dp" />
 
 </RelativeLayout>

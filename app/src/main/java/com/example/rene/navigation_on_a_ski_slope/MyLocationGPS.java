@@ -49,8 +49,9 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
         myLocations = new ArrayList<>();
         myLocLeftSlopeSkii = new ArrayList<>();
 
-        mLocMgr = (LocationManager) getSystemService(LOCATION_SERVICE);
-        mLocMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER,1000, 0, this);
+
+            mLocMgr = (LocationManager) getSystemService(LOCATION_SERVICE);
+            mLocMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, this);
 
         //Inicijalizacija klase koja implementira sucelje CoordinatesPresenter
         coordinatesPresenter = new CoordinatesPresenterImpl(this);
@@ -105,28 +106,28 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
         }else if (track == 2){
             MyTrackPoints point1, point2, point3, point4, point5, point6;
             point1 = new MyTrackPoints();
-            point1.y =  46.307745;
-            point1.x =  16.338490;
+            point1.y =  46.302318;
+            point1.x =  16.337191;
             point1.turn = 0;
             point2 = new MyTrackPoints();
-            point2.y = 46.307744;
-            point2.x = 16.338404;
+            point2.y = 46.302167;
+            point2.x = 16.337246;
             point2.turn = 0;
             point3 = new MyTrackPoints();
-            point3.y = 46.307740;
-            point3.x = 16.338262;
+            point3.y = 46.302071;
+            point3.x = 16.337299;
             point3.turn = 0;
             point4 = new MyTrackPoints();
-            point4.y = 46.307742;
-            point4.x = 16.338164;
+            point4.y = 46.301957;
+            point4.x = 16.337345;
             point4.turn = 0;
             point5 = new MyTrackPoints();
-            point5.y =  46.307745;
-            point5.x =  16.338051;
-            point5.turn = 1;            //turning point
+            point5.y =  46.301817;
+            point5.x =  16.337339;        //turning point
+            point5.turn = 1;
             point6 = new MyTrackPoints();
-            point6.y =  46.307802;
-            point6.x =  16.338051;
+            point6.y =  46.301776;
+            point6.x =  16.337222;
             point6.turn = 0;
 
             myTrackPointsList = new ArrayList<>();
@@ -183,6 +184,7 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
         turnPoint.add(locAfterTurn);
     }
 
+
     public String turnLeftRight(List<MyTrackPoints> myTrPointList) {
         String turn = null;
         for (int i = 0; i < myTrPointList.size(); i++) {
@@ -229,6 +231,8 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
         }
     }*/
 
+
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -268,8 +272,10 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
         point.y =  location.getLatitude();
         myLocations.add(point);
 
-        Toast.makeText(getApplicationContext(),"Distance from turn: " + distance + " m", Toast.LENGTH_SHORT).show();
-
+        String dist = String.format("%.2f", distance);
+        TextView textView;
+        textView = (TextView) findViewById(R.id.distanceTxt);
+        textView.setText(dist + "m");
 
          if(distance < 10) {
              for(int i = 0; i< myLocations.size(); i++) {
@@ -298,11 +304,11 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
         UserLocationStatus userLocationStatus = new UserLocationStatus();
         String mess = userLocationStatus.CalculatingIfUserLeftSlope(myLocLeftSlopeTrack, myLocLeftSlopeSkii);
 
-        TextView textView;
-        textView = (TextView) findViewById(R.id.editText);
+        TextView textView2;
+        textView2 = (TextView) findViewById(R.id.editText);
         if(mess != null) {
-            textView.setText(mess);
-            textView.setTextColor(Color.RED);
+            textView2.setText(mess);
+            textView2.setTextColor(Color.RED);
         }
     }
 
