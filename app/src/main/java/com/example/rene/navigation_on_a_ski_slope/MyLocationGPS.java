@@ -106,28 +106,28 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
         }else if (track == 2){
             MyTrackPoints point1, point2, point3, point4, point5, point6;
             point1 = new MyTrackPoints();
-            point1.x =  46.302318;
-            point1.y =  16.337191;
+            point1.x =  46.302326;
+            point1.y =  16.337187;
             point1.turn = 0;
             point2 = new MyTrackPoints();
-            point2.x = 46.302167;
-            point2.y = 16.337246;
+            point2.x = 46.302388;
+            point2.y = 16.337171;
             point2.turn = 0;
             point3 = new MyTrackPoints();
-            point3.x = 46.302071;
-            point3.y = 16.337299;
+            point3.x = 46.302465;
+            point3.y = 16.337138;
             point3.turn = 0;
             point4 = new MyTrackPoints();
-            point4.x = 46.301957;
-            point4.y = 16.337345;
+            point4.x = 46.302544;
+            point4.y = 16.337108;
             point4.turn = 0;
             point5 = new MyTrackPoints();
-            point5.x =  46.301817;
-            point5.y =  16.337339;        //turning point
-            point5.turn = 1;
+            point5.x =  46.302623;
+            point5.y =  16.337072;        //turning point
+            point5.turn = -1;
             point6 = new MyTrackPoints();
-            point6.x =  46.301776;
-            point6.y =  16.337222;
+            point6.x =  46.302595;
+            point6.y =  16.336954;
             point6.turn = 0;
 
             myTrackPointsList = new ArrayList<>();
@@ -286,7 +286,6 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
              }
              AverageDirection averageDirection = new AverageDirection();
              double angle = averageDirection.AvgDirection(myLocHist, turnPoint);
-             Toast.makeText(getApplicationContext(), angle + "", Toast.LENGTH_SHORT).show();
              Intent intent = new Intent(context, DisplayImage.class);
              intent.putExtra("EXTRA_ANGLE", angle);
              intent.putExtra("turnLR", turnLR);
