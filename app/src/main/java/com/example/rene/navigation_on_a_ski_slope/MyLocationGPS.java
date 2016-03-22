@@ -8,6 +8,8 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.model.Coordinates;
@@ -308,11 +310,17 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
             mess = " We can assume that user has left the slope";
         }
 
+        Animation anim = new AlphaAnimation(0.0f, 1.0f);
+        anim.setDuration(500);
+        anim.setStartOffset(20);
+        anim.setRepeatMode(Animation.REVERSE);
+        anim.setRepeatCount(Animation.INFINITE);
+
         TextView textView2;
         textView2 = (TextView) findViewById(R.id.editText);
         if(mess != null) {
             textView2.setText(mess);
-            textView2.setTextColor(Color.RED);
+            textView2.startAnimation(anim);
         }else{
             textView2.setText("");
         }

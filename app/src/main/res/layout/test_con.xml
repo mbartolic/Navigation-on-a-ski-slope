@@ -3,8 +3,8 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="1"
-    android:id="@+id/skiDistFromTurn">
-
+    android:id="@+id/skiDistFromTurn"
+    style="@style/main_app_theme">
 
       <TextView
         android:layout_width="wrap_content"
@@ -17,7 +17,8 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        style="@style/txt_Color" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -27,6 +28,7 @@
         android:id="@+id/distanceTxt"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:textSize="90dp" />
+        android:textSize="90dp"
+        style="@style/txt_Color" />
 
 </RelativeLayout>
