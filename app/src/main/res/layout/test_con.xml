@@ -24,11 +24,66 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Distance"
+        android:text="Distance to finish:"
         android:id="@+id/distanceTxt"
+        android:textSize="20dp"
+        style="@style/txt_Color"
+        android:layout_marginLeft="29dp"
+        android:layout_marginStart="29dp"
+        android:layout_above="@+id/imgViewArrow"
+        android:layout_toRightOf="@+id/imgViewArrow"
+        android:layout_toEndOf="@+id/imgViewArrow" />
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/imgViewArrow"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:textSize="90dp"
-        style="@style/txt_Color" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="35dp"
+        android:layout_marginStart="35dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/txtDistanceToTurn"
+        android:textSize="20dp"
+        style="@style/txt_Color"
+        android:text="Distance to turn:"
+        android:layout_alignTop="@+id/imgViewArrow"
+        android:layout_alignLeft="@+id/distanceTxt"
+        android:layout_alignStart="@+id/distanceTxt" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start"
+        android:id="@+id/startBtn"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/txtDistanceToTurn"
+        android:layout_alignStart="@+id/txtDistanceToTurn" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stop"
+        android:id="@+id/stopBtn"
+        android:layout_alignTop="@+id/startBtn"
+        android:layout_toRightOf="@+id/txtDistanceToTurn"
+        android:layout_toEndOf="@+id/txtDistanceToTurn" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:id="@+id/TXTCordinatesServer"
+        android:layout_below="@+id/startBtn"
+        android:layout_alignLeft="@+id/startBtn"
+        android:layout_alignStart="@+id/startBtn"
+        android:layout_alignBottom="@+id/imgViewArrow"
+        android:layout_alignRight="@+id/stopBtn"
+        android:layout_alignEnd="@+id/stopBtn" />
 
 </RelativeLayout>
