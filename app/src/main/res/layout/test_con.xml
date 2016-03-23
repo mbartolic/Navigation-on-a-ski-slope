@@ -74,16 +74,16 @@
         android:layout_toRightOf="@+id/txtDistanceToTurn"
         android:layout_toEndOf="@+id/txtDistanceToTurn" />
 
-    <TextView
+    <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
-        android:id="@+id/TXTCordinatesServer"
+        android:id="@+id/ListViewServerCoord"
+        android:layout_alignRight="@+id/stopBtn"
         android:layout_below="@+id/startBtn"
         android:layout_alignLeft="@+id/startBtn"
         android:layout_alignStart="@+id/startBtn"
         android:layout_alignBottom="@+id/imgViewArrow"
-        android:layout_alignRight="@+id/stopBtn"
-        android:layout_alignEnd="@+id/stopBtn" />
+        style="@style/txt_Color"
+        />
 
 </RelativeLayout>

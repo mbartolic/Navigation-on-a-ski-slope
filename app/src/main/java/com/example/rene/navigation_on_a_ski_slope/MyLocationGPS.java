@@ -234,29 +234,28 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
         return j;
     }
 
+
+    List<MyTrackPoints> mypp = new ArrayList<>();
     public void storeFetchedCoordinates(Coordinates coordinates) {
-        MyPointDouble coord;
-        List<MyPointDouble> mypp = new ArrayList<>();
+        MyTrackPoints coord;
+
         for (Instruction instruction : coordinates.getPaths().get(0).getInstructions()) {
-            coord=new MyPointDouble();
+            coord=new MyTrackPoints();
             coord.x=(Double.parseDouble(instruction.getCoordinate().get(0)));
             coord.y=(Double.parseDouble(instruction.getCoordinate().get(1)));
+            coord.turn = instruction.getSign();
             mypp.add(coord);
-            Toast.makeText(getApplicationContext(), coord.x + " druga kordinata"+ coord.y +"" ,
-                    Toast.LENGTH_SHORT).show();
+            // Toast.makeText(getApplicationContext(), coord.x + " druga kordinata"+ coord.y +"" ,
+            //         Toast.LENGTH_SHORT).show();
+        }
+        ispisKoordinata(mypp);
+    }
+
+    public void ispisKoordinata(List<MyTrackPoints> myp) {
+         for (int i = 0; i < myp.size(); i++) {
+            Toast.makeText(getApplicationContext(),"size: " + myp.size() + " x: " + myp.get(i).x + " , y: " + myp.get(i).y + "" + " , turn: " + myp.get(i).turn + "", Toast.LENGTH_LONG).show();
         }
     }
-/*
-//OVAJ DIO NE RADI
-    public void storeFetchedSign(Coordinates coordinates) {
-        int i=0;
-        for (Instruction instruction : coordinates.getPaths().get(0).getInstructions()) {
-            i = (instruction.getSign());
-
-            Toast.makeText(getApplicationContext(), i +"" ,
-                    Toast.LENGTH_SHORT).show();
-        }
-    }*/
 
     public void addListenerToButton() {
         Button btnStart = (Button) findViewById(R.id.startBtn);
