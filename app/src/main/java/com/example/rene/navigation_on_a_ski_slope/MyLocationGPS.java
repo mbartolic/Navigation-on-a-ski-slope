@@ -12,6 +12,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.model.Coordinates;
@@ -236,8 +237,10 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
 
 
     List<MyTrackPoints> mypp = new ArrayList<>();
+
     public void storeFetchedCoordinates(Coordinates coordinates) {
         MyTrackPoints coord;
+
 
         for (Instruction instruction : coordinates.getPaths().get(0).getInstructions()) {
             coord=new MyTrackPoints();
@@ -250,11 +253,21 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
         }
         ispisKoordinata(mypp);
     }
+    TextView txtServerCoord;
 
+    String var1, var2, var3;
+    StringBuilder sb = new StringBuilder();
     public void ispisKoordinata(List<MyTrackPoints> myp) {
+        txtServerCoord = (TextView) findViewById(R.id.listViewServerCoord);
          for (int i = 0; i < myp.size(); i++) {
-            Toast.makeText(getApplicationContext(),"size: " + myp.size() + " x: " + myp.get(i).x + " , y: " + myp.get(i).y + "" + " , turn: " + myp.get(i).turn + "", Toast.LENGTH_LONG).show();
-        }
+             var1 = String.valueOf(myp.get(i).x);
+             var2 = String.valueOf(myp.get(i).y);
+             var3 = String.valueOf(myp.get(i).turn);
+             sb.append("X: ");      sb.append(var1);    sb.append(", ");
+             sb.append(" Y: ");     sb.append(var2);    sb.append(", ");
+             sb.append(" Sign: ");  sb.append(var3);    sb.append("\n");
+         }
+        txtServerCoord.setText(sb.toString());
     }
 
     public void addListenerToButton() {
