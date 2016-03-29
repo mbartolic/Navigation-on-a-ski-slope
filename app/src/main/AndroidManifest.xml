@@ -42,17 +42,6 @@
         </activity>
 
         <activity
-            android:name=".OnSlope"
-            android:screenOrientation="landscape">
-        </activity>
-
-        <activity
-            android:name=".DisplayImage"
-            android:screenOrientation="landscape">
-
-        </activity>
-
-        <activity
             android:name=".MyLocationGPS"
             android:label="@string/title_activity_my_location_gps"
             android:screenOrientation="landscape">

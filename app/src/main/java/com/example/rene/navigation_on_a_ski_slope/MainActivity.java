@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         Button btnR1 = (Button) findViewById(R.id.route1);  // connecting other button with xml
         Button btnR2 = (Button) findViewById(R.id.route2);  // connecting button with xml
         Button btnR3 = (Button) findViewById(R.id.route3);
+        Button btnR4 = (Button) findViewById(R.id.simulateBtn);
 
         btnR1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +55,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(context, MyLocationGPS.class);    //creating new intent and replacing the old one
                 intent.putExtra("track",3);
+                startActivity(intent);
+                overridePendingTransition(R.anim.anim_to_right, R.anim.anim_to_left); //animation when inteint starts
+            }
+        });
+        btnR4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, Simulation.class);    //creating new intent and replacing the old one
+                intent.putExtra("track",4);
                 startActivity(intent);
                 overridePendingTransition(R.anim.anim_to_right, R.anim.anim_to_left); //animation when inteint starts
             }

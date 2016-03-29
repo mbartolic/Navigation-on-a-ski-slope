@@ -32,18 +32,18 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
     private static final String LOG_KEY = "coordianes";
     int track;
     List<MyTrackPoints> myTrackPointsList = null;
-    ArrayList<MyPointDouble> myLocations = null;
-    List<MyPointDouble> turnPoint = new ArrayList<>();
-    MyPointDouble locTurn =  new MyPointDouble();
-    MyPointDouble locAfterTurn = new MyPointDouble();
+    ArrayList<MyTrackPoints> myLocations = null;
+    List<MyTrackPoints> turnPoint = new ArrayList<>();
+    MyTrackPoints locTurn =  new MyTrackPoints();
+    MyTrackPoints locAfterTurn = new MyTrackPoints();
     String turnLR;
     int trackID = 0;
     List<Location> myLocLeftSlopeTrack;
     List<Location> myLocLeftSlopeSkii;
 
     Location myLocation ;
-    List<MyPointDouble> myLocHist;
-    MyPointDouble point;
+    List<MyTrackPoints> myLocHist;
+    MyTrackPoints point;
 
     DistanceFromPoint distanceFromPoint;
       final Context context = this;
@@ -334,7 +334,7 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
         float distanceToTurn = distanceFromPoint.getDistance(l2, myLocation);
         float distanceFromTurnToTrackEnd = distanceFromPoint.getDistance(l2, l1);
 
-        point = new MyPointDouble();
+        point = new MyTrackPoints();
         point.x =  location.getLongitude();
         point.y =  location.getLatitude();
         myLocations.add(point);
@@ -350,7 +350,7 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
         distanceToTurnTxt.setText("Distance to turn: " + dist2 + "m");/////////////////////
             if (distanceToTurn < 10 && (distanceToTrackEnd > distanceFromTurnToTrackEnd)) {
                 for (int i = 0; i < myLocations.size(); i++) {
-                    MyPointDouble converted = new MyPointDouble();
+                    MyTrackPoints converted = new MyTrackPoints();
                     converted.x = convertingGpsCoordToXY.convertLon(myLocations.get(i).x);
                     converted.y = convertingGpsCoordToXY.convertLat(myLocations.get(i).y);
                     myLocHist.add(converted);
@@ -410,7 +410,7 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
     }
 
 
-    public void setImage(double angle, String turnLR){
+      public void setImage(double angle, String turnLR){
         ImageView imageView = (ImageView)findViewById(R.id.imgViewArrow);
         if(angle >= 0 && angle <= 60 && turnLR.equalsIgnoreCase("right")){
             imageView.setImageResource(R.drawable.southeast);

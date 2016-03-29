@@ -18,9 +18,9 @@ public class AverageDirection {
      * @param myLocalHistory
      * @return
      */
-    public double AvgDirection(List<MyPointDouble> myLocalHistory, List<MyPointDouble> pathAfterTurn) {
+    public double AvgDirection(List<MyTrackPoints> myLocalHistory, List<MyTrackPoints> pathAfterTurn) {
         double x1 = 0, y1 = 0, x2 = 0, y2 = 0;
-        List<MyPointDouble> avgPoint = new ArrayList<>();
+        List<MyTrackPoints> avgPoint = new ArrayList<>();
         boolean zastavica1 = false;
         boolean zastavica2 = false;
         double angle = 0;
@@ -41,7 +41,7 @@ public class AverageDirection {
                 zastavica2 = true;
             }
             if (zastavica1 && zastavica2) {
-                MyPointDouble poin = new MyPointDouble();
+                MyTrackPoints poin = new MyTrackPoints();
                 poin.x = (x1 + x2) / 2;
                 poin.y = (y1 + y2) / 2;
                 zastavica1 = false;
@@ -61,9 +61,9 @@ public class AverageDirection {
      * @param avgPoint
      * @return
      */
-    private double futurePoints (int numberOfPoints, List<MyPointDouble> avgPoint, List<MyPointDouble> pathAfterTurn) {
+    private double futurePoints (int numberOfPoints, List<MyTrackPoints> avgPoint, List<MyTrackPoints> pathAfterTurn) {
         double angle = 0;
-        MyPointDouble futurePoint = new MyPointDouble();
+        MyTrackPoints futurePoint = new MyTrackPoints();
         if (numberOfPoints >= 2) {
             double futurex = avgPoint.get(numberOfPoints - 1).x - avgPoint.get(numberOfPoints - 2).x;
             double futurey = avgPoint.get(numberOfPoints - 1).y - avgPoint.get(numberOfPoints - 2).y;
@@ -73,17 +73,17 @@ public class AverageDirection {
         }
         return angle;
     }
-    MyPointDouble VectorAfterTurn =  new MyPointDouble();
-    MyPointDouble VectorBeforeTurn = new MyPointDouble();
-    MyPointDouble turn = new MyPointDouble();
-    MyPointDouble pathAfterTur = new MyPointDouble();
+    MyTrackPoints VectorAfterTurn =  new MyTrackPoints();
+    MyTrackPoints VectorBeforeTurn = new MyTrackPoints();
+    MyTrackPoints turn = new MyTrackPoints();
+    MyTrackPoints pathAfterTur = new MyTrackPoints();
 
     /**
      * Calculates angle between points on junction.
      * @param PointAtTheMoment
      * @return
      */
-    private double angleBetweenPoints(MyPointDouble PointAtTheMoment, List<MyPointDouble> pathAfterTurn) {
+    private double angleBetweenPoints(MyTrackPoints PointAtTheMoment, List<MyTrackPoints> pathAfterTurn) {
         turn.x = pathAfterTurn.get(0).x;      //location of turn in wien converted
         turn.y = pathAfterTurn.get(0).y;     //location if turn in wien converted
         pathAfterTur.x = pathAfterTurn.get(1).x;

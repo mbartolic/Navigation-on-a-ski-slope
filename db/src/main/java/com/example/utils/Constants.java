@@ -13,8 +13,8 @@ public class Constants {
     public static final String SOURCE_LONGITUDE = "16.337065";
     public static final String SOURCE_POINTS = SOURCE_LATITUDE + "," + SOURCE_LONGITUDE;
 
-    public static final String DESTINATION_LATITUDE = "46.301944";
-    public static final String DESTIONATION_LONGITUDE = "16.336783";
+    public static final String DESTINATION_LATITUDE = "46.309940"; // 46.301944
+    public static final String DESTIONATION_LONGITUDE = "16.349011"; // 16.336783
     public static final String DESTINATION_POINTS = DESTINATION_LATITUDE + "," + DESTIONATION_LONGITUDE;
 
     public static final String CAR_ROUTE_TYPE = "car";

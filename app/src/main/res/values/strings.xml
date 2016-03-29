@@ -8,6 +8,9 @@
     <string name="route1">Route 1</string>
     <string name="route2">Route 2</string>
     <string name="route3">Route 3</string>
+    <string name="simulate">Simulate</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
     <string name="txt_routesNameID">Route name</string>
     <string name="txt_routesDistanceID">Route distance</string>
     <string name="txt_routesHeighID">Route height</string>
