@@ -62,10 +62,9 @@ public class MainActivity extends AppCompatActivity {
         btnR4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, Simulation.class);    //creating new intent and replacing the old one
-                intent.putExtra("track",4);
+                Intent intent = new Intent(context, Simulation.class);
                 startActivity(intent);
-                overridePendingTransition(R.anim.anim_to_right, R.anim.anim_to_left); //animation when inteint starts
+                overridePendingTransition(R.anim.anim_to_right, R.anim.anim_to_left);
             }
         });
     }

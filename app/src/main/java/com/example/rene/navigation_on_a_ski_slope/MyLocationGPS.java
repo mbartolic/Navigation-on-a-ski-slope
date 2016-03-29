@@ -44,7 +44,7 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
     Location myLocation ;
     List<MyTrackPoints> myLocHist;
     MyTrackPoints point;
-
+    TextView txtServerCoord;
     DistanceFromPoint distanceFromPoint;
       final Context context = this;
 
@@ -55,15 +55,14 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
         addListenerToButton();
         myLocations = new ArrayList<>();
         myLocLeftSlopeSkii = new ArrayList<>();
+        txtServerCoord = (TextView) findViewById(R.id.listViewServerCoord);
 
-        mLocMgr = (LocationManager) getSystemService(LOCATION_SERVICE);
-        mLocMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0,this);
 
         //Inicijalizacija klase koja implementira sucelje CoordinatesPresenter
         coordinatesPresenter = new CoordinatesPresenterImpl(this);
         //Dohvacanje koordinata preko sucelja CoordinatesPresenter
         coordinatesPresenter.getData(Constants.SOURCE_POINTS, Constants.DESTINATION_POINTS, Constants.CAR_ROUTE_TYPE, Constants.VOICE_INSTRUCTIONS, Constants.LANGUAGE);
-
+        mLocMgr = (LocationManager) getSystemService(LOCATION_SERVICE);
         if (savedInstanceState == null) {
             Bundle bundle = getIntent().getExtras();
             if(bundle == null) {
@@ -248,12 +247,10 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
             coord.y=(Double.parseDouble(instruction.getCoordinate().get(1)));
             coord.turn = instruction.getSign();
             mypp.add(coord);
-            // Toast.makeText(getApplicationContext(), coord.x + " druga kordinata"+ coord.y +"" ,
-            //         Toast.LENGTH_SHORT).show();
         }
         ispisKoordinata(mypp);
     }
-    TextView txtServerCoord;
+
 
     String var1, var2, var3;
     StringBuilder sb = new StringBuilder();
@@ -278,6 +275,8 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
             @Override
             public void onClick(View v) {
 
+                mLocMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0,MyLocationGPS.this);
+                txtServerCoord.setText("");
 
             }
         });
@@ -285,7 +284,9 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
         btnStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    mLocMgr.removeUpdates(locationListener);
+
+                if(mLocMgr !=null)
+                    mLocMgr.removeUpdates(MyLocationGPS.this);
             }
         });
     }
