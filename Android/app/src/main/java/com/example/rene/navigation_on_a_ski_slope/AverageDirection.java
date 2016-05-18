@@ -1,7 +1,12 @@
 package com.example.rene.navigation_on_a_ski_slope;
 
+import android.support.annotation.NonNull;
+
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 /**
  *
@@ -18,40 +23,434 @@ public class AverageDirection {
      * @param myLocalHistory
      * @return
      */
-    public double AvgDirection(List<MyTrackPoints> myLocalHistory, List<MyTrackPoints> pathAfterTurn) {
-        double x1 = 0, y1 = 0, x2 = 0, y2 = 0;
+    public double AvgDirection(List<MyTrackPoints> myLocalHistory,List<MyTrackPoints> pathAfterTurn) {
         List<MyTrackPoints> avgPoint = new ArrayList<>();
-        boolean zastavica1 = false;
-        boolean zastavica2 = false;
-        double angle = 0;
 
+        List<MyTrackPoints> extremePoints = new List<MyTrackPoints>() {
+            @Override
+            public void add(int location, MyTrackPoints object) {
+
+            }
+
+            @Override
+            public boolean add(MyTrackPoints object) {
+                return false;
+            }
+
+            @Override
+            public boolean addAll(int location, Collection<? extends MyTrackPoints> collection) {
+                return false;
+            }
+
+            @Override
+            public boolean addAll(Collection<? extends MyTrackPoints> collection) {
+                return false;
+            }
+
+            @Override
+            public void clear() {
+
+            }
+
+            @Override
+            public boolean contains(Object object) {
+                return false;
+            }
+
+            @Override
+            public boolean containsAll(Collection<?> collection) {
+                return false;
+            }
+
+            @Override
+            public MyTrackPoints get(int location) {
+                return null;
+            }
+
+            @Override
+            public int indexOf(Object object) {
+                return 0;
+            }
+
+            @Override
+            public boolean isEmpty() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            public Iterator<MyTrackPoints> iterator() {
+                return null;
+            }
+
+            @Override
+            public int lastIndexOf(Object object) {
+                return 0;
+            }
+
+            @Override
+            public ListIterator<MyTrackPoints> listIterator() {
+                return null;
+            }
+
+            @NonNull
+            @Override
+            public ListIterator<MyTrackPoints> listIterator(int location) {
+                return null;
+            }
+
+            @Override
+            public MyTrackPoints remove(int location) {
+                return null;
+            }
+
+            @Override
+            public boolean remove(Object object) {
+                return false;
+            }
+
+            @Override
+            public boolean removeAll(Collection<?> collection) {
+                return false;
+            }
+
+            @Override
+            public boolean retainAll(Collection<?> collection) {
+                return false;
+            }
+
+            @Override
+            public MyTrackPoints set(int location, MyTrackPoints object) {
+                return null;
+            }
+
+            @Override
+            public int size() {
+                return 0;
+            }
+
+            @NonNull
+            @Override
+            public List<MyTrackPoints> subList(int start, int end) {
+                return null;
+            }
+
+            @NonNull
+            @Override
+            public Object[] toArray() {
+                return new Object[0];
+            }
+
+            @NonNull
+            @Override
+            public <T> T[] toArray(T[] array) {
+                return null;
+            }
+        };
+        double angle = 0;
+        List<Boolean> zastavica=new List<Boolean>() {
+            @Override
+            public void add(int location, Boolean object) {
+
+            }
+
+            @Override
+            public boolean add(Boolean object) {
+                return false;
+            }
+
+            @Override
+            public boolean addAll(int location, Collection<? extends Boolean> collection) {
+                return false;
+            }
+
+            @Override
+            public boolean addAll(Collection<? extends Boolean> collection) {
+                return false;
+            }
+
+            @Override
+            public void clear() {
+
+            }
+
+            @Override
+            public boolean contains(Object object) {
+                return false;
+            }
+
+            @Override
+            public boolean containsAll(Collection<?> collection) {
+                return false;
+            }
+
+            @Override
+            public Boolean get(int location) {
+                return null;
+            }
+
+            @Override
+            public int indexOf(Object object) {
+                return 0;
+            }
+
+            @Override
+            public boolean isEmpty() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            public Iterator<Boolean> iterator() {
+                return null;
+            }
+
+            @Override
+            public int lastIndexOf(Object object) {
+                return 0;
+            }
+
+            @Override
+            public ListIterator<Boolean> listIterator() {
+                return null;
+            }
+
+            @NonNull
+            @Override
+            public ListIterator<Boolean> listIterator(int location) {
+                return null;
+            }
+
+            @Override
+            public Boolean remove(int location) {
+                return null;
+            }
+
+            @Override
+            public boolean remove(Object object) {
+                return false;
+            }
+
+            @Override
+            public boolean removeAll(Collection<?> collection) {
+                return false;
+            }
+
+            @Override
+            public boolean retainAll(Collection<?> collection) {
+                return false;
+            }
+
+            @Override
+            public Boolean set(int location, Boolean object) {
+                return null;
+            }
+
+            @Override
+            public int size() {
+                return 0;
+            }
+
+            @NonNull
+            @Override
+            public List<Boolean> subList(int start, int end) {
+                return null;
+            }
+
+            @NonNull
+            @Override
+            public Object[] toArray() {
+                return new Object[0];
+            }
+
+            @NonNull
+            @Override
+            public <T> T[] toArray(T[] array) {
+                return null;
+            }
+        };
         int size = myLocalHistory.size();
-        for(int i = 2; i<size; i++){
-        if (myLocalHistory.size() > 3) {
-            if ( ((myLocalHistory.get(i).x < myLocalHistory.get(i - 1).x) && (myLocalHistory.get(i - 1).x > myLocalHistory.get(i - 2).x) ) || ( ((myLocalHistory.get(i).y) < myLocalHistory.get(i - 1).y) && (myLocalHistory.get(i - 1).y > myLocalHistory.get(i - 2).y) ) ){
-                x1 = myLocalHistory.get(i - 1).x;
-                y1 = myLocalHistory.get(i - 1).y;
+        int i=myLocalHistory.size()-1;
+        MyTrackPoints extPoint= new MyTrackPoints();
+        MyTrackPoints futurePoint=new MyTrackPoints();
+        MyTrackPoints p;
+        List<MyTrackPoints> point=new List<MyTrackPoints>() {
+            @Override
+            public void add(int location, MyTrackPoints object) {
+
+            }
+
+            @Override
+            public boolean add(MyTrackPoints object) {
+                return false;
+            }
+
+            @Override
+            public boolean addAll(int location, Collection<? extends MyTrackPoints> collection) {
+                return false;
+            }
+
+            @Override
+            public boolean addAll(Collection<? extends MyTrackPoints> collection) {
+                return false;
+            }
+
+            @Override
+            public void clear() {
+
+            }
+
+            @Override
+            public boolean contains(Object object) {
+                return false;
+            }
+
+            @Override
+            public boolean containsAll(Collection<?> collection) {
+                return false;
+            }
+
+            @Override
+            public MyTrackPoints get(int location) {
+                return null;
+            }
+
+            @Override
+            public int indexOf(Object object) {
+                return 0;
+            }
+
+            @Override
+            public boolean isEmpty() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            public Iterator<MyTrackPoints> iterator() {
+                return null;
+            }
+
+            @Override
+            public int lastIndexOf(Object object) {
+                return 0;
+            }
+
+            @Override
+            public ListIterator<MyTrackPoints> listIterator() {
+                return null;
+            }
+
+            @NonNull
+            @Override
+            public ListIterator<MyTrackPoints> listIterator(int location) {
+                return null;
+            }
+
+            @Override
+            public MyTrackPoints remove(int location) {
+                return null;
+            }
+
+            @Override
+            public boolean remove(Object object) {
+                return false;
+            }
+
+            @Override
+            public boolean removeAll(Collection<?> collection) {
+                return false;
+            }
+
+            @Override
+            public boolean retainAll(Collection<?> collection) {
+                return false;
+            }
+
+            @Override
+            public MyTrackPoints set(int location, MyTrackPoints object) {
+                return null;
+            }
+
+            @Override
+            public int size() {
+                return 0;
+            }
+
+            @NonNull
+            @Override
+            public List<MyTrackPoints> subList(int start, int end) {
+                return null;
+            }
+
+            @NonNull
+            @Override
+            public Object[] toArray() {
+                return new Object[0];
+            }
+
+            @NonNull
+            @Override
+            public <T> T[] toArray(T[] array) {
+                return null;
+            }
+        };
+
+        if (myLocalHistory.size() > 5) {
+            if ( ((myLocalHistory.get(i-2).x < myLocalHistory.get(i - 1).x) && (myLocalHistory.get(i - 2).x < myLocalHistory.get(i).x)  &&  ((myLocalHistory.get(i-2).x) < myLocalHistory.get(i-3).x) && (myLocalHistory.get(i - 2).x < myLocalHistory.get(i - 4).x) && (myLocalHistory.get(i - 2).x < myLocalHistory.get(i - 5).x)) ){
+                extPoint.x = myLocalHistory.get(i - 2).x;
+                extPoint.y = myLocalHistory.get(i - 2).y;
                 //left
-                zastavica1 = true;
+                zastavica.add(true);
+                extremePoints.add(extPoint);
+
             }
-            if  ( ((myLocalHistory.get(i).x > myLocalHistory.get(i - 1).x) && (myLocalHistory.get(i - 1).x < myLocalHistory.get(i - 2).x) ) || ( ((myLocalHistory.get(i).y) > myLocalHistory.get(i - 1).y) && (myLocalHistory.get(i - 1).y < myLocalHistory.get(i - 2).y) ) ) {
-                x2 = myLocalHistory.get(i - 1).x;
-                y2 = myLocalHistory.get(i - 1).y;
+            if ( ((myLocalHistory.get(i-2).x > myLocalHistory.get(i - 1).x) && (myLocalHistory.get(i - 2).x > myLocalHistory.get(i).x)  &&  ((myLocalHistory.get(i-2).x) > myLocalHistory.get(i-3).x) && (myLocalHistory.get(i - 2).x > myLocalHistory.get(i - 4).x) && (myLocalHistory.get(i - 2).x > myLocalHistory.get(i - 5).x)) ){
+                extPoint.x = myLocalHistory.get(i - 2).x;
+                extPoint.y = myLocalHistory.get(i - 2).y;
                 //right
-                zastavica2 = true;
+                zastavica.add(true);
+                extremePoints.add(extPoint);
+
             }
-            if (zastavica1 && zastavica2) {
-                MyTrackPoints poin = new MyTrackPoints();
-                poin.x = (x1 + x2) / 2;
-                poin.y = (y1 + y2) / 2;
-                zastavica1 = false;
-                zastavica2 = false;
-                avgPoint.add(poin);
+            if ( ((myLocalHistory.get(i-2).y < myLocalHistory.get(i - 1).y) && (myLocalHistory.get(i - 2).y < myLocalHistory.get(i).y)  &&  ((myLocalHistory.get(i-2).y) < myLocalHistory.get(i-3).y) && (myLocalHistory.get(i - 2).y < myLocalHistory.get(i - 4).y) && (myLocalHistory.get(i - 2).y < myLocalHistory.get(i - 5).y)) ){
+                extPoint.x = myLocalHistory.get(i - 2).x;
+                extPoint.y = myLocalHistory.get(i - 2).y;
+                //left
+                zastavica.add(true);
+                extremePoints.add(extPoint);
+
+            }
+            if ( ((myLocalHistory.get(i-2).y > myLocalHistory.get(i - 1).y) && (myLocalHistory.get(i - 2).y > myLocalHistory.get(i).y)  &&  ((myLocalHistory.get(i-2).y) > myLocalHistory.get(i-3).y) && (myLocalHistory.get(i - 2).y > myLocalHistory.get(i - 4).y) && (myLocalHistory.get(i - 2).y > myLocalHistory.get(i - 5).y)) ){
+                extPoint.x = myLocalHistory.get(i - 2).x;
+                extPoint.y = myLocalHistory.get(i - 2).y;
+                //right
+                zastavica.add(true);
+                extremePoints.add(extPoint);
+
+            }
+            int zastavicaI=zastavica.size()-1;
+            int j=myLocalHistory.size();
+
+            if (zastavicaI>1) {
+
+                if (zastavica.get(zastavicaI) && zastavica.get(zastavicaI) || zastavica.get(zastavicaI) && zastavica.get(zastavicaI))
+                {
+                    zastavica.remove(zastavicaI-1);
+                    int ii= extremePoints.size()-1;
+                    if(extremePoints.size()>1){
+                        p=new MyTrackPoints();
+                        p.x=(extremePoints.get(ii).x +extremePoints.get(ii-1).x )/2;
+                        p.y=(extremePoints.get(ii).y +extremePoints.get(ii-1).y )/2;
+                        avgPoint.add(p);
+                    }
+                }
+
                 int numberOfPoints = avgPoint.size();
                 angle = futurePoints(numberOfPoints, avgPoint, pathAfterTurn);
             }
         }
-        }
+
         return angle;
     }
 

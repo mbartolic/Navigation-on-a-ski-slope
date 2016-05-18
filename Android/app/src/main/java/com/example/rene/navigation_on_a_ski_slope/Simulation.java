@@ -399,11 +399,11 @@ public class Simulation extends Activity implements LocationListener, Coordiante
                                 String mess = null;
                                 int counter = 0;
                                 UserLocationStatus userLocationStatus = new UserLocationStatus();
-                                counter = userLocationStatus.CalculatingIfUserLeftSlope(myLocLeftSlopeTrack, myL, counter);
+                             /*   counter = userLocationStatus.CalculatingIfUserLeftSlope(myLocLeftSlopeTrack, myL, counter);
                                 if (counter > 4) {
                                     mess = "User has left the slope!";
                                 }
-
+*/
                                 Animation anim = new AlphaAnimation(0.0f, 1.0f);
                                 anim.setDuration(500);
                                 anim.setStartOffset(20);
