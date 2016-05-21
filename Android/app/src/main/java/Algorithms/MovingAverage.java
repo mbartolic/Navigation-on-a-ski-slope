@@ -2,14 +2,15 @@ package Algorithms;
 
 import com.example.rene.navigation_on_a_ski_slope.MyTrackPoints;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Marko1 on 5.5.2016..
  */
-public class MovingAverage {
+public class MovingAverage implements AlgorithmsInterface{
 
-    List<MyTrackPoints> pointMoveAvg = null;
+    List<MyTrackPoints> pointMoveAvg = new ArrayList<>();
 
     public List<MyTrackPoints> MovAverage(List<MyTrackPoints> pointHistory) {
 
@@ -35,4 +36,9 @@ public class MovingAverage {
         return pointMoveAvg;
     }
 
+
+    @Override
+    public List<MyTrackPoints> Smooth(List<MyTrackPoints> myLocHist) {
+        return null;
+    }
 }

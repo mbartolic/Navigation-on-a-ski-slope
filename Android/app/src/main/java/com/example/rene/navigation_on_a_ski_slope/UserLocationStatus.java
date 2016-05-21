@@ -24,13 +24,17 @@ public class UserLocationStatus {
 
     public int CalculatingTrackPointIndex(List<Location> mypp, Location
             skiLocation, int index){
-
-        float distanceIJ = distanceFromPoint.getDistance(mypp.get(index),
-                mypp.get(index + 1));
-        float distanceXJ = distanceFromPoint.getDistance(skiLocation,
-                mypp.get(index + 1));
-        if (distanceIJ > distanceXJ){
-            index++;
+        if(index == mypp.size()-1){
+            float distanceIJ = 0;
+            float distanceXJ = distanceFromPoint.getDistance(skiLocation, mypp.get(index));
+        }else {
+            float distanceIJ = distanceFromPoint.getDistance(mypp.get(index),
+                    mypp.get(index + 1));
+            float distanceXJ = distanceFromPoint.getDistance(skiLocation,
+                    mypp.get(index + 1));
+            if (distanceIJ > distanceXJ) {
+                index++;
+            }
         }
 
 
@@ -39,12 +43,16 @@ public class UserLocationStatus {
 
     public float DistanceToTrackEnd(List<Location> mypp, int near){
         slope_distance =0;
-        for (int i=near; i<mypp.size()-1;i++){
-            float a= distanceFromPoint.getDistance(mypp.get(i),
-                    mypp.get(i+1));
-            slope_distance =+ a;     //
+        if (near == mypp.size()-1){
+            return  slope_distance;
+        }else {
+            for (int i = near; i < mypp.size() - 1; i++) {
+                float a = distanceFromPoint.getDistance(mypp.get(i),
+                        mypp.get(i + 1));
+                slope_distance = +a;     //
+            }
+            return slope_distance;
         }
-        return  slope_distance;
 
     }
 
