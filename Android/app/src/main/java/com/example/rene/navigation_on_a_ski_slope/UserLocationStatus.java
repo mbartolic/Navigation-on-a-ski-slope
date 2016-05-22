@@ -11,12 +11,9 @@ public class UserLocationStatus {
 
     DistanceFromPoint distanceFromPoint = new DistanceFromPoint();
 
-
     public UserLocationStatus() { }
 
     public int CalculatingIfUserLeftSlope(List<Location> trackLocations, Location skiLocation, int flag1) {
-
-
 
         float min = 1000;
         for (int j = 0; j < trackLocations.size(); j++) {
@@ -33,9 +30,6 @@ public class UserLocationStatus {
         } else {
             flag1++;
         }
-
-
-
         return flag1;
     }
 }
