@@ -80,54 +80,54 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
         }
 
         if (track == 1) {
-            MyTrackPoints point1, point2, point3, point4, point5, point6, point7, point8, point9;
+            MyTrackPoints point1, point2, point3;
+//            point1 = new MyTrackPoints();
+//            point1.x =  46.306509;
+//            point1.y =  16.344788;
+//            point1.turn = 0;
+//            point2 = new MyTrackPoints();
+//            point2.x = 46.307028;
+//            point2.y = 16.344563;
+//            point2.turn = 2;
+//            point3 = new MyTrackPoints();
+//            point3.x = 46.307339;
+//            point3.y = 16.345904;
+//            point3.turn = 0;
+//            point4 = new MyTrackPoints();
+//            point4.x = 46.307791;
+//            point4.y = 16.347299;
+//            point4.turn = -2;
             point1 = new MyTrackPoints();
-            point1.x = 46.302318;
-            point1.y = 16.337191;
+            point1.x =  46.307806;
+            point1.y =  16.344166;        //turning point
             point1.turn = 0;
             point2 = new MyTrackPoints();
-            point2.x = 46.302167;
-            point2.y = 16.337246;
-            point2.turn = 0;
+            point2.x =  46.307680;
+            point2.y =  16.343619;
+            point2.turn = 2;
             point3 = new MyTrackPoints();
-            point3.x = 46.302071;
-            point3.y = 16.337299;
+            point3.x =  46.308391;
+            point3.y =  16.343029;
             point3.turn = 0;
-            point4 = new MyTrackPoints();
-            point4.x = 46.301957;
-            point4.y = 16.337345;
-            point4.turn = 0;
-            point5 = new MyTrackPoints();
-            point5.x = 46.301817;
-            point5.y = 16.337339;        //turning point
-            point5.turn = 1;
-            point6 = new MyTrackPoints();
-            point6.x = 46.301776;
-            point6.y = 16.337222;
-            point6.turn = 0;
-            point7 = new MyTrackPoints();
-            point7.x = 46.301758;
-            point7.y = 16.337128;
-            point7.turn = 0;
-            point8 = new MyTrackPoints();
-            point8.x = 46.301738;
-            point8.y = 16.337028;
-            point8.turn = 1;
-            point9 = new MyTrackPoints();
-            point9.x = 46.301829;
-            point9.y = 16.336988;
-            point9.turn = 0;
+//            point8 = new MyTrackPoints();
+//            point8.x =  46.308628;
+//            point8.y =  16.343737;
+//            point8.turn = -2;
+//            point9 = new MyTrackPoints();
+//            point9.x =  46.309584;
+//            point9.y =  16.343329;
+//            point9.turn = 0;
 
             myTrackPointsList = new ArrayList<>();
             myTrackPointsList.add(point1);
             myTrackPointsList.add(point2);
             myTrackPointsList.add(point3);
-            myTrackPointsList.add(point4);
-            myTrackPointsList.add(point5);
-            myTrackPointsList.add(point6);
-            myTrackPointsList.add(point7);
-            myTrackPointsList.add(point8);
-            myTrackPointsList.add(point9);
+//            myTrackPointsList.add(point4);
+//            myTrackPointsList.add(point5);
+//            myTrackPointsList.add(point6);
+//            myTrackPointsList.add(point7);
+//            myTrackPointsList.add(point8);
+//            myTrackPointsList.add(point9);
 
         } else if (track == 2) {
             MyTrackPoints point1, point2, point3, point4, point5, point6, point7;
@@ -385,6 +385,11 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
         float distanceFromTurnToTrackEnd = userLocationStatus.DistanceToTrackEnd(myLocLeftSlopeTrack, index);
         float distanceToTrackEnd = distanceToTurn + distanceFromTurnToTrackEnd;
 
+        if(distanceToTrackEnd<10){
+            Toast.makeText(MyLocationGPS.this, "FINISH",
+                    Toast.LENGTH_SHORT).show();
+        }
+
         String dist = String.format("%.0f", distanceToTrackEnd);
         TextView distanceToFinishTxt;
         distanceToFinishTxt = (TextView) findViewById(R.id.distanceTxt);
@@ -393,7 +398,7 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
         TextView distanceToTurnTxt;
         distanceToTurnTxt = (TextView) findViewById(R.id.txtDistanceToTurn);
         distanceToTurnTxt.setText("Distance to turn: " + dist2 + "m");/////////////////////
-        if (distanceToTurn < 30 && (distanceToTrackEnd > distanceFromTurnToTrackEnd)) {
+        if (distanceToTurn < 20 && (distanceToTrackEnd > distanceFromTurnToTrackEnd)) {
             for (int i = 0; i < myLocations.size(); i++) {
                 MyTrackPoints converted = new MyTrackPoints();
                 converted.x = convertingGpsCoordToXY.convertLon(myLocations.get(i).x);

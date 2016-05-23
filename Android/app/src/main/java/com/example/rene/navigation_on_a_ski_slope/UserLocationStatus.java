@@ -49,7 +49,7 @@ public class UserLocationStatus {
             for (int i = near; i < mypp.size() - 1; i++) {
                 float a = distanceFromPoint.getDistance(mypp.get(i),
                         mypp.get(i + 1));
-                slope_distance = +a;     //
+                slope_distance = slope_distance+a;     //
             }
             return slope_distance;
         }
