@@ -91,7 +91,8 @@
         android:layout_alignRight="@+id/imgViewArrow"
         android:layout_alignEnd="@+id/imgViewArrow"
         android:layout_alignTop="@+id/imgViewArrow"
-        android:layout_alignBottom="@+id/txtDistanceToTurn" />
+        android:layout_alignBottom="@+id/txtDistanceToTurn"
+        android:visibility="invisible" />
 
     <RadioGroup
         android:layout_width="match_parent"

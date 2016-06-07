@@ -47,6 +47,7 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
     int trackID = 0;
     List<Location> myLocLeftSlopeTrack;
     List<Location> myLocLeftSlopeSkii;
+    List<Integer> trackTurns;
 
     Location myLocation;
     List<MyTrackPoints> myLocHist;
@@ -55,6 +56,7 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
     DistanceFromPoint distanceFromPoint;
     final Context context = this;
     int index = 0;
+    TextView distanceToTurnTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,9 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
         myLocations = new ArrayList<>();
         myLocLeftSlopeSkii = new ArrayList<>();
         txtServerCoord = (TextView) findViewById(R.id.listViewServerCoord);
+
+        distanceToTurnTxt = (TextView) findViewById(R.id.txtDistanceToTurn);
+        distanceToTurnTxt.setVisibility(View.GONE);
 
         //Inicijalizacija klase koja implementira sucelje CoordinatesPresenter
         coordinatesPresenter = new CoordinatesPresenterImpl(this);
@@ -371,21 +376,23 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
         l2.setLatitude(locTurn.x);                         //turn x
 
         myLocLeftSlopeTrack = new ArrayList<>();
+        trackTurns = new ArrayList<>();
         myLocLeftSlopeSkii.add(location);
         for (int i = 0; i < myTrackPointsList.size(); i++) {
             Location loc = new Location(location);
             loc.setLongitude(myTrackPointsList.get(i).y);
             loc.setLatitude(myTrackPointsList.get(i).x);
+            trackTurns.add(myTrackPointsList.get(i).turn);
             myLocLeftSlopeTrack.add(loc);
         }
 
         userLocationStatus = new UserLocationStatus();
         index = userLocationStatus.CalculatingTrackPointIndex(myLocLeftSlopeTrack, myLocation, index);
-        float distanceToTurn =userLocationStatus.DistanceToNearestTrackPoint(myLocLeftSlopeTrack, myLocation, index);
+        float distanceToTurn = userLocationStatus.DistanceToNearestTrackPoint(myLocLeftSlopeTrack, myLocation, index);
         float distanceFromTurnToTrackEnd = userLocationStatus.DistanceToTrackEnd(myLocLeftSlopeTrack, index);
         float distanceToTrackEnd = distanceToTurn + distanceFromTurnToTrackEnd;
 
-        if(distanceToTrackEnd<10){
+        if (distanceToTrackEnd < 10) {
             Toast.makeText(MyLocationGPS.this, "FINISH",
                     Toast.LENGTH_SHORT).show();
         }
@@ -395,81 +402,47 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
         distanceToFinishTxt = (TextView) findViewById(R.id.distanceTxt);
         distanceToFinishTxt.setText("Distance to finish: " + dist + "m");
         String dist2 = String.format("%.0f", distanceToTurn);
-        TextView distanceToTurnTxt;
-        distanceToTurnTxt = (TextView) findViewById(R.id.txtDistanceToTurn);
-        distanceToTurnTxt.setText("Distance to turn: " + dist2 + "m");/////////////////////
-        if (distanceToTurn < 20 && (distanceToTrackEnd > distanceFromTurnToTrackEnd)) {
-            for (int i = 0; i < myLocations.size(); i++) {
-                MyTrackPoints converted = new MyTrackPoints();
-                converted.x = convertingGpsCoordToXY.convertLon(myLocations.get(i).x);
-                converted.y = convertingGpsCoordToXY.convertLat(myLocations.get(i).y);
-                myLocHist.add(converted);
-            }
+        if (trackTurns.get(index) != 0) {
+            distanceToTurnTxt.setVisibility(View.VISIBLE);
+            distanceToTurnTxt.setText("Distance to turn: " + dist2 + "m");
+            if (distanceToTurn < 30&& (distanceToTrackEnd > distanceFromTurnToTrackEnd)) {
+                for (int i = 0; i < myLocations.size(); i++) {
+                    MyTrackPoints converted = new MyTrackPoints();
+                    converted.x = convertingGpsCoordToXY.convertLon(myLocations.get(i).x);
+                    converted.y = convertingGpsCoordToXY.convertLat(myLocations.get(i).y);
+                    myLocHist.add(converted);
+                }
 
-            AverageDirection averageDirection = new AverageDirection();
-            double angle = 0;
+                AverageDirection averageDirection = new AverageDirection();
+                double angle = 0;
 
-            AlgorithmsInterface smoothingAlgorithm = new SmoothingAlgorithm();
-            AlgorithmsInterface getSmoothingAlgorithm = new MovingAverage();
-            List<MyTrackPoints> smoothRealList;
-            RadioButton rbtnReal = (RadioButton)findViewById(R.id.realButton);
-            RadioButton rbtnMov = (RadioButton)findViewById(R.id.movAvgButton);
-            RadioButton rbtnSmo = (RadioButton)findViewById(R.id.smoothButton);
-            if(myLocHist.size() > 3)
-            {
-                if(rbtnSmo.isChecked()){
-                    smoothRealList = smoothingAlgorithm.Smooth(myLocHist);
-                    angle = averageDirection.AvgDirection(smoothRealList, turnPoint);
-                } else if (rbtnMov.isChecked()) {
-                    smoothRealList = getSmoothingAlgorithm.MovAverage(myLocHist);
-                    angle = averageDirection.AvgDirection(smoothRealList, turnPoint);
-                } else if(rbtnReal.isChecked()) {
-                    angle = averageDirection.AvgDirection(myLocHist, turnPoint);
+                AlgorithmsInterface smoothingAlgorithm = new SmoothingAlgorithm();
+                AlgorithmsInterface getSmoothingAlgorithm = new MovingAverage();
+                List<MyTrackPoints> smoothRealList;
+                RadioButton rbtnReal = (RadioButton) findViewById(R.id.realButton);
+                RadioButton rbtnMov = (RadioButton) findViewById(R.id.movAvgButton);
+                RadioButton rbtnSmo = (RadioButton) findViewById(R.id.smoothButton);
+                if (myLocHist.size() > 3) {
+                    if (rbtnSmo.isChecked()) {
+                        smoothRealList = smoothingAlgorithm.Smooth(myLocHist);
+                        angle = averageDirection.AvgDirection(smoothRealList, turnPoint);
+                    } else if (rbtnMov.isChecked()) {
+                        smoothRealList = getSmoothingAlgorithm.MovAverage(myLocHist);
+                        angle = averageDirection.AvgDirection(smoothRealList, turnPoint);
+                    } else if (rbtnReal.isChecked()) {
+                        angle = averageDirection.AvgDirection(myLocHist, turnPoint);
+                    }
+                }
+                if (turnLR != null && myLocHist.size() > 2) {
+                    setImage(angle, turnLR);
                 }
             }
-
-            distanceToTurnTxt.setText("Distance to turn: " + dist2 + "m");
-            if (turnLR != null && myLocHist.size() > 2) {
-                setImage(angle, turnLR);
-            }
-            trackID = turningPoint(myTrackPointsList, trackID); //detect in which point is turning
-            turnLR = turnLeftRight(myTrackPointsList, trackID);  //detect if turn is left or right
-
-            locTurn.y = myTrackPointsList.get(trackID).y;
-            locTurn.x = myTrackPointsList.get(trackID).x;
-            locAfterTurn.y = myTrackPointsList.get(trackID + 1).y;
-            locAfterTurn.x = myTrackPointsList.get(trackID + 1).x;
-            turnPoint.clear();
-            turnPoint.add(locTurn);
-            turnPoint.add(locAfterTurn);
-        } else {
+        }else{
+            distanceToTurnTxt.setVisibility(View.GONE);
             ImageView imageView = (ImageView) findViewById(R.id.imgViewArrow);
             imageView.setImageDrawable(null);
         }
     }
-
-    String mess = null;
-    // userLocationStatus = new UserLocationStatus();
-        /*counter = userLocationStatus.CalculatingIfUserLeftSlope(myLocLeftSlopeTrack, myLocation, counter);
-        if (counter > 4) {
-            mess = "User has left the slope!";
-        }
-
-        Animation anim = new AlphaAnimation(0.0f, 1.0f);
-        anim.setDuration(500);
-        anim.setStartOffset(20);
-        anim.setRepeatMode(Animation.REVERSE);
-        anim.setRepeatCount(Animation.INFINITE);
-
-        TextView leftSlope = (TextView) findViewById(R.id.editText);
-        if (mess != null) {
-            leftSlope.setText("" + mess);
-            leftSlope.startAnimation(anim);
-        } else {
-            leftSlope.setText("");
-        }
-    }
-*/
 
     public void setImage(double angle, String turnLR) {
         ImageView imageView = (ImageView) findViewById(R.id.imgViewArrow);
