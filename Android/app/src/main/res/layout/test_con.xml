@@ -73,9 +73,11 @@
         android:text="Stop"
         android:id="@+id/stopBtn"
         android:background="#ffffff"
-        android:layout_alignBottom="@+id/imgViewArrow"
-        android:layout_toRightOf="@+id/txtDistanceToTurn"
-        android:layout_toEndOf="@+id/txtDistanceToTurn" />
+        android:layout_alignTop="@+id/startBtn"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="26dp"
+        android:layout_marginEnd="26dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -86,10 +88,61 @@
         style="@style/txt_Color"
         android:layout_alignLeft="@+id/imgViewArrow"
         android:layout_alignStart="@+id/imgViewArrow"
-        android:layout_alignBottom="@+id/imgViewArrow"
         android:layout_alignRight="@+id/imgViewArrow"
         android:layout_alignEnd="@+id/imgViewArrow"
-        android:layout_alignTop="@+id/imgViewArrow" />
+        android:layout_alignTop="@+id/imgViewArrow"
+        android:layout_alignBottom="@+id/txtDistanceToTurn"
+        android:visibility="invisible" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rGroup"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/distanceTxt"
+        android:layout_alignStart="@+id/distanceTxt"
+        android:layout_above="@+id/startBtn">
+
+        <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Moving Average"
+        android:id="@+id/movAvgButton"
+        android:checked="true"
+        android:onClick="onRadioButtonClicked"
+        android:layout_alignTop="@+id/imgViewArrow"
+        android:layout_alignRight="@+id/startBtn"
+        android:layout_alignEnd="@+id/startBtn"
+        android:layout_marginRight="27dp"
+        android:layout_marginEnd="27dp"
+            android:enabled="true"
+            android:clickable="true" />
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Smooth"
+        android:id="@+id/smoothButton"
+        android:onClick="onRadioButtonClicked"
+        android:layout_alignTop="@+id/movAvgButton"
+        android:layout_toRightOf="@+id/stopBtn"
+        android:layout_toEndOf="@+id/stopBtn"
+        android:clickable="true"
+        android:enabled="true" />
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Real points"
+        android:id="@+id/realButton"
+        android:layout_alignTop="@+id/movAvgButton"
+        android:layout_toRightOf="@+id/movAvgButton"
+        android:layout_toEndOf="@+id/movAvgButton"
+        android:enabled="true"
+        android:clickable="true"
+        android:nestedScrollingEnabled="false"
+        android:onClick="onRadioButtonClicked" />
+    </RadioGroup>
 
 
 </RelativeLayout>

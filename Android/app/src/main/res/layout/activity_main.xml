@@ -39,16 +39,16 @@
 
     </GridLayout>
 
-    <Button
-        android:layout_width="250dp"
-        android:layout_height="70dp"
-        android:text="@string/simulate"
-        android:id="@+id/simulateBtn"
-        android:layout_row="3"
-        android:layout_column="1"
-        android:layout_below="@+id/gridLayout"
-        android:layout_alignRight="@+id/gridLayout"
-        android:layout_alignEnd="@+id/gridLayout" />
+    <!--<Button-->
+        <!--android:layout_width="250dp"-->
+        <!--android:layout_height="70dp"-->
+        <!--android:text="@string/simulate"-->
+        <!--android:id="@+id/simulateBtn"-->
+        <!--android:layout_row="3"-->
+        <!--android:layout_column="1"-->
+        <!--android:layout_below="@+id/gridLayout"-->
+        <!--android:layout_alignRight="@+id/gridLayout"-->
+        <!--android:layout_alignEnd="@+id/gridLayout" />-->
 
     <Button
         android:layout_width="250dp"

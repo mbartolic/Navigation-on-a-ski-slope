@@ -1,7 +1,14 @@
 package com.example.rene.navigation_on_a_ski_slope;
 
+import android.graphics.Point;
+import android.support.annotation.NonNull;
+import android.widget.Toast;
+
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 /**
  *
@@ -18,40 +25,195 @@ public class AverageDirection {
      * @param myLocalHistory
      * @return
      */
-    public double AvgDirection(List<MyTrackPoints> myLocalHistory, List<MyTrackPoints> pathAfterTurn) {
-        double x1 = 0, y1 = 0, x2 = 0, y2 = 0;
+    public double AvgDirection(List<MyTrackPoints> myLocalHistory,List<MyTrackPoints> pathAfterTurn) {
         List<MyTrackPoints> avgPoint = new ArrayList<>();
-        boolean zastavica1 = false;
-        boolean zastavica2 = false;
-        double angle = 0;
 
-        int size = myLocalHistory.size();
-        for(int i = 2; i<size; i++){
-        if (myLocalHistory.size() > 3) {
-            if ( ((myLocalHistory.get(i).x < myLocalHistory.get(i - 1).x) && (myLocalHistory.get(i - 1).x > myLocalHistory.get(i - 2).x) ) || ( ((myLocalHistory.get(i).y) < myLocalHistory.get(i - 1).y) && (myLocalHistory.get(i - 1).y > myLocalHistory.get(i - 2).y) ) ){
-                x1 = myLocalHistory.get(i - 1).x;
-                y1 = myLocalHistory.get(i - 1).y;
+        List<MyTrackPoints> extremePoints = new ArrayList<>();
+        double angle = 0;
+        Boolean flagx1 = false;
+        Boolean flagx2 = false;
+        Boolean flagy1 = false;
+        Boolean flagY2 = false;
+        MyTrackPoints extPoint;
+        MyTrackPoints futurePoint=new MyTrackPoints();
+        MyTrackPoints p;
+        List<MyTrackPoints> point=new List<MyTrackPoints>() {
+            @Override
+            public void add(int location, MyTrackPoints object) {
+
+            }
+
+            @Override
+            public boolean add(MyTrackPoints object) {
+                return false;
+            }
+
+            @Override
+            public boolean addAll(int location, Collection<? extends MyTrackPoints> collection) {
+                return false;
+            }
+
+            @Override
+            public boolean addAll(Collection<? extends MyTrackPoints> collection) {
+                return false;
+            }
+
+            @Override
+            public void clear() {
+
+            }
+
+            @Override
+            public boolean contains(Object object) {
+                return false;
+            }
+
+            @Override
+            public boolean containsAll(Collection<?> collection) {
+                return false;
+            }
+
+            @Override
+            public MyTrackPoints get(int location) {
+                return null;
+            }
+
+            @Override
+            public int indexOf(Object object) {
+                return 0;
+            }
+
+            @Override
+            public boolean isEmpty() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            public Iterator<MyTrackPoints> iterator() {
+                return null;
+            }
+
+            @Override
+            public int lastIndexOf(Object object) {
+                return 0;
+            }
+
+            @Override
+            public ListIterator<MyTrackPoints> listIterator() {
+                return null;
+            }
+
+            @NonNull
+            @Override
+            public ListIterator<MyTrackPoints> listIterator(int location) {
+                return null;
+            }
+
+            @Override
+            public MyTrackPoints remove(int location) {
+                return null;
+            }
+
+            @Override
+            public boolean remove(Object object) {
+                return false;
+            }
+
+            @Override
+            public boolean removeAll(Collection<?> collection) {
+                return false;
+            }
+
+            @Override
+            public boolean retainAll(Collection<?> collection) {
+                return false;
+            }
+
+            @Override
+            public MyTrackPoints set(int location, MyTrackPoints object) {
+                return null;
+            }
+
+            @Override
+            public int size() {
+                return 0;
+            }
+
+            @NonNull
+            @Override
+            public List<MyTrackPoints> subList(int start, int end) {
+                return null;
+            }
+
+            @NonNull
+            @Override
+            public Object[] toArray() {
+                return new Object[0];
+            }
+
+            @NonNull
+            @Override
+            public <T> T[] toArray(T[] array) {
+                return null;
+            }
+        };
+
+
+        for(int i = 5; i<myLocalHistory.size(); i++) {
+            if (((myLocalHistory.get(i - 2).x < myLocalHistory.get(i - 1).x) && (myLocalHistory.get(i - 2).x < myLocalHistory.get(i).x) && ((myLocalHistory.get(i - 2).x) < myLocalHistory.get(i - 3).x) && (myLocalHistory.get(i - 2).x < myLocalHistory.get(i - 4).x) && (myLocalHistory.get(i - 2).x < myLocalHistory.get(i - 5).x))) {
+                extPoint= new MyTrackPoints();
+                extPoint.x = myLocalHistory.get(i - 2).x;
+                extPoint.y = myLocalHistory.get(i - 2).y;
                 //left
-                zastavica1 = true;
+                flagx1 = true;
+                extremePoints.add(extPoint);
+
             }
-            if  ( ((myLocalHistory.get(i).x > myLocalHistory.get(i - 1).x) && (myLocalHistory.get(i - 1).x < myLocalHistory.get(i - 2).x) ) || ( ((myLocalHistory.get(i).y) > myLocalHistory.get(i - 1).y) && (myLocalHistory.get(i - 1).y < myLocalHistory.get(i - 2).y) ) ) {
-                x2 = myLocalHistory.get(i - 1).x;
-                y2 = myLocalHistory.get(i - 1).y;
+            if (((myLocalHistory.get(i - 2).x > myLocalHistory.get(i - 1).x) && (myLocalHistory.get(i - 2).x > myLocalHistory.get(i).x) && ((myLocalHistory.get(i - 2).x) > myLocalHistory.get(i - 3).x) && (myLocalHistory.get(i - 2).x > myLocalHistory.get(i - 4).x) && (myLocalHistory.get(i - 2).x > myLocalHistory.get(i - 5).x))) {
+                extPoint= new MyTrackPoints();
+                extPoint.x = myLocalHistory.get(i - 2).x;
+                extPoint.y = myLocalHistory.get(i - 2).y;
                 //right
-                zastavica2 = true;
+                flagx2 = true;
+                extremePoints.add(extPoint);
+
             }
-            if (zastavica1 && zastavica2) {
-                MyTrackPoints poin = new MyTrackPoints();
-                poin.x = (x1 + x2) / 2;
-                poin.y = (y1 + y2) / 2;
-                zastavica1 = false;
-                zastavica2 = false;
-                avgPoint.add(poin);
+            if (((myLocalHistory.get(i - 2).y < myLocalHistory.get(i - 1).y) && (myLocalHistory.get(i - 2).y < myLocalHistory.get(i).y) && ((myLocalHistory.get(i - 2).y) < myLocalHistory.get(i - 3).y) && (myLocalHistory.get(i - 2).y < myLocalHistory.get(i - 4).y) && (myLocalHistory.get(i - 2).y < myLocalHistory.get(i - 5).y))) {
+                extPoint= new MyTrackPoints();
+                extPoint.x = myLocalHistory.get(i - 2).x;
+                extPoint.y = myLocalHistory.get(i - 2).y;
+                //left
+                flagy1 = true;
+                extremePoints.add(extPoint);
+
+            }
+            if (((myLocalHistory.get(i - 2).y > myLocalHistory.get(i - 1).y) && (myLocalHistory.get(i - 2).y > myLocalHistory.get(i).y) && ((myLocalHistory.get(i - 2).y) > myLocalHistory.get(i - 3).y) && (myLocalHistory.get(i - 2).y > myLocalHistory.get(i - 4).y) && (myLocalHistory.get(i - 2).y > myLocalHistory.get(i - 5).y))) {
+                extPoint= new MyTrackPoints();
+                extPoint.x = myLocalHistory.get(i - 2).x;
+                extPoint.y = myLocalHistory.get(i - 2).y;
+                //right
+                flagY2 = true;
+                extremePoints.add(extPoint);
+
+            }
+            int j = myLocalHistory.size();
+
+            if (flagx1 && flagx2 || flagy1 && flagY2) {
+                flagx1 = false;
+                flagx2 = false;
+                flagy1 = false;
+                flagY2 = false;
+                int ii = extremePoints.size() - 1;
+                p = new MyTrackPoints();
+                p.x = (extremePoints.get(ii).x + extremePoints.get(ii - 1).x) / 2;
+                p.y = (extremePoints.get(ii).y + extremePoints.get(ii - 1).y) / 2;
+                avgPoint.add(p);
+            }
                 int numberOfPoints = avgPoint.size();
                 angle = futurePoints(numberOfPoints, avgPoint, pathAfterTurn);
-            }
         }
-        }
+
         return angle;
     }
 
@@ -64,12 +226,15 @@ public class AverageDirection {
     private double futurePoints (int numberOfPoints, List<MyTrackPoints> avgPoint, List<MyTrackPoints> pathAfterTurn) {
         double angle = 0;
         MyTrackPoints futurePoint = new MyTrackPoints();
+        List<MyTrackPoints> PointAtMom = new ArrayList<>();
         if (numberOfPoints >= 2) {
             double futurex = avgPoint.get(numberOfPoints - 1).x - avgPoint.get(numberOfPoints - 2).x;
             double futurey = avgPoint.get(numberOfPoints - 1).y - avgPoint.get(numberOfPoints - 2).y;
             futurePoint.x = avgPoint.get(numberOfPoints - 1).x + futurex;
             futurePoint.y = avgPoint.get(numberOfPoints - 1).y + futurey;
-            angle = angleBetweenPoints(futurePoint, pathAfterTurn);
+            PointAtMom.add(avgPoint.get(avgPoint.size()-1));
+            PointAtMom.add(futurePoint);
+            angle = angleBetweenPoints(PointAtMom, pathAfterTurn);
         }
         return angle;
     }
@@ -83,14 +248,14 @@ public class AverageDirection {
      * @param PointAtTheMoment
      * @return
      */
-    private double angleBetweenPoints(MyTrackPoints PointAtTheMoment, List<MyTrackPoints> pathAfterTurn) {
-        turn.x = pathAfterTurn.get(0).x;      //location of turn in wien converted
-        turn.y = pathAfterTurn.get(0).y;     //location if turn in wien converted
+    private double angleBetweenPoints(List<MyTrackPoints> PointAtTheMoment, List<MyTrackPoints> pathAfterTurn) {
+        turn.x = pathAfterTurn.get(0).x;
+        turn.y = pathAfterTurn.get(0).y;
         pathAfterTur.x = pathAfterTurn.get(1).x;
         pathAfterTur.y =pathAfterTurn.get(1).y;
 
-        VectorBeforeTurn.x = PointAtTheMoment.x - turn.x;
-        VectorBeforeTurn.y = PointAtTheMoment.y - turn.y;
+        VectorBeforeTurn.x = PointAtTheMoment.get(PointAtTheMoment.size() - 1).x - PointAtTheMoment.get(PointAtTheMoment.size() - 2).x;
+        VectorBeforeTurn.y = PointAtTheMoment.get(PointAtTheMoment.size() - 1).y - PointAtTheMoment.get(PointAtTheMoment.size() - 2).y;
 
         VectorAfterTurn.x = pathAfterTur.x - turn.x;
         VectorAfterTurn.y = pathAfterTur.y - turn.y;
