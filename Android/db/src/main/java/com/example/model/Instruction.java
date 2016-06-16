@@ -9,7 +9,6 @@ import java.util.List;
 
 public class Instruction implements Serializable {
 
-
     private float distance;
 
     private String text;
@@ -63,10 +62,7 @@ public class Instruction implements Serializable {
 
     public class VoiceInstructions implements Serializable{
 
-
-
         private List<String> coordinate;
-
 
         private String text;
 

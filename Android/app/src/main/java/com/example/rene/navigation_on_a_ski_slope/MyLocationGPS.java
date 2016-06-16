@@ -9,22 +9,20 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RadioButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.example.model.Coordinates;
 import com.example.model.Instruction;
 import com.example.mvp.presenter.CoordinatesPresenter;
 import com.example.mvp.presenter.impl.CoordinatesPresenterImpl;
 import com.example.mvp.view.CoordiantesView;
 import com.example.utils.Constants;
+
 import java.util.ArrayList;
 import java.util.List;
 import Algorithms.AlgorithmsInterface;
@@ -32,13 +30,10 @@ import Algorithms.MovingAverage;
 import Algorithms.SmoothingAlgorithm;
 
 public class MyLocationGPS extends Activity implements LocationListener, CoordiantesView {
-
     private LocationManager mLocMgr;
     private LocationListener locationListener;
     CoordinatesPresenter coordinatesPresenter;
-    private static final String LOG_KEY = "coordianes";
-    int track;
-    List<MyTrackPoints> myTrackPointsList = null;
+    int track, algID;
     ArrayList<MyTrackPoints> myLocations = null;
     List<MyTrackPoints> turnPoint = new ArrayList<>();
     MyTrackPoints locTurn = new MyTrackPoints();
@@ -48,213 +43,109 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
     List<Location> myLocLeftSlopeTrack;
     List<Location> myLocLeftSlopeSkii;
     List<Integer> trackTurns;
-
+    ProgressBar progressBar;
     Location myLocation;
     List<MyTrackPoints> myLocHist;
     MyTrackPoints point;
-    TextView txtServerCoord;
     DistanceFromPoint distanceFromPoint;
     final Context context = this;
     int index = 0;
-    TextView distanceToTurnTxt;
+    List<MyTrackPoints> myTrackPointsList = null;
+    public MyTrackPoints coord;
 
+    public void storeFetchedCoordinates(Coordinates coordinates) {
+        myTrackPointsList = new ArrayList<>();
+        if (track == 3) {
+
+            for (Instruction instruction : coordinates.getPaths().get(0).getInstructions()) {
+
+                coord = new MyTrackPoints();
+                coord.x = (Double.parseDouble(instruction.getCoordinate().get(0)));
+                coord.y = (Double.parseDouble(instruction.getCoordinate().get(1)));
+                coord.turn = instruction.getSign();
+                myTrackPointsList.add(coord);
+            }
+
+            trackID = turningPoint(myTrackPointsList, trackID); //detect in which point is turning
+            turnLR = turnLeftRight(myTrackPointsList, trackID);  //detect if turn is left or right
+            locTurn.y = myTrackPointsList.get(trackID - 1).y;
+            locTurn.x = myTrackPointsList.get(trackID - 1).x;
+            locAfterTurn.y = myTrackPointsList.get(trackID).y;
+            locAfterTurn.x = myTrackPointsList.get(trackID).x;
+            turnPoint.add(locTurn);
+            turnPoint.add(locAfterTurn);
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test_con);
-        addListenerToButton();
         myLocations = new ArrayList<>();
         myLocLeftSlopeSkii = new ArrayList<>();
-        txtServerCoord = (TextView) findViewById(R.id.listViewServerCoord);
-
-        distanceToTurnTxt = (TextView) findViewById(R.id.txtDistanceToTurn);
-        distanceToTurnTxt.setVisibility(View.GONE);
+        progressBar = (ProgressBar)findViewById(R.id.progressBar2);
 
         //Inicijalizacija klase koja implementira sucelje CoordinatesPresenter
         coordinatesPresenter = new CoordinatesPresenterImpl(this);
         //Dohvacanje koordinata preko sucelja CoordinatesPresenter
-        coordinatesPresenter.getData(Constants.SOURCE_POINTS, Constants.DESTINATION_POINTS, Constants.CAR_ROUTE_TYPE, Constants.VOICE_INSTRUCTIONS, Constants.LANGUAGE);
+
         mLocMgr = (LocationManager) getSystemService(LOCATION_SERVICE);
         if (savedInstanceState == null) {
             Bundle bundle = getIntent().getExtras();
             if (bundle == null) {
                 track = 0;
+                algID = 1;
             } else {
                 track = getIntent().getExtras().getInt("track");
+                algID = getIntent().getExtras().getInt("alg");
             }
         }
 
         if (track == 1) {
             MyTrackPoints point1, point2, point3;
-//            point1 = new MyTrackPoints();
-//            point1.x =  46.306509;
-//            point1.y =  16.344788;
-//            point1.turn = 0;
-//            point2 = new MyTrackPoints();
-//            point2.x = 46.307028;
-//            point2.y = 16.344563;
-//            point2.turn = 2;
-//            point3 = new MyTrackPoints();
-//            point3.x = 46.307339;
-//            point3.y = 16.345904;
-//            point3.turn = 0;
-//            point4 = new MyTrackPoints();
-//            point4.x = 46.307791;
-//            point4.y = 16.347299;
-//            point4.turn = -2;
             point1 = new MyTrackPoints();
-<<<<<<< HEAD
-            point1.x =  46.306509;
-            point1.y =  16.344788;
+            point1.x =  46.308044;
+            point1.y =  16.345183;
             point1.turn = 0;
             point2 = new MyTrackPoints();
-            point2.x = 46.307028;
-            point2.y = 16.344563;
+            point2.x =  46.307642;
+            point2.y =  16.343479;
             point2.turn = 2;
             point3 = new MyTrackPoints();
-            point3.x = 46.307339;
-            point3.y = 16.345904;
+            point3.x =  46.308159;
+            point3.y =  16.343132;
             point3.turn = 0;
-            point4 = new MyTrackPoints();
-            point4.x = 46.307791;
-            point4.y = 16.347299;
-            point4.turn = -2;
-            point5 = new MyTrackPoints();
-            point5.x =  46.308525;
-            point5.y =  16.347181;        //turning point
-            point5.turn = -2;
-            point6 = new MyTrackPoints();
-            point6.x =  46.307680;
-            point6.y =  16.343619;
-            point6.turn = 2;
-            point7 = new MyTrackPoints();
-            point7.x =  46.308391;
-            point7.y =  16.343029;
-            point7.turn = 2;
-            point8 = new MyTrackPoints();
-            point8.x =  46.308628;
-            point8.y =  16.343737;
-            point8.turn = -2;
-            point9 = new MyTrackPoints();
-            point9.x =  46.309584;
-            point9.y =  16.343329;
-            point9.turn = 0;
-=======
-            point1.x =  46.307806;
-            point1.y =  16.344166;        //turning point
-            point1.turn = 0;
-            point2 = new MyTrackPoints();
-            point2.x =  46.307680;
-            point2.y =  16.343619;
-            point2.turn = 2;
-            point3 = new MyTrackPoints();
-            point3.x =  46.308391;
-            point3.y =  16.343029;
-            point3.turn = 0;
-//            point8 = new MyTrackPoints();
-//            point8.x =  46.308628;
-//            point8.y =  16.343737;
-//            point8.turn = -2;
-//            point9 = new MyTrackPoints();
-//            point9.x =  46.309584;
-//            point9.y =  16.343329;
-//            point9.turn = 0;
->>>>>>> Modularnost_+_udaljenost
 
             myTrackPointsList = new ArrayList<>();
             myTrackPointsList.add(point1);
             myTrackPointsList.add(point2);
             myTrackPointsList.add(point3);
-//            myTrackPointsList.add(point4);
-//            myTrackPointsList.add(point5);
-//            myTrackPointsList.add(point6);
-//            myTrackPointsList.add(point7);
-//            myTrackPointsList.add(point8);
-//            myTrackPointsList.add(point9);
 
         } else if (track == 2) {
-            MyTrackPoints point1, point2, point3, point4, point5, point6, point7;
-            point1 = new MyTrackPoints();
-            point1.x = 46.302627;
-            point1.y = 16.337065;
-            point1.turn = 0;
-            point2 = new MyTrackPoints();
-            point2.x = 46.302576;
-            point2.y = 16.336854;
-            point2.turn = 0;
-            point3 = new MyTrackPoints();
-            point3.x = 46.302517;
-            point3.y = 16.336727;
-            point3.turn = -1;
-            point4 = new MyTrackPoints();
-            point4.x = 46.302316;
-            point4.y = 16.336794;
-            point4.turn = 0;
-            point5 = new MyTrackPoints();
-            point5.x = 46.302054;
-            point5.y = 16.336893;        //turning point
-            point5.turn = 0;
-            point6 = new MyTrackPoints();
-            point6.x = 46.301974;
-            point6.y = 16.336925;
-            point6.turn = 1;
-            point7 = new MyTrackPoints();
-            point7.x = 46.301944;
-            point7.y = 16.336783;
-            point7.turn = 0;
+            LocalFileRead localFileRead = new LocalFileRead();
 
-            myTrackPointsList = new ArrayList<>();
-            myTrackPointsList.add(point1);
-            myTrackPointsList.add(point2);
-            myTrackPointsList.add(point3);
-            myTrackPointsList.add(point4);
-            myTrackPointsList.add(point5);
-            myTrackPointsList.add(point6);
-            myTrackPointsList.add(point7);
-
+            myTrackPointsList = localFileRead.readFile();
         } else if (track == 3) {
-            MyTrackPoints point1, point2, point3, point4, point5, point6;
-            point1 = new MyTrackPoints();
-            point1.x = 46.309225;
-            point1.y = 16.346991;
-            point1.turn = 0;
-            point2 = new MyTrackPoints();
-            point2.x = 46.309436;
-            point2.y = 16.346951;
-            point2.turn = 1;
-            point3 = new MyTrackPoints();
-            point3.x = 46.309499;
-            point3.y = 16.347198;
-            point3.turn = 0;
-            point4 = new MyTrackPoints();
-            point4.x = 46.309566;
-            point4.y = 16.347455;
-            point4.turn = 0;
-            point5 = new MyTrackPoints();
-            point5.x = 46.309625;
-            point5.y = 16.347761;
-            point5.turn = 0;
-            point6 = new MyTrackPoints();
-            point6.x = 46.309940;
-            point6.y = 16.349011;
-            point6.turn = 0;
-            myTrackPointsList = new ArrayList<>();
-            myTrackPointsList.add(point1);
-            myTrackPointsList.add(point2);
-            myTrackPointsList.add(point3);
-            myTrackPointsList.add(point4);
-            myTrackPointsList.add(point5);
-            myTrackPointsList.add(point6);
+            Bundle bundle = getIntent().getExtras();
+            if (bundle == null) {} else {
+                String sorX = getIntent().getExtras().getString("sX");
+                String sorY = getIntent().getExtras().getString("sY");
+                String desX = getIntent().getExtras().getString("dX");
+                String desY = getIntent().getExtras().getString("dY");
+                String sourcePoints = sorY + "," + sorX;
+                String destinationPoints = desY + "," + desX;
+                coordinatesPresenter.getData(sourcePoints, destinationPoints, Constants.CAR_ROUTE_TYPE, Constants.VOICE_INSTRUCTIONS, Constants.LANGUAGE);
+            }
         }
-        trackID = turningPoint(myTrackPointsList, trackID); //detect in which point is turning
-        turnLR = turnLeftRight(myTrackPointsList, trackID);  //detect if turn is left or right
-
-        locTurn.y = myTrackPointsList.get(trackID).y;
-        locTurn.x = myTrackPointsList.get(trackID).x;
-        locAfterTurn.y = myTrackPointsList.get(trackID + 1).y;
-        locAfterTurn.x = myTrackPointsList.get(trackID + 1).x;
-        turnPoint.add(locTurn);
-        turnPoint.add(locAfterTurn);
+        if(track == 1 || track == 2){
+            trackID = turningPoint(myTrackPointsList, trackID); //detect in which point is turning
+            turnLR = turnLeftRight(myTrackPointsList, trackID);  //detect if turn is left or right
+            locTurn.y = myTrackPointsList.get(trackID-1).y;
+            locTurn.x = myTrackPointsList.get(trackID-1).x;
+            locAfterTurn.y = myTrackPointsList.get(trackID).y;
+            locAfterTurn.x = myTrackPointsList.get(trackID).x;
+            turnPoint.add(locTurn);
+            turnPoint.add(locAfterTurn);
+        }
     }
 
     public String turnLeftRight(List<MyTrackPoints> myTrPointList, int turnID) {
@@ -279,78 +170,14 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
         return j;
     }
 
-    List<MyTrackPoints> mypp = new ArrayList<>();
 
-    public void storeFetchedCoordinates(Coordinates coordinates) {
-        MyTrackPoints coord;
-
-        for (Instruction instruction : coordinates.getPaths().get(0).getInstructions()) {
-            coord = new MyTrackPoints();
-            coord.x = (Double.parseDouble(instruction.getCoordinate().get(0)));
-            coord.y = (Double.parseDouble(instruction.getCoordinate().get(1)));
-            coord.turn = instruction.getSign();
-            mypp.add(coord);
-        }
-        ispisKoordinata(mypp);
-    }
 
     String var1, var2, var3;
     StringBuilder sb = new StringBuilder();
 
-    public void ispisKoordinata(List<MyTrackPoints> myp) {
-        txtServerCoord = (TextView) findViewById(R.id.listViewServerCoord);
-        for (int i = 0; i < myp.size(); i++) {
-            var1 = String.valueOf(myp.get(i).x);
-            var2 = String.valueOf(myp.get(i).y);
-            var3 = String.valueOf(myp.get(i).turn);
-            sb.append("X: ");
-            sb.append(var1);
-            sb.append(", ");
-            sb.append(" Y: ");
-            sb.append(var2);
-            sb.append(", ");
-            sb.append(" Sign: ");
-            sb.append(var3);
-            sb.append("\n");
-        }
-        txtServerCoord.setText(sb.toString());
-    }
-
-    public void addListenerToButton() {
-        Button btnStart = (Button) findViewById(R.id.startBtn);
-        Button btnStop = (Button) findViewById(R.id.stopBtn);
-
-        btnStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                mLocMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, MyLocationGPS.this);
-                txtServerCoord.setText("");
-                Toast.makeText(MyLocationGPS.this, "GPS ON",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        btnStop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (mLocMgr != null)
-                    mLocMgr.removeUpdates(MyLocationGPS.this);
-                Toast.makeText(MyLocationGPS.this, "GPS OFF",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    public void onRadioButtonClicked(View view) {
-    }
-
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         if (mLocMgr != null)
@@ -365,6 +192,18 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
                 return;
             }mLocMgr.removeUpdates(this);
         finish();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mLocMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, MyLocationGPS.this);
+        TextView displayMessage;
+        displayMessage=(TextView) findViewById(R.id.messageDesplaytxt);
+        displayMessage.setText("Searching...");
+        TextView metarDisplayTxt;
+        metarDisplayTxt=(TextView) findViewById(R.id.metarDisplay);
+        metarDisplayTxt.setText("GPS");
     }
 
     @Override
@@ -389,30 +228,21 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
 
     UserLocationStatus userLocationStatus = null;
 
+
     @Override
     public void onLocationChanged(Location location) {
         ConvertingGpsCoordToXY convertingGpsCoordToXY = new ConvertingGpsCoordToXY();
-
         smoothAlgList = new ArrayList<>();
         movAlgList = new ArrayList<>();
-
         myLocation = new Location(location);
         myLocHist = new ArrayList<>();
         distanceFromPoint = new DistanceFromPoint();
         Location l1 = new Location(LocationManager.GPS_PROVIDER);
         Location l2 = new Location(LocationManager.GPS_PROVIDER);
-
         point = new MyTrackPoints();
         point.x = location.getLongitude();     //get long gps
         point.y = location.getLatitude();      //get lat gps
         myLocations.add(point);
-
-        int size = myTrackPointsList.size() - 1;
-        l1.setLongitude(myTrackPointsList.get(size).y);    //track end y
-        l1.setLatitude(myTrackPointsList.get(size).x);     //track end x
-        l2.setLongitude(locTurn.y);                        //turn y
-        l2.setLatitude(locTurn.x);                         //turn x
-
         myLocLeftSlopeTrack = new ArrayList<>();
         trackTurns = new ArrayList<>();
         myLocLeftSlopeSkii.add(location);
@@ -433,16 +263,33 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
         if (distanceToTrackEnd < 10) {
             Toast.makeText(MyLocationGPS.this, "FINISH",
                     Toast.LENGTH_SHORT).show();
+
+            if (mLocMgr != null)
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }mLocMgr.removeUpdates(this);
         }
 
         String dist = String.format("%.0f", distanceToTrackEnd);
-        TextView distanceToFinishTxt;
-        distanceToFinishTxt = (TextView) findViewById(R.id.distanceTxt);
-        distanceToFinishTxt.setText("Distance to finish: " + dist + "m");
+        TextView metarDisplayTxt, metarTxt, displayMessage;
+        progressBar.setVisibility(View.INVISIBLE);
+        displayMessage=(TextView) findViewById(R.id.messageDesplaytxt);
+        displayMessage.setText("Distance to finish: ");
+        metarDisplayTxt=(TextView) findViewById(R.id.metarDisplay);
+        metarDisplayTxt.setText(dist);
+        metarTxt=(TextView) findViewById(R.id.metric);
+        metarTxt.setText("m");
         String dist2 = String.format("%.0f", distanceToTurn);
         if (trackTurns.get(index) != 0) {
-            distanceToTurnTxt.setVisibility(View.VISIBLE);
-            distanceToTurnTxt.setText("Distance to turn: " + dist2 + "m");
+            displayMessage.setText("Distance to turn: ");
+            metarDisplayTxt.setText(dist2);
             if (distanceToTurn < 30&& (distanceToTrackEnd > distanceFromTurnToTrackEnd)) {
                 for (int i = 0; i < myLocations.size(); i++) {
                     MyTrackPoints converted = new MyTrackPoints();
@@ -457,17 +304,14 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
                 AlgorithmsInterface smoothingAlgorithm = new SmoothingAlgorithm();
                 AlgorithmsInterface getSmoothingAlgorithm = new MovingAverage();
                 List<MyTrackPoints> smoothRealList;
-                RadioButton rbtnReal = (RadioButton) findViewById(R.id.realButton);
-                RadioButton rbtnMov = (RadioButton) findViewById(R.id.movAvgButton);
-                RadioButton rbtnSmo = (RadioButton) findViewById(R.id.smoothButton);
                 if (myLocHist.size() > 3) {
-                    if (rbtnSmo.isChecked()) {
+                    if (algID == 2) {
                         smoothRealList = smoothingAlgorithm.Smooth(myLocHist);
                         angle = averageDirection.AvgDirection(smoothRealList, turnPoint);
-                    } else if (rbtnMov.isChecked()) {
+                    } else if (algID == 3) {
                         smoothRealList = getSmoothingAlgorithm.MovAverage(myLocHist);
                         angle = averageDirection.AvgDirection(smoothRealList, turnPoint);
-                    } else if (rbtnReal.isChecked()) {
+                    } else if (algID == 1) {
                         angle = averageDirection.AvgDirection(myLocHist, turnPoint);
                     }
                 }
@@ -476,7 +320,6 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
                 }
             }
         }else{
-            distanceToTurnTxt.setVisibility(View.GONE);
             ImageView imageView = (ImageView) findViewById(R.id.imgViewArrow);
             imageView.setImageDrawable(null);
         }

@@ -5,7 +5,6 @@ import android.location.Location;
 public class DistanceFromPoint {
 
     private Location loc, myloc;
-
     public DistanceFromPoint() {
     }
 

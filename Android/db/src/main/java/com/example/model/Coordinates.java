@@ -8,8 +8,6 @@ import java.util.List;
  */
 public class Coordinates implements Serializable{
 
-
-
     private List<Path> paths;
 
     public List<Path> getPaths() {
@@ -20,10 +18,7 @@ public class Coordinates implements Serializable{
         this.paths = paths;
     }
 
-
     public class Path implements Serializable{
-
-
 
         private float distance;
 

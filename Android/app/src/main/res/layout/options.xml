@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/main_app_theme"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Choose algorithm:"
+        android:id="@+id/textView"
+        android:layout_marginLeft="41dp"
+        android:layout_marginStart="41dp"
+        android:layout_marginTop="35dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        style="@style/txt_Color"
+        android:textSize="20dp" />
+
+    <RadioGroup
+        android:layout_width="308dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/radioGroup"
+        android:layout_alignTop="@+id/textView"
+        android:layout_alignLeft="@+id/textView"
+        android:layout_alignStart="@+id/textView">
+
+        <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Real points"
+        android:id="@+id/realButton"
+        android:layout_marginTop="29dp"
+        style="@style/txt_Color"
+        android:layout_below="@+id/textView"
+        android:layout_alignLeft="@+id/textView"
+        android:layout_alignStart="@+id/textView"
+        android:checked="true" />
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Smooth point algorithm"
+        android:id="@+id/smoothButton"
+        style="@style/txt_Color"
+        android:layout_below="@+id/movAvgButton"
+        android:layout_alignLeft="@+id/textView" />
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Moving averate algorithm"
+        android:id="@+id/movAvgButton"
+        style="@style/txt_Color"
+        android:layout_below="@+id/realButton"
+        android:layout_alignLeft="@+id/textView" />
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Start Y:"
+        android:id="@+id/txtStartY"
+        style="@style/txt_Color"
+        android:layout_above="@+id/destinationX"
+        android:layout_alignRight="@+id/txtEndY"
+        android:layout_alignEnd="@+id/txtEndY"
+        android:textSize="15dp" />
+
+    <EditText
+        android:layout_width="85dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/sourceX"
+        android:inputType="numberDecimal"
+        android:width="100dp"
+        style="@style/txt_Color"
+
+        android:layout_below="@+id/txtTrackPointsInsert"
+        android:layout_alignRight="@+id/sourceY"
+        android:layout_alignEnd="@+id/sourceY"
+        android:layout_alignLeft="@+id/sourceY"
+        android:layout_alignStart="@+id/sourceY" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sourceY"
+        android:inputType="numberDecimal"
+        android:width="100dp"
+        style="@style/txt_Color"
+        android:layout_row="1"
+        android:layout_below="@+id/sourceX"
+        android:layout_toRightOf="@+id/textView2" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/destinationX"
+        android:inputType="numberDecimal"
+        android:width="100dp"
+        style="@style/txt_Color"
+        android:layout_below="@+id/sourceY"
+        android:layout_toRightOf="@+id/textView2" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/destinationY"
+        android:inputType="numberDecimal"
+        android:width="100dp"
+        style="@style/txt_Color"
+        android:layout_row="3"
+        android:layout_below="@+id/destinationX"
+        android:layout_toRightOf="@+id/textView2" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Start X:"
+        android:id="@+id/txtstartX"
+        style="@style/txt_Color"
+        android:layout_alignBottom="@+id/sourceX"
+        android:layout_alignLeft="@+id/txtStartY"
+        android:layout_alignStart="@+id/txtStartY"
+        android:textSize="15dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="End X:"
+        android:id="@+id/txtEndX"
+        style="@style/txt_Color"
+        android:layout_row="6"
+        android:layout_alignBottom="@+id/destinationX"
+        android:layout_alignRight="@+id/txtstartX"
+        android:layout_alignEnd="@+id/txtstartX"
+        android:textSize="15dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="End Y:"
+        android:id="@+id/txtEndY"
+
+        style="@style/txt_Color"
+        android:layout_alignBottom="@+id/destinationY"
+        android:layout_toLeftOf="@+id/destinationY"
+        android:layout_toStartOf="@+id/destinationY"
+        android:textSize="15dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Type track start and end point:"
+        android:id="@+id/txtTrackPointsInsert"
+        style="@style/txt_Color"
+        android:layout_row="8"
+
+        android:layout_alignTop="@+id/radioGroup"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="27dp"
+        android:layout_marginEnd="27dp"
+        android:textSize="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Press back to confirm"
+        android:id="@+id/textView2"
+        android:layout_row="9"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/textView"
+        android:layout_toEndOf="@+id/textView"
+        style="@style/txt_Color"/>
+
+</RelativeLayout>

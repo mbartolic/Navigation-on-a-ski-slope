@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 
-
 /**
  * Displays splash screen on application startup.
  */
@@ -26,9 +25,7 @@ public class SplashScreen extends ActionBarActivity{
                 SplashScreen.this.startActivity(mainIntent);        // starting main activity
                 overridePendingTransition(R.anim.anim_to_down, R.anim.anim_to_up);  //animation when intent starts
                 SplashScreen.this.finish();                     //closing intent
-
             }
-        },slpWait);     //
+        },slpWait);
     }
-
 }

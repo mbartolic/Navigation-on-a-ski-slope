@@ -44,6 +44,6 @@ public class CoordinatesPresenterImpl implements CoordinatesPresenter, OnCoordin
     @Override
     public void fetchedCoordinatesData(Coordinates coordinates) {
         //TODO retrieve data and store in db
-            view.storeFetchedCoordinates(coordinates);
-        }
+        view.storeFetchedCoordinates(coordinates);
     }
+}

@@ -25,7 +25,6 @@ public class CoordinatesDB extends Model {
     @Column (name = "image")
     private String image;
 
-
     public String getLon() {
         return lon;
     }

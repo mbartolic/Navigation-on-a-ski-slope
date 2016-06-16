@@ -4,7 +4,6 @@ package com.example.rene.navigation_on_a_ski_slope;
 public class ConvertingGpsCoordToXY {
 
     private double lon, lat;
-
     public ConvertingGpsCoordToXY() {}
 
     /**
@@ -18,7 +17,6 @@ public class ConvertingGpsCoordToXY {
             lon = lon * (-1);
             return lon;
         }else return lon;
-
     }
 
     /**

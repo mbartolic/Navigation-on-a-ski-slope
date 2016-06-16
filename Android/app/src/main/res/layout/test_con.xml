@@ -18,131 +18,64 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:textAlignment="center"
-        style="@style/txt_Color" />
+        style="@style/txt_Color"
+          android:layout_row="0"
+          android:layout_column="0" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="326dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Distance to finish:"
-        android:id="@+id/distanceTxt"
-        android:textSize="20dp"
         style="@style/txt_Color"
-        android:layout_marginLeft="40dp"
-        android:layout_marginStart="40dp"
-
-        android:layout_alignTop="@+id/imgViewArrow"
-        android:layout_toRightOf="@+id/imgViewArrow"
-        android:layout_toEndOf="@+id/imgViewArrow"
-        android:layout_marginTop="28dp" />
+        android:id="@+id/metarDisplay"
+        android:layout_row="2"
+        android:layout_column="1"
+        android:textSize="150dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="textEnd" />
 
     <ImageView
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:id="@+id/imgViewArrow"
-        android:layout_centerVertical="true"
-
-        android:layout_marginLeft="35dp"
-        android:layout_marginStart="35dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/txtDistanceToTurn"
-        android:textSize="20dp"
-        style="@style/txt_Color"
-        android:text="Distance to turn:"
-        android:layout_centerVertical="true"
-        android:layout_alignLeft="@+id/distanceTxt"
-        android:layout_alignStart="@+id/distanceTxt" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Start"
-        android:id="@+id/startBtn"
-        android:background="#ffffff"
-        android:layout_alignBottom="@+id/imgViewArrow"
-        android:layout_alignLeft="@+id/txtDistanceToTurn"
-        android:layout_alignStart="@+id/txtDistanceToTurn" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Stop"
-        android:id="@+id/stopBtn"
-        android:background="#ffffff"
-        android:layout_alignTop="@+id/startBtn"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="26dp"
-        android:layout_marginEnd="26dp" />
+        android:layout_row="1"
+        android:layout_column="12"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/listViewServerCoord"
-        android:textSize="20dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/m"
         style="@style/txt_Color"
-        android:layout_alignLeft="@+id/imgViewArrow"
-        android:layout_alignStart="@+id/imgViewArrow"
-        android:layout_alignRight="@+id/imgViewArrow"
-        android:layout_alignEnd="@+id/imgViewArrow"
-        android:layout_alignTop="@+id/imgViewArrow"
-        android:layout_alignBottom="@+id/txtDistanceToTurn"
-        android:visibility="invisible" />
+        android:id="@+id/metric"
+        android:textSize="50dp"
+        android:layout_marginBottom="29dp"
+        android:layout_alignBottom="@+id/metarDisplay"
+        android:layout_toRightOf="@+id/metarDisplay"
+        android:layout_toEndOf="@+id/metarDisplay" />
 
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/rGroup"
-        android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/distanceTxt"
-        android:layout_alignStart="@+id/distanceTxt"
-        android:layout_above="@+id/startBtn">
-
-        <RadioButton
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Moving Average"
-        android:id="@+id/movAvgButton"
-        android:checked="true"
-        android:onClick="onRadioButtonClicked"
-        android:layout_alignTop="@+id/imgViewArrow"
-        android:layout_alignRight="@+id/startBtn"
-        android:layout_alignEnd="@+id/startBtn"
-        android:layout_marginRight="27dp"
-        android:layout_marginEnd="27dp"
-            android:enabled="true"
-            android:clickable="true" />
+        style="@style/txt_Color"
+        android:id="@+id/messageDesplaytxt"
+        android:layout_above="@+id/metarDisplay"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
+        android:textSize="30dp" />
 
-    <RadioButton
+    <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Smooth"
-        android:id="@+id/smoothButton"
-        android:onClick="onRadioButtonClicked"
-        android:layout_alignTop="@+id/movAvgButton"
-        android:layout_toRightOf="@+id/stopBtn"
-        android:layout_toEndOf="@+id/stopBtn"
-        android:clickable="true"
-        android:enabled="true" />
-
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Real points"
-        android:id="@+id/realButton"
-        android:layout_alignTop="@+id/movAvgButton"
-        android:layout_toRightOf="@+id/movAvgButton"
-        android:layout_toEndOf="@+id/movAvgButton"
-        android:enabled="true"
-        android:clickable="true"
-        android:nestedScrollingEnabled="false"
-        android:onClick="onRadioButtonClicked" />
-    </RadioGroup>
+        android:id="@+id/progressBar2"
+        android:layout_above="@+id/editText"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>
