@@ -34,6 +34,7 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
     private LocationListener locationListener;
     CoordinatesPresenter coordinatesPresenter;
     int track, algID;
+    List<MyTrackPoints> myTrackPointsList = null;
     ArrayList<MyTrackPoints> myLocations = null;
     List<MyTrackPoints> turnPoint = new ArrayList<>();
     MyTrackPoints locTurn = new MyTrackPoints();
@@ -65,15 +66,6 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
                 coord.turn = instruction.getSign();
                 myTrackPointsList.add(coord);
             }
-
-            trackID = turningPoint(myTrackPointsList, trackID); //detect in which point is turning
-            turnLR = turnLeftRight(myTrackPointsList, trackID);  //detect if turn is left or right
-            locTurn.y = myTrackPointsList.get(trackID - 1).y;
-            locTurn.x = myTrackPointsList.get(trackID - 1).x;
-            locAfterTurn.y = myTrackPointsList.get(trackID).y;
-            locAfterTurn.x = myTrackPointsList.get(trackID).x;
-            turnPoint.add(locTurn);
-            turnPoint.add(locAfterTurn);
         }
     }
     @Override
@@ -139,10 +131,10 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
         if(track == 1 || track == 2){
             trackID = turningPoint(myTrackPointsList, trackID); //detect in which point is turning
             turnLR = turnLeftRight(myTrackPointsList, trackID);  //detect if turn is left or right
-            locTurn.y = myTrackPointsList.get(trackID-1).y;
-            locTurn.x = myTrackPointsList.get(trackID-1).x;
-            locAfterTurn.y = myTrackPointsList.get(trackID).y;
-            locAfterTurn.x = myTrackPointsList.get(trackID).x;
+            locTurn.y = myTrackPointsList.get(trackID).y;
+            locTurn.x = myTrackPointsList.get(trackID).x;
+            locAfterTurn.y = myTrackPointsList.get(trackID+1).y;
+            locAfterTurn.x = myTrackPointsList.get(trackID+1).x;
             turnPoint.add(locTurn);
             turnPoint.add(locAfterTurn);
         }
@@ -243,6 +235,11 @@ public class MyLocationGPS extends Activity implements LocationListener, Coordia
         point.x = location.getLongitude();     //get long gps
         point.y = location.getLatitude();      //get lat gps
         myLocations.add(point);
+        int size = myTrackPointsList.size() - 1;
+        l1.setLongitude(myTrackPointsList.get(size).y);    //track end y
+        l1.setLatitude(myTrackPointsList.get(size).x);     //track end x
+        l2.setLongitude(locTurn.y);                        //turn y
+        l2.setLatitude(locTurn.x);                         //turn x
         myLocLeftSlopeTrack = new ArrayList<>();
         trackTurns = new ArrayList<>();
         myLocLeftSlopeSkii.add(location);
