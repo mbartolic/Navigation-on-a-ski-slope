@@ -4,6 +4,9 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using System.Windows;
+
+
 
 namespace SkiPlayground
 {
@@ -373,7 +376,18 @@ namespace SkiPlayground
                 last.X = 333; last.Y = 404; pHist.Add(last);
                 last.X = 310; last.Y = 422; pHist.Add(last);
                 last.X = 287; last.Y = 439; pHist.Add(last);
+            }else if(selectedFile == true){
+                for (int counter = 0; counter < numbersLong.Length - 1; counter = counter + 2)
+                {
+                    last.X = numbersLong[counter];
+                    last.Y = numbersLong[counter + 1];
+                    pHist.Add(last);
+                }             
             }
+            BindingSource bs2 = new BindingSource();
+            bs2.DataSource = pHist;
+            lstAllPoints.DataSource = bs2;
+
             for (int i = 0; i < pHist.Count(); i++)
             {
                 pointHistory.Add(pHist[i]);
@@ -623,6 +637,7 @@ namespace SkiPlayground
             last = new Point(0, 0);
             labCurrentDirection.Text = "";
             labClickedPosition.Text = "";
+            lstAllPoints.DataSource = null;
 
             this.Refresh();
         }
@@ -653,7 +668,60 @@ namespace SkiPlayground
             double b1 = b;
 
             return points.Select(point => new Point() { X = point.X, Y = (int)(a1 * point.X - b1) }).ToList();
-        }        
+        }
+        public Boolean selectedFile;
+        public int[] numbersLong;
+        private void btnSelect_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            selectedFile = true;
+
+            // Set filter options and filter index.
+            openFileDialog1.Filter = "Text Files (.txt)|*.txt|All Files (*.*)|*.*";
+            openFileDialog1.FilterIndex = 1;
+
+            // Process input if the user clicked OK.
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                // Open the selected file to read.
+                System.IO.Stream fileStream = openFileDialog1.OpenFile();
+
+                using (System.IO.StreamReader reader = new System.IO.StreamReader(fileStream))
+                {
+                    // Read the whole text from the file and write it the textbox.
+                    // txtCoordinates.Text = reader.ReadToEnd();
+                    string originalFileText = reader.ReadToEnd();
+                    //spliting original string into strings which will represent numbers
+                    char[] delimiterChars = { ' ', ',', ':', '\t', '\n' };
+                    string[] numbers = originalFileText.Split(delimiterChars);
+                    //txtCoordinates.Text = numbers[2];
+
+                    //transforming string to long
+                    //      int[] numbersLong = Array.ConvertAll(numbers, int.Parse);
+                    //      int[] numbersLong = numbers.Select(int.Parse).ToArray();
+                    numbersLong = new int[numbers.Length];
+                    int i = 0;
+
+                    foreach (String text in numbers)
+                    {
+                        int.TryParse(text, out numbersLong[i]);
+                        ++i;
+                    }
+                    //txtCoordinates.Text = numbersLong[0].ToString();
+                    
+                    cmbSkiSlope.Text = "Selected file";  
+               }
+                fileStream.Close();
+
+            }   
+        }
+
+        private void txtCoordinates_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+               
     }
 }
 

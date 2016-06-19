@@ -48,6 +48,7 @@ public class Options extends Activity{
         intent.putExtra("sY",sorY);
         intent.putExtra("dX",desX);
         intent.putExtra("dY",desY);
+        finish();
         startActivity(intent);
     }
 }

@@ -36,10 +36,10 @@ public class LocalFileRead extends Activity {
                 int j = 0;
                 for (int i = 0; i < separated.length; i++) {
                     if (i % 3 == 0) {
-                        myTrP.x = Double.parseDouble(separated[i]);
+                        myTrP.y = Double.parseDouble(separated[i]);
                         j++;
                     } else if (i % 3 == 1) {
-                        myTrP.y = Double.parseDouble(separated[i]);
+                        myTrP.x = Double.parseDouble(separated[i]);
                         j++;
                     } else if (i % 3 == 2) {
                         myTrP.turn = Integer.parseInt(separated[i]);

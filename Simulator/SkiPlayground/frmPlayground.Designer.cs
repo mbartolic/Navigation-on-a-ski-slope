@@ -31,7 +31,6 @@
             this.labClickedPosition = new System.Windows.Forms.Label();
             this.lstAllPoints = new System.Windows.Forms.ListBox();
             this.labCurrentDirection = new System.Windows.Forms.Label();
-            this.btnReset = new System.Windows.Forms.Button();
             this.labStyle = new System.Windows.Forms.Label();
             this.lblArrow = new System.Windows.Forms.Label();
             this.lblTurnAngle = new System.Windows.Forms.Label();
@@ -43,6 +42,8 @@
             this.cmbSkiSlope = new System.Windows.Forms.ComboBox();
             this.btnSimulateSlope = new System.Windows.Forms.Button();
             this.movAverageBtn = new System.Windows.Forms.CheckBox();
+            this.btnSelect = new System.Windows.Forms.Button();
+            this.btnReset = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // labClickedPosition
@@ -70,16 +71,6 @@
             this.labCurrentDirection.Size = new System.Drawing.Size(84, 13);
             this.labCurrentDirection.TabIndex = 2;
             this.labCurrentDirection.Text = "Current direction";
-            // 
-            // btnReset
-            // 
-            this.btnReset.Location = new System.Drawing.Point(847, 627);
-            this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(75, 23);
-            this.btnReset.TabIndex = 3;
-            this.btnReset.Text = "Reset";
-            this.btnReset.UseVisualStyleBackColor = true;
-            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
             // labStyle
             // 
@@ -198,12 +189,34 @@
             this.movAverageBtn.UseVisualStyleBackColor = true;
             this.movAverageBtn.CheckedChanged += new System.EventHandler(this.movAverageBtn_CheckedChanged);
             // 
+            // btnSelect
+            // 
+            this.btnSelect.Location = new System.Drawing.Point(781, 20);
+            this.btnSelect.Name = "btnSelect";
+            this.btnSelect.Size = new System.Drawing.Size(91, 28);
+            this.btnSelect.TabIndex = 21;
+            this.btnSelect.Text = "Select FIle";
+            this.btnSelect.UseVisualStyleBackColor = true;
+            this.btnSelect.Click += new System.EventHandler(this.btnSelect_Click);
+            // 
+            // btnReset
+            // 
+            this.btnReset.Location = new System.Drawing.Point(826, 625);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(91, 28);
+            this.btnReset.TabIndex = 22;
+            this.btnReset.Text = "Reset";
+            this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            // 
             // frmPlayground
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::SkiPlayground.Properties.Resources.slope;
             this.ClientSize = new System.Drawing.Size(942, 684);
+            this.Controls.Add(this.btnReset);
+            this.Controls.Add(this.btnSelect);
             this.Controls.Add(this.movAverageBtn);
             this.Controls.Add(this.btnSimulateSlope);
             this.Controls.Add(this.cmbSkiSlope);
@@ -215,7 +228,6 @@
             this.Controls.Add(this.lblTurnAngle);
             this.Controls.Add(this.lblArrow);
             this.Controls.Add(this.labStyle);
-            this.Controls.Add(this.btnReset);
             this.Controls.Add(this.labCurrentDirection);
             this.Controls.Add(this.lstAllPoints);
             this.Controls.Add(this.labClickedPosition);
@@ -232,7 +244,6 @@
         private System.Windows.Forms.Label labClickedPosition;
         private System.Windows.Forms.ListBox lstAllPoints;
         private System.Windows.Forms.Label labCurrentDirection;
-        private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.Label labStyle;
         private System.Windows.Forms.Label lblArrow;
         private System.Windows.Forms.Label lblTurnAngle;
@@ -244,6 +255,8 @@
         private System.Windows.Forms.ComboBox cmbSkiSlope;
         private System.Windows.Forms.Button btnSimulateSlope;
         private System.Windows.Forms.CheckBox movAverageBtn;
+        private System.Windows.Forms.Button btnSelect;
+        private System.Windows.Forms.Button btnReset;
     }
 }
 

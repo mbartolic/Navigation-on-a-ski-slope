@@ -1,6 +1,6 @@
 package Algorithms;
 
-import com.example.rene.navigation_on_a_ski_slope.MyTrackPoints;
+import com.example.rene.MainClasses.MyTrackPoints;
 
 import java.util.List;
 

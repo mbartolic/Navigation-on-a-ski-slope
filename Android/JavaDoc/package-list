@@ -1,3 +1,4 @@
+Algorithms
 com.example
 com.example.db
 com.example.model
@@ -7,6 +8,6 @@ com.example.mvp.listener
 com.example.mvp.presenter
 com.example.mvp.presenter.impl
 com.example.mvp.view
-com.example.rene.navigation_on_a_ski_slope
+com.example.rene.MainClasses
 com.example.services
 com.example.utils

@@ -48,4 +48,24 @@ public class UserLocationStatus {
         user_distance = distanceFromPoint.getDistance(skiLocation, mypp.get(near));
         return user_distance;
     }
+
+
+
+    public int CalculatingIfUserLeftSlope(List<Location> mypp, Location skiLocation, int flag1, int near) {
+        double pointDistance;
+        double min = distanceFromPoint.getDistance(skiLocation, mypp.get(near));
+
+        if (mypp.size()-1== near){
+            pointDistance = distanceFromPoint.getDistance(mypp.get(near), mypp.get(near - 1));
+        }else {
+            pointDistance = distanceFromPoint.getDistance(mypp.get(near), mypp.get(near + 1));
+        }
+        if (min <= pointDistance) {
+            flag1 = 0;
+        } else {
+            flag1++;
+        }
+
+        return flag1;
+    }
 }
