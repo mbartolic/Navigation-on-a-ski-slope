@@ -1,1 +1,1 @@
-include ':app', ':db'
+include ':app', ':core', ':ws_plugin'
