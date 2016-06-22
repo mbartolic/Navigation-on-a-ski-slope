@@ -17,15 +17,23 @@ public class FixedCoordinates implements FetchTrackCoordinatesInterface {
     @Override
     public void fetchTrackCoordinates(FetchTrackCoordinatesListener l, Context c) {
 
-        MyTrackPoints point1, point2, point3, point4;
+        MyTrackPoints point1, point2, point3, point4, point5,point6;
         point1 = new MyTrackPoints();
         point1.y =  46.308044;
         point1.x =  16.345183;
         point1.turn = 0;
+        point5 = new MyTrackPoints();
+        point5.y = 46.307822;
+        point5.x = 16.344282;
+        point5.turn = 0;
         point2 = new MyTrackPoints();
         point2.y =  46.307642;
         point2.x =  16.343479;
         point2.turn = 2;
+        point6 = new MyTrackPoints();
+        point6.y = 46.307900;
+        point6.x = 16.343252;
+        point6.turn = 0;
         point3 = new MyTrackPoints();
         point3.y =  46.308439;
         point3.x =  16.342981;
@@ -38,7 +46,9 @@ public class FixedCoordinates implements FetchTrackCoordinatesInterface {
         List<MyTrackPoints> myTrackPointsList = null;
         myTrackPointsList = new ArrayList<>();
         myTrackPointsList.add(point1);
+        myTrackPointsList.add(point5);
         myTrackPointsList.add(point2);
+        myTrackPointsList.add(point6);
         myTrackPointsList.add(point3);
         myTrackPointsList.add(point4);
 

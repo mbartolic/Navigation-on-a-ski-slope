@@ -113,7 +113,7 @@
         android:layout_alignRight="@+id/destinationX"
         android:layout_alignEnd="@+id/destinationX"
 
-        android:layout_toEndOf="@+id/txtStartY"
+
         android:layout_alignLeft="@+id/destinationX"
         android:layout_alignStart="@+id/destinationX" />
 
@@ -133,7 +133,6 @@
         android:layout_below="@+id/sourceX"
         android:layout_toLeftOf="@+id/sourceY"
         android:layout_toStartOf="@+id/sourceY"
-        android:textAlignment="textEnd"
         android:singleLine="true" />
     <EditText
         android:layout_width="wrap_content"
@@ -142,41 +141,42 @@
         android:inputType="numberDecimal"
         android:width="100dp"
         style="@style/txt_Color"
-        android:layout_row="3"
         android:layout_below="@+id/destinationX"
         android:layout_alignRight="@+id/txtTrackPointsInsert"
         android:layout_alignEnd="@+id/txtTrackPointsInsert"
-        android:layout_alignParentStart="false"
+
         />
 </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             >
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="  End Long:"
-        android:id="@+id/txtEndX"
-        style="@style/txt_Color"
-        android:layout_row="6"
-        android:textSize="15dp"
 
-        android:layout_alignBottom="@+id/destinationX"
-        android:layout_toLeftOf="@+id/destinationX"
-        android:layout_toStartOf="@+id/destinationX"
-        android:textAlignment="textEnd" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="  End Long:"
+                android:id="@+id/txtEndX"
+                style="@style/txt_Color"
+                android:layout_row="6"
+                android:textSize="15dp"
 
+                android:layout_alignBottom="@+id/destinationX"
+                android:layout_toLeftOf="@+id/destinationX"
+                android:layout_toStartOf="@+id/destinationX"
+                />
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/txtDestX"
+                android:inputType="numberDecimal"
                 style="@style/txt_Color"
-                android:width="100dp"
-                />
-
-
+                android:id="@+id/destinationX"
+                android:layout_below="@+id/radioGroup"
+                android:layout_alignRight="@+id/radioGroup"
+                android:layout_alignEnd="@+id/radioGroup"
+                android:width="100dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -191,7 +191,6 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="     End Lat:"
                 android:id="@+id/txtEndY"
-
                 style="@style/txt_Color"
                 android:textSize="15dp"
                 android:layout_alignParentTop="true"
@@ -202,9 +201,11 @@
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/txtDestY"
+                android:inputType="numberDecimal"
+                android:id="@+id/destinationY"
                 style="@style/txt_Color"
                 android:width="100dp" />
+
         </LinearLayout>
     </LinearLayout>
 

@@ -10,7 +10,7 @@ public class PreferenceManagerHelper {
                 .edit()
                 .putString("start_long", startLong)
                 .putString("start_lat", startLat)
-                .putString("eng_long", endLong)
+                .putString("end_long", endLong)
                 .putString("end_lat", endLat)
                 .putInt("alg_number", algNumber)
                 .commit();

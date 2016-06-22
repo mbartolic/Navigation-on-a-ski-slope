@@ -31,14 +31,8 @@ import hr.foi.air.evoski.wsplugin.WebServerCoordinates;
 
 public class MyLocationGPS extends Activity implements LocationListener {
     private LocationManager mLocMgr;
-
     int track, algID;
     ArrayList<MyTrackPoints> myLocations = null;
-    List<MyTrackPoints> turnPoint = new ArrayList<>();
-    MyTrackPoints locTurn = new MyTrackPoints();
-    MyTrackPoints locAfterTurn = new MyTrackPoints();
-    String turnLR;
-    int trackID = 0;
     List<Location> myLocLeftSlopeTrack;
     List<Location> myLocLeftSlopeSkii;
     List<Integer> trackTurns;
@@ -47,10 +41,10 @@ public class MyLocationGPS extends Activity implements LocationListener {
     List<MyTrackPoints> myLocHist;
     MyTrackPoints point;
     DistanceFromPoint distanceFromPoint;
-    int index = 0;
+    int index = 0, turnPassedCounter = 0;
     List<MyTrackPoints> myTrackPointsList = null;
-
-
+    List<Integer> turnPassed = new ArrayList<>();
+    int numbOfTurns = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +64,6 @@ public class MyLocationGPS extends Activity implements LocationListener {
                 algID = getIntent().getExtras().getInt("alg");
             }
         }
-
         //geting coordinates
         FetchTrackCoordinatesInterface plugin;
         if (track == 1) {
@@ -87,39 +80,14 @@ public class MyLocationGPS extends Activity implements LocationListener {
                 myTrackPointsList = points;
             }
         }, this);
-
         //searching for turns
-        trackID = turningPoint(myTrackPointsList, trackID); //detect in which point is turning
-        turnLR = turnLeftRight(myTrackPointsList, trackID);  //detect if turn is left or right
-        locTurn.y = myTrackPointsList.get(trackID).y;
-        locTurn.x = myTrackPointsList.get(trackID).x;
-        locAfterTurn.y = myTrackPointsList.get(trackID + 1).y;
-        locAfterTurn.x = myTrackPointsList.get(trackID + 1).x;
-        turnPoint.add(locTurn);
-        turnPoint.add(locAfterTurn);
-
-    }
-
-    public String turnLeftRight(List<MyTrackPoints> myTrPointList, int turnID) {
-        String turn = null;
-        if (myTrPointList.get(turnID).turn > 0) {
-            turn = "right";
-        } else if (myTrPointList.get(turnID).turn < 0) {
-            turn = "left";
-        }
-        return turn;
-    }
-
-    public int turningPoint(List<MyTrackPoints> myTrPointList, int turnID) {
-        int j = 0;
-        for (int i = turnID + 1; i < myTrPointList.size(); i++) {
-            if (myTrPointList.get(i).turn != 0) {
-                j = i;
-                break;
+        for (int i = 0; i < myTrackPointsList.size(); i++){
+            turnPassed.add(0);
+            if(myTrackPointsList.get(i).turn != 0){
+                numbOfTurns++;
             }
         }
-        return j;
-    }
+    }//OnCreate
 
     @Override
     public void onBackPressed() {
@@ -218,7 +186,7 @@ public class MyLocationGPS extends Activity implements LocationListener {
         float distanceToTrackEnd = distanceToTurn + distanceFromTurnToTrackEnd;
         TextView metarDisplayTxt, metarTxt, displayMessage, numbTurns;
         numbTurns = (TextView) findViewById(R.id.txtTurnsLeft);
-        numbTurns.setText("Number of turns: " +  turnPoint.size());
+        numbTurns.setText("Number of turns left: " + numbOfTurns);
 
         if (distanceToTrackEnd < 10) {
             Toast.makeText(MyLocationGPS.this, "FINISH", Toast.LENGTH_SHORT).show();
@@ -246,20 +214,25 @@ public class MyLocationGPS extends Activity implements LocationListener {
             metarDisplayTxt.setText(dist);
             metarTxt = (TextView) findViewById(R.id.metric);
             metarTxt.setText("m");
-
+            numbTurns = (TextView) findViewById(R.id.txtTurnsLeft);
+            numbTurns.setText("Number of turns left: " + numbOfTurns);
             String dist2 = String.format("%.0f", distanceToTurn);
+
             if (trackTurns.get(index) != 0 && distanceToTurn < 50 && (distanceToTrackEnd > distanceFromTurnToTrackEnd)) {
                 displayMessage.setText("Distance to turn");
                 metarDisplayTxt.setText(dist2);
+                if(turnPassed.get(index) != 1){
+                    turnPassed.set(index, Integer.valueOf(1));
+                    numbOfTurns--;
+                }
                 numbTurns = (TextView) findViewById(R.id.txtTurnsLeft);
-                numbTurns.setText("Number of turns: " + index + "/" + turnPoint.size());
+                numbTurns.setText("Number of turns left: " + numbOfTurns);
                 for (int i = 0; i < myLocations.size(); i++) {
                     MyTrackPoints converted = new MyTrackPoints();
                     converted.x = convertingGpsCoordToXY.convertLon(myLocations.get(i).x);
                     converted.y = convertingGpsCoordToXY.convertLat(myLocations.get(i).y);
                     myLocHist.add(converted);
                 }
-
                 AverageDirection averageDirection = new AverageDirection();
                 double angle = 0;
 
@@ -273,13 +246,11 @@ public class MyLocationGPS extends Activity implements LocationListener {
                     } else { //algID bi trebao biti 1
                         smoothingAlgorithm = new RealPointsAlgorithm();
                     }
-
                     smoothedPoints = smoothingAlgorithm.getSmoothedPoints(myLocHist);
-                    angle = averageDirection.AvgDirection(smoothedPoints, turnPoint);
+                    angle = averageDirection.AvgDirection(smoothedPoints, myTrackPointsList, index);
                 }
-                if (turnLR != null && myLocHist.size() > 2) {
-                    setImage(angle, turnLR);
-                }
+                    setImage(angle, myTrackPointsList.get(index).turn);
+
             } else {
                 ImageView imageView = (ImageView) findViewById(R.id.imgViewArrow);
                 imageView.setImageDrawable(null);
@@ -309,19 +280,19 @@ public class MyLocationGPS extends Activity implements LocationListener {
             }
     }
 
-    public void setImage(double angle, String turnLR) {
+    public void setImage(double angle, int turnLR) {
         ImageView imageView = (ImageView) findViewById(R.id.imgViewArrow);
-        if (angle >= 0 && angle <= 60 && turnLR.equalsIgnoreCase("right")) {
+        if (angle >= 0 && angle <= 60 && turnLR > 0) {
             imageView.setImageResource(R.drawable.southeast);
-        } else if (angle > 60 && angle < 120 && turnLR.equalsIgnoreCase("right")) {
+        } else if (angle > 60 && angle < 120 && turnLR > 0) {
             imageView.setImageResource(R.drawable.east);
-        } else if (angle >= 120 && angle <= 180 && turnLR.equalsIgnoreCase("right")) {
+        } else if (angle >= 120 && angle <= 180 && turnLR > 0) {
             imageView.setImageResource(R.drawable.northeast);
-        } else if (angle >= 120 && angle <= 180 && turnLR.equalsIgnoreCase("left")) {
+        } else if (angle >= 120 && angle <= 180 && turnLR < 0) {
             imageView.setImageResource(R.drawable.northwest);
-        } else if (angle > 60 && angle < 120 && turnLR.equalsIgnoreCase("left")) {
+        } else if (angle > 60 && angle < 120 && turnLR < 0) {
             imageView.setImageResource(R.drawable.west);
-        } else if (angle >= 0 && angle <= 60 && turnLR.equalsIgnoreCase("left")) {
+        } else if (angle >= 0 && angle <= 60 && turnLR < 0) {
             imageView.setImageResource(R.drawable.southwest);
         } else {
             imageView.setImageResource(R.drawable.north);

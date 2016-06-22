@@ -28,7 +28,6 @@ public class WebServerCoordinates implements FetchTrackCoordinatesInterface, Coo
 
     @Override
     public void fetchTrackCoordinates(FetchTrackCoordinatesListener l, Context c) {
-        List<MyTrackPoints> myTrackPointsList = null;
         this.l = l;
 
         // TODO - Dohvatiti iz shared preferences

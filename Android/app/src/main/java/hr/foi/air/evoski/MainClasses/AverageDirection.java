@@ -19,7 +19,7 @@ public class AverageDirection {
      * @param myLocalHistory
      * @return
      */
-    public double AvgDirection(List<MyTrackPoints> myLocalHistory,List<MyTrackPoints> pathAfterTurn) {
+    public double AvgDirection(List<MyTrackPoints> myLocalHistory,List<MyTrackPoints> pathAfterTurn, int index) {
 
         List<MyTrackPoints> avgPoint = new ArrayList<>();
         List<MyTrackPoints> extremePoints = new ArrayList<>();
@@ -78,7 +78,7 @@ public class AverageDirection {
                 avgPoint.add(p);
             }
                 int numberOfPoints = avgPoint.size();
-                angle = futurePoints(numberOfPoints, avgPoint, pathAfterTurn);
+                angle = futurePoints(numberOfPoints, avgPoint, pathAfterTurn, index);
         }
         return angle;
     }
@@ -89,7 +89,7 @@ public class AverageDirection {
      * @param avgPoint
      * @return
      */
-    private double futurePoints (int numberOfPoints, List<MyTrackPoints> avgPoint, List<MyTrackPoints> pathAfterTurn) {
+    private double futurePoints (int numberOfPoints, List<MyTrackPoints> avgPoint, List<MyTrackPoints> pathAfterTurn, int index) {
         double angle = 0;
         MyTrackPoints futurePoint = new MyTrackPoints();
         List<MyTrackPoints> PointAtMom = new ArrayList<>();
@@ -100,7 +100,7 @@ public class AverageDirection {
             futurePoint.y = avgPoint.get(numberOfPoints - 1).y + futurey;
             PointAtMom.add(avgPoint.get(avgPoint.size()-1));
             PointAtMom.add(futurePoint);
-            angle = angleBetweenPoints(PointAtMom, pathAfterTurn);
+            angle = angleBetweenPoints(PointAtMom, pathAfterTurn, index);
         }
         return angle;
     }
@@ -114,11 +114,11 @@ public class AverageDirection {
      * @param PointAtTheMoment
      * @return
      */
-    private double angleBetweenPoints(List<MyTrackPoints> PointAtTheMoment, List<MyTrackPoints> pathAfterTurn) {
-        turn.x = pathAfterTurn.get(0).x;
-        turn.y = pathAfterTurn.get(0).y;
-        pathAfterTur.x = pathAfterTurn.get(1).x;
-        pathAfterTur.y =pathAfterTurn.get(1).y;
+    private double angleBetweenPoints(List<MyTrackPoints> PointAtTheMoment, List<MyTrackPoints> pathAfterTurn, int index) {
+        turn.x = pathAfterTurn.get(index).x;
+        turn.y = pathAfterTurn.get(index).y;
+        pathAfterTur.x = pathAfterTurn.get(index + 1).x;
+        pathAfterTur.y =pathAfterTurn.get(index + 1).y;
         VectorBeforeTurn.x = PointAtTheMoment.get(PointAtTheMoment.size() - 1).x - PointAtTheMoment.get(PointAtTheMoment.size() - 2).x;
         VectorBeforeTurn.y = PointAtTheMoment.get(PointAtTheMoment.size() - 1).y - PointAtTheMoment.get(PointAtTheMoment.size() - 2).y;
         VectorAfterTurn.x = pathAfterTur.x - turn.x;

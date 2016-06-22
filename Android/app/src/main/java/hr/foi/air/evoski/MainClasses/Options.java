@@ -25,8 +25,8 @@ public class Options extends Activity{
         context = getApplicationContext();
         sX = (TextView) findViewById(R.id.sourceX);
         sY = (TextView) findViewById(R.id.sourceY);
-        dX = (TextView) findViewById(R.id.txtDestX);
-        dY = (TextView) findViewById(R.id.txtDestY);
+        dX = (TextView) findViewById(R.id.destinationX);
+        dY = (TextView) findViewById(R.id.destinationY);
 
         sX.setText(PreferenceManagerHelper.getStartLong(context));
         sY.setText(PreferenceManagerHelper.getStartLat(context));
