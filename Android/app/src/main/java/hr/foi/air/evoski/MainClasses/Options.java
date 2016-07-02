@@ -3,7 +3,6 @@ package hr.foi.air.evoski.MainClasses;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -60,11 +59,6 @@ public class Options extends Activity{
         PreferenceManagerHelper.setStartEndPoints(sorX,sorY,desX,desY, algID, context);
 
         Intent intent = new Intent(context, MainActivity.class);
-        intent.putExtra("alg",algID);
-        intent.putExtra("sX",sorX);
-        intent.putExtra("sY",sorY);
-        intent.putExtra("dX",desX);
-        intent.putExtra("dY",desY);
         startActivity(intent);
         finish();
     }

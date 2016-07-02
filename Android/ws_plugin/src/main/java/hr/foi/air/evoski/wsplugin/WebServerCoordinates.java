@@ -40,7 +40,7 @@ public class WebServerCoordinates implements FetchTrackCoordinatesInterface, Coo
             String sourcePoints = sorY + "," + sorX;
             String destinationPoints = desY + "," + desX;
             coordinatesPresenter.getData(sourcePoints, destinationPoints, Constants.CAR_ROUTE_TYPE, Constants.VOICE_INSTRUCTIONS, Constants.LANGUAGE);
-            Toast.makeText(c, "Coordinates fetched", Toast.LENGTH_SHORT).show();
+
 
     }
 

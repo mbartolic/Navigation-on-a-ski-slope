@@ -1,14 +1,18 @@
 package hr.foi.air.evoski.MainClasses;
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.support.v4.app.ActivityCompat;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ImageView;
@@ -41,13 +45,16 @@ public class MyLocationGPS extends Activity implements LocationListener {
     List<MyTrackPoints> myLocHist;
     MyTrackPoints point;
     DistanceFromPoint distanceFromPoint;
-    int index = 0, turnPassedCounter = 0;
+    int index = 0;
     List<MyTrackPoints> myTrackPointsList = null;
     List<Integer> turnPassed = new ArrayList<>();
     int numbOfTurns = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
         setContentView(R.layout.test_con);
         myLocations = new ArrayList<>();
         myLocLeftSlopeSkii = new ArrayList<>();
@@ -78,16 +85,21 @@ public class MyLocationGPS extends Activity implements LocationListener {
             @Override
             public void OnCoordinatesFetched(List<MyTrackPoints> points) {
                 myTrackPointsList = points;
+               searchingForTurns(myTrackPointsList);
             }
         }, this);
-        //searching for turns
-        for (int i = 0; i < myTrackPointsList.size(); i++){
+
+
+    }//OnCreate
+
+    public void searchingForTurns(List<MyTrackPoints> myTrackPnts){
+        for (int i = 0; i < myTrackPnts.size(); i++){
             turnPassed.add(0);
-            if(myTrackPointsList.get(i).turn != 0){
+            if(myTrackPnts.get(i).turn != 0){
                 numbOfTurns++;
             }
         }
-    }//OnCreate
+    }
 
     @Override
     public void onBackPressed() {
@@ -186,12 +198,13 @@ public class MyLocationGPS extends Activity implements LocationListener {
         float distanceToTrackEnd = distanceToTurn + distanceFromTurnToTrackEnd;
         TextView metarDisplayTxt, metarTxt, displayMessage, numbTurns;
         numbTurns = (TextView) findViewById(R.id.txtTurnsLeft);
-        numbTurns.setText("Number of turns left: " + numbOfTurns);
+        numbTurns.setText("Turns left: " + numbOfTurns);
 
         if (distanceToTrackEnd < 10) {
             Toast.makeText(MyLocationGPS.this, "FINISH", Toast.LENGTH_SHORT).show();
             metarDisplayTxt = (TextView) findViewById(R.id.metarDisplay);
-            metarDisplayTxt.setText("0");
+            metarDisplayTxt.setGravity(Gravity.CENTER);
+            metarDisplayTxt.setText("0m");
 
             if (mLocMgr != null)
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -211,22 +224,23 @@ public class MyLocationGPS extends Activity implements LocationListener {
             displayMessage = (TextView) findViewById(R.id.messageDesplaytxt);
             displayMessage.setText("Distance to finish");
             metarDisplayTxt = (TextView) findViewById(R.id.metarDisplay);
-            metarDisplayTxt.setText(dist);
-            metarTxt = (TextView) findViewById(R.id.metric);
-            metarTxt.setText("m");
+            metarDisplayTxt.setGravity(Gravity.CENTER);
+            metarDisplayTxt.setText(dist+"m");
+
             numbTurns = (TextView) findViewById(R.id.txtTurnsLeft);
-            numbTurns.setText("Number of turns left: " + numbOfTurns);
+            numbTurns.setText("Turns left: " + numbOfTurns);
             String dist2 = String.format("%.0f", distanceToTurn);
 
             if (trackTurns.get(index) != 0 && distanceToTurn < 50 && (distanceToTrackEnd > distanceFromTurnToTrackEnd)) {
                 displayMessage.setText("Distance to turn");
-                metarDisplayTxt.setText(dist2);
+                metarDisplayTxt.setGravity(Gravity.RIGHT);
+                metarDisplayTxt.setText(dist2+"m");
                 if(turnPassed.get(index) != 1){
                     turnPassed.set(index, Integer.valueOf(1));
                     numbOfTurns--;
                 }
                 numbTurns = (TextView) findViewById(R.id.txtTurnsLeft);
-                numbTurns.setText("Number of turns left: " + numbOfTurns);
+                numbTurns.setText("Turns left: " + numbOfTurns);
                 for (int i = 0; i < myLocations.size(); i++) {
                     MyTrackPoints converted = new MyTrackPoints();
                     converted.x = convertingGpsCoordToXY.convertLon(myLocations.get(i).x);

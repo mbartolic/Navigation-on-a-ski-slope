@@ -35,9 +35,6 @@
         android:id="@+id/realButton"
         android:layout_marginTop="29dp"
         style="@style/txt_Color"
-        android:layout_below="@+id/textView"
-        android:layout_alignLeft="@+id/textView"
-        android:layout_alignStart="@+id/textView"
         android:checked="true" />
 
     <RadioButton
@@ -46,8 +43,7 @@
         android:text="Smooth point algorithm"
         android:id="@+id/smoothButton"
         style="@style/txt_Color"
-        android:layout_below="@+id/movAvgButton"
-        android:layout_alignLeft="@+id/textView" />
+        />
 
     <RadioButton
         android:layout_width="wrap_content"
@@ -55,8 +51,7 @@
         android:text="Moving averate algorithm"
         android:id="@+id/movAvgButton"
         style="@style/txt_Color"
-        android:layout_below="@+id/realButton"
-        android:layout_alignLeft="@+id/textView" />
+        />
     </RadioGroup>
 
 
@@ -215,10 +210,8 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Press back to confirm"
         android:id="@+id/textView2"
-        android:layout_row="9"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/textView"
-        android:layout_toEndOf="@+id/textView"
+        android:layout_centerHorizontal="true"
         style="@style/txt_Color"/>
 
 </RelativeLayout>

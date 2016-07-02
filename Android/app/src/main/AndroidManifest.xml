@@ -54,16 +54,6 @@
             android:screenOrientation="landscape">
         </activity>
 
-        <meta-data
-            android:name="com.google.android.maps.vw.API_KEY"
-            android:value="AIzaSyA74rK6lBZeI8hjLrHsG355uReYm539KNs" />
-
-
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
-
-
     </application>
 
 </manifest>

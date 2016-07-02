@@ -11,32 +11,21 @@ import android.widget.Button;
 import android.widget.Toast;
 import java.io.File;
 import hr.foi.air.evoski.R;
+import hr.foi.air.evoski.core.PreferenceManagerHelper;
 
 public class MainActivity extends AppCompatActivity  {
     int algID = 1;
     String sorX,sorY,desX,desY;
-
+    Context context;
+    int idAlgNumb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
+        context = getApplicationContext();
         setContentView(R.layout.activity_main);
         addListenerToButton();
-        Bundle bundle = getIntent().getExtras();
-
-        if (bundle == null) {
-            algID = 1;
-            sorX = null;
-            sorY = null;
-            desX = null;
-            desY = null;
-        } else {
-            algID = getIntent().getExtras().getInt("alg");
-            sorX = getIntent().getExtras().getString("sX");
-            sorY = getIntent().getExtras().getString("sY");
-            desX = getIntent().getExtras().getString("dX");
-            desY = getIntent().getExtras().getString("dY");
-        }
+        idAlgNumb = PreferenceManagerHelper.getAlgNumber(context);
     }
 
     public void addListenerToButton() {
@@ -51,7 +40,7 @@ public class MainActivity extends AppCompatActivity  {
             public void onClick(View v) {
                 Intent intent = new Intent(context, MyLocationGPS.class);
                 intent.putExtra("track",1);
-                intent.putExtra("algID", algID);
+                intent.putExtra("algID", idAlgNumb);
                 startActivity(intent);
                 finish();
                 overridePendingTransition(R.anim.anim_to_right, R.anim.anim_to_left);
@@ -67,7 +56,7 @@ public class MainActivity extends AppCompatActivity  {
                 File file = new File(path);
                 if(file.exists()){
                 intent.putExtra("track",2);
-                intent.putExtra("algID", algID);
+                intent.putExtra("algID", idAlgNumb);
                 startActivity(intent);
                     finish();
                 overridePendingTransition(R.anim.anim_to_right, R.anim.anim_to_left);
@@ -81,22 +70,23 @@ public class MainActivity extends AppCompatActivity  {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, MyLocationGPS.class);
+                sorX = (PreferenceManagerHelper.getStartLong(context));
+                sorY = (PreferenceManagerHelper.getStartLat(context));
+                desX = (PreferenceManagerHelper.getEndLong(context));
+                desY = (PreferenceManagerHelper.getEndLat(context));
                 ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo networkInfo = cm.getActiveNetworkInfo();
                 if (networkInfo == null) {
                     Toast.makeText(MainActivity.this, "Check internet connection", Toast.LENGTH_SHORT).show();
-                } else if (sorX == null || sorY == null || desX == null || desY == null){
+                } else if (sorX == "" || sorY == "" || desX == "" || desY == ""){
                     Toast.makeText(MainActivity.this, "Type coordinates in Options",Toast.LENGTH_SHORT).show();
                 }else{
                     intent.putExtra("track", 3);
-                    intent.putExtra("algID", algID);
-                    intent.putExtra("sX", sorX);
-                    intent.putExtra("sY", sorY);
-                    intent.putExtra("dX", desX);
-                    intent.putExtra("dY", desY);
+                    intent.putExtra("algID", idAlgNumb);
                     startActivity(intent);
                     finish();
                     overridePendingTransition(R.anim.anim_to_right, R.anim.anim_to_left);
+                    Toast.makeText(MainActivity.this, "Coordinates fetched",Toast.LENGTH_SHORT).show();
                 }
             }
         });
