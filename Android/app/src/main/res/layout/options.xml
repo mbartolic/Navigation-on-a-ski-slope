@@ -5,84 +5,68 @@
     style="@style/main_app_theme"
     >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Choose algorithm:"
-        android:id="@+id/textView"
-        android:layout_marginLeft="41dp"
-        android:layout_marginStart="41dp"
-        android:layout_marginTop="35dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        style="@style/txt_Color"
-        android:textSize="20dp" />
-
     <RadioGroup
-        android:layout_width="308dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/radioGroup"
-        android:layout_alignTop="@+id/textView"
-        android:layout_alignLeft="@+id/textView"
-        android:layout_alignStart="@+id/textView">
+        android:layout_marginRight="55dp"
+        android:layout_marginEnd="55dp"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/txtTrackPointsInsert"
+        android:layout_toStartOf="@+id/txtTrackPointsInsert">
 
-        <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Real points"
-        android:id="@+id/realButton"
-        android:layout_marginTop="29dp"
-        style="@style/txt_Color"
-        android:checked="true" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Choose algorithm:"
+            android:id="@+id/textView"
+            style="@style/txt_Color"
+            android:textSize="12dp"
+            android:textAlignment="center" />
 
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Smooth point algorithm"
-        android:id="@+id/smoothButton"
-        style="@style/txt_Color"
-        />
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:text="@string/realButton"
+            android:id="@+id/realButton"
+            android:textSize="10dp" />
 
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Moving averate algorithm"
-        android:id="@+id/movAvgButton"
-        style="@style/txt_Color"
-        />
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:text="@string/movAvgButton"
+            android:id="@+id/movAvgButton"
+            android:textSize="10dp" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:text="@string/smoothButton"
+            android:id="@+id/smoothButton"
+            android:textSize="10dp" />
+
     </RadioGroup>
 
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Type track start and end point:"
-        android:id="@+id/txtTrackPointsInsert"
-        style="@style/txt_Color"
-        android:layout_row="8"
-
-        android:layout_alignTop="@+id/radioGroup"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="27dp"
-        android:layout_marginEnd="27dp"
-        android:textSize="20dp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_centerVertical="true"
-        android:layout_alignRight="@+id/txtTrackPointsInsert"
-        android:layout_alignEnd="@+id/txtTrackPointsInsert">
+        android:id="@+id/linearLayout"
+        android:layout_alignTop="@+id/radioGroup"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_alignStart="@+id/textView2"
+        android:layout_marginLeft="107dp"
+        android:layout_marginStart="107dp">
 
 <LinearLayout
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:transitionGroup="false">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -90,14 +74,14 @@
             android:text=" Start Long:"
             android:id="@+id/txtstartX"
             style="@style/txt_Color"
-            android:textSize="15dp"
+            android:textSize="12dp"
             android:layout_alignBaseline="@+id/sourceX"
             android:layout_alignBottom="@+id/sourceX"
             android:layout_toLeftOf="@+id/sourceX"
             android:layout_toStartOf="@+id/sourceX" />
 
         <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="76dp"
         android:layout_height="wrap_content"
         android:id="@+id/sourceX"
         android:inputType="numberDecimal"
@@ -110,7 +94,8 @@
 
 
         android:layout_alignLeft="@+id/destinationX"
-        android:layout_alignStart="@+id/destinationX" />
+        android:layout_alignStart="@+id/destinationX"
+            android:textSize="12dp" />
 
 </LinearLayout>
 
@@ -124,13 +109,13 @@
         android:text="    Start Lat:"
         android:id="@+id/txtStartY"
         style="@style/txt_Color"
-        android:textSize="15dp"
+        android:textSize="12dp"
         android:layout_below="@+id/sourceX"
         android:layout_toLeftOf="@+id/sourceY"
         android:layout_toStartOf="@+id/sourceY"
         android:singleLine="true" />
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="76dp"
         android:layout_height="wrap_content"
         android:id="@+id/sourceY"
         android:inputType="numberDecimal"
@@ -140,7 +125,7 @@
         android:layout_alignRight="@+id/txtTrackPointsInsert"
         android:layout_alignEnd="@+id/txtTrackPointsInsert"
 
-        />
+        android:textSize="12dp" />
 </LinearLayout>
 
         <LinearLayout
@@ -156,14 +141,14 @@
                 android:id="@+id/txtEndX"
                 style="@style/txt_Color"
                 android:layout_row="6"
-                android:textSize="15dp"
+                android:textSize="12dp"
 
                 android:layout_alignBottom="@+id/destinationX"
                 android:layout_toLeftOf="@+id/destinationX"
                 android:layout_toStartOf="@+id/destinationX"
                 />
             <EditText
-                android:layout_width="wrap_content"
+                android:layout_width="74dp"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
                 style="@style/txt_Color"
@@ -171,7 +156,8 @@
                 android:layout_below="@+id/radioGroup"
                 android:layout_alignRight="@+id/radioGroup"
                 android:layout_alignEnd="@+id/radioGroup"
-                android:width="100dp" />
+                android:width="100dp"
+                android:textSize="12dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -187,31 +173,60 @@
                 android:text="     End Lat:"
                 android:id="@+id/txtEndY"
                 style="@style/txt_Color"
-                android:textSize="15dp"
+                android:textSize="12dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_weight="0.50" />
 
             <EditText
-                android:layout_width="wrap_content"
+                android:layout_width="74dp"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
                 android:id="@+id/destinationY"
                 style="@style/txt_Color"
-                android:width="100dp" />
+                android:width="100dp"
+                android:textSize="12dp" />
 
         </LinearLayout>
+
     </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Press back to confirm"
         android:id="@+id/textView2"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        style="@style/txt_Color"
+        android:textSize="15dp"
+        android:text="Press back to confirm!" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Type start and end point:"
+        android:id="@+id/txtTrackPointsInsert"
+        style="@style/txt_Color"
+        android:layout_row="8"
+        android:textSize="12dp"
+        android:layout_above="@+id/linearLayout"
+        android:layout_alignRight="@+id/linearLayout"
+        android:layout_alignEnd="@+id/linearLayout"
+        android:layout_alignLeft="@+id/linearLayout"
+        android:layout_alignStart="@+id/linearLayout" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+
+        android:id="@+id/chosenAlg"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="15dp"
         style="@style/txt_Color"/>
 
 </RelativeLayout>

@@ -22,10 +22,12 @@ public class LocalFileRead extends Activity {
         String response = null;
         String[] separated;
         try {
-            String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath() + File.separator + "TrackRoute.txt";
+            File docsFolder = new File(Environment.getExternalStorageDirectory() + "/Documents");
+            File file = new File(docsFolder.getAbsolutePath(),"TrackRoute.txt");
+         //   String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath() + File.separator + "TrackRoute.txt";
             BufferedReader bufferedReader = null;
             StringBuffer output = new StringBuffer();
-            bufferedReader = new BufferedReader(new FileReader(path));
+            bufferedReader = new BufferedReader(new FileReader(file));
             String line = "";
             while ((line = bufferedReader.readLine()) != null) {
                 output.append(line + ";");

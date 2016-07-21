@@ -8,23 +8,23 @@
     android:keepScreenOn="true">
 
       <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
           android:id="@+id/editText"
           android:textAlignment="center"
           style="@style/txt_Color"
-          android:layout_below="@+id/messageDesplaytxt"
-          android:layout_centerHorizontal="true"
-          />
+          android:layout_alignParentTop="true"
+          android:layout_alignRight="@+id/progressBar2"
+          android:layout_alignEnd="@+id/progressBar2" />
 
     <TextView
-        android:layout_width="400dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         style="@style/txt_Color"
         android:id="@+id/metarDisplay"
-        android:textSize="150sp"
+        android:textSize="100sp"
         android:gravity="center"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
@@ -41,19 +41,7 @@
         android:layout_toStartOf="@+id/progressBar2" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/m"
-        style="@style/txt_Color"
-        android:id="@+id/metric"
-        android:textSize="50sp"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/metarDisplay"
-        android:layout_toEndOf="@+id/metarDisplay" />
-
-    <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/txt_Color"
         android:id="@+id/messageDesplaytxt"
@@ -76,12 +64,11 @@
         style="@style/txt_Color"
         android:id="@+id/txtTurnsLeft"
         android:textSize="20sp"
-        android:gravity="right"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_toEndOf="@+id/progressBar2"
         android:layout_alignTop="@+id/progressBar2"
-        android:layout_toRightOf="@+id/progressBar2" />
+        android:gravity="center" />
 
 
 </RelativeLayout>

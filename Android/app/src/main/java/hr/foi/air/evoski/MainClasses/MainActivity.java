@@ -3,6 +3,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,11 +14,12 @@ import java.io.File;
 import hr.foi.air.evoski.R;
 import hr.foi.air.evoski.core.PreferenceManagerHelper;
 
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends AppCompatActivity {
     int algID = 1;
-    String sorX,sorY,desX,desY;
+    String sorX, sorY, desX, desY;
     Context context;
     int idAlgNumb;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +41,7 @@ public class MainActivity extends AppCompatActivity  {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, MyLocationGPS.class);
-                intent.putExtra("track",1);
+                intent.putExtra("track", 1);
                 intent.putExtra("algID", idAlgNumb);
                 startActivity(intent);
                 finish();
@@ -52,16 +54,21 @@ public class MainActivity extends AppCompatActivity  {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, MyLocationGPS.class);
-                String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath() + File.separator + "TrackRoute.txt";
-                File file = new File(path);
-                if(file.exists()){
-                intent.putExtra("track",2);
-                intent.putExtra("algID", idAlgNumb);
-                startActivity(intent);
-                    finish();
-                overridePendingTransition(R.anim.anim_to_right, R.anim.anim_to_left);
-                }else{
-                    Toast.makeText(MainActivity.this, "TrackRoute.txt cannot be found!", Toast.LENGTH_SHORT).show();
+                File docsFolder = new File(Environment.getExternalStorageDirectory() + "/Documents");
+              //  String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath() + File.separator + "TrackRoute.txt";
+                if (docsFolder.exists()) {
+                    File file = new File(docsFolder.getAbsolutePath(),"TrackRoute.txt");
+                    if (file.exists()) {
+                        intent.putExtra("track", 2);
+                        intent.putExtra("algID", idAlgNumb);
+                        startActivity(intent);
+                        finish();
+                        overridePendingTransition(R.anim.anim_to_right, R.anim.anim_to_left);
+                    } else {
+                        Toast.makeText(MainActivity.this, "TrackRoute.txt cannot be found!", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(MainActivity.this, "Documents folder cannot be found!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -78,15 +85,15 @@ public class MainActivity extends AppCompatActivity  {
                 NetworkInfo networkInfo = cm.getActiveNetworkInfo();
                 if (networkInfo == null) {
                     Toast.makeText(MainActivity.this, "Check internet connection", Toast.LENGTH_SHORT).show();
-                } else if (sorX == "" || sorY == "" || desX == "" || desY == ""){
-                    Toast.makeText(MainActivity.this, "Type coordinates in Options",Toast.LENGTH_SHORT).show();
-                }else{
+                } else if (sorX == "" || sorY == "" || desX == "" || desY == "") {
+                    Toast.makeText(MainActivity.this, "Type coordinates in Options", Toast.LENGTH_SHORT).show();
+                } else {
                     intent.putExtra("track", 3);
                     intent.putExtra("algID", idAlgNumb);
                     startActivity(intent);
                     finish();
                     overridePendingTransition(R.anim.anim_to_right, R.anim.anim_to_left);
-                    Toast.makeText(MainActivity.this, "Coordinates fetched",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Coordinates fetched", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -100,6 +107,16 @@ public class MainActivity extends AppCompatActivity  {
                 overridePendingTransition(R.anim.anim_to_right, R.anim.anim_to_left);
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
     }
 }
 

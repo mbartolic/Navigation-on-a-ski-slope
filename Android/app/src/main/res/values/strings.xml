@@ -21,4 +21,7 @@
     <string name="displayMetric"></string>
     <string name="distance_to_finish">Distance to finish:</string>
     <string name="options">Options</string>
+    <string name="realButton">Real points</string>
+    <string name="smoothButton">Smooth alg</string>
+    <string name="movAvgButton">Move Avg alg</string>
 </resources>
